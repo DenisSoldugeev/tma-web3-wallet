@@ -1,0 +1,131 @@
+.create {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: $spacing-lg;
+}
+
+.content {
+  max-width: 600px;
+  width: 100%;
+}
+
+.step {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xl;
+  animation: fadeIn 0.2s ease-out;
+}
+
+.title {
+  @include gradient-text($primary-gradient);
+  font-size: $font-size-3xl;
+  font-weight: $font-weight-bold;
+  text-align: center;
+
+  @include responsive(md) {
+    font-size: $font-size-4xl;
+  }
+}
+
+.description {
+  font-size: $font-size-base;
+  color: $text-secondary;
+  text-align: center;
+  line-height: 1.6;
+}
+
+.warningCard {
+  background: rgba(235, 51, 73, 0.1);
+  border: 1px solid rgba(235, 51, 73, 0.3);
+
+  h3 {
+    color: $text-primary;
+    margin-bottom: $spacing-md;
+    font-size: $font-size-lg;
+  }
+}
+
+.warningList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-sm;
+
+  li {
+    padding-left: $spacing-lg;
+    position: relative;
+    color: $text-secondary;
+    font-size: $font-size-sm;
+
+    &::before {
+      content: '•';
+      position: absolute;
+      left: $spacing-sm;
+      color: rgba(235, 51, 73, 0.7);
+      font-weight: bold;
+    }
+  }
+}
+
+.mnemonicCard {
+  padding: $spacing-xl;
+}
+
+.mnemonicGrid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: $spacing-md;
+
+  @include responsive(md) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.mnemonicWord {
+  @include glass-effect($glass-blur-subtle, 0.05, 0.2);
+  display: flex;
+  align-items: center;
+  gap: $spacing-sm;
+  padding: $spacing-sm $spacing-md;
+  border-radius: $radius-md;
+  transition: all $transition-base;
+
+  &:hover {
+    @include glass-effect($glass-blur-subtle, 0.1, 0.3);
+    transform: translateY(-2px);
+  }
+}
+
+.wordNumber {
+  font-size: $font-size-xs;
+  color: $text-tertiary;
+  font-weight: $font-weight-medium;
+  min-width: 20px;
+}
+
+.word {
+  font-size: $font-size-sm;
+  color: $text-primary;
+  font-weight: $font-weight-medium;
+  font-family: $font-family-mono;
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+  margin-top: $spacing-lg;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

@@ -1,0 +1,67 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-sm;
+  width: 100%;
+}
+
+.label {
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  color: $text-secondary;
+  margin-bottom: $spacing-xs;
+}
+
+.input {
+  @include glass-effect($glass-blur-subtle, 0.05, 0.2);
+  width: 100%;
+  padding: $spacing-md $spacing-lg;
+  font-size: $font-size-base;
+  font-family: $font-family-base;
+  color: $text-primary;
+  border-radius: $radius-md;
+  border: 1px solid transparent;
+  outline: none;
+  transition: all $transition-base $ease-out-expo;
+
+  &::placeholder {
+    color: $text-tertiary;
+  }
+
+  &:focus {
+    @include glass-effect($glass-blur, 0.1, 0.3);
+    border-color: rgba(102, 126, 234, 0.5);
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+  }
+
+  &:hover:not(:focus):not(:disabled) {
+    @include glass-effect($glass-blur-subtle, 0.08, 0.25);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  &.error {
+    border-color: rgba(235, 51, 73, 0.5);
+
+    &:focus {
+      box-shadow: 0 0 0 3px rgba(235, 51, 73, 0.1);
+    }
+  }
+
+  &.success {
+    border-color: rgba(56, 239, 125, 0.5);
+
+    &:focus {
+      box-shadow: 0 0 0 3px rgba(56, 239, 125, 0.1);
+    }
+  }
+}
+
+.errorText {
+  font-size: $font-size-sm;
+  color: #ff6b6b;
+  margin-top: $spacing-xs;
+}

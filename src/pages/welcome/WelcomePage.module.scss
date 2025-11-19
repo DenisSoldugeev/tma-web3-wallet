@@ -1,0 +1,51 @@
+.welcome {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: $spacing-lg;
+}
+
+.content {
+  max-width: 600px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-3xl;
+  animation: fadeIn 0.3s ease-out;
+}
+
+.header {
+  text-align: center;
+}
+
+.title {
+  @include gradient-text($primary-gradient);
+  font-size: $font-size-4xl;
+  font-weight: $font-weight-bold;
+  margin-bottom: $spacing-md;
+
+  @include responsive(md) {
+    font-size: 3.5rem;
+  }
+}
+
+.subtitle {
+  font-size: $font-size-lg;
+  color: $text-secondary;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-lg;
+}
+
+.footer {
+  text-align: center;
+  font-size: $font-size-sm;
+  color: $text-tertiary;
+  font-style: italic;
+}

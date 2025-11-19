@@ -1,0 +1,45 @@
+.card {
+  @include glass-effect($glass-blur, 0.1, 0.2);
+  border-radius: $radius-lg;
+  padding: $spacing-lg;
+  box-shadow: $shadow-md;
+  transition: all $transition-base $ease-out-expo;
+
+  &.gradient {
+    position: relative;
+    background: rgba(255, 255, 255, 0.05);
+
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: $radius-lg;
+      padding: 2px;
+      background: $primary-gradient;
+      -webkit-mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+      mask:
+        linear-gradient(#fff 0 0) content-box,
+        linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      pointer-events: none;
+    }
+  }
+
+  &.hoverable {
+    cursor: pointer;
+
+    &:hover {
+      transform: translateY(-4px) scale(1.01);
+      box-shadow: $shadow-lg;
+
+      @include glass-effect($glass-blur, 0.15, 0.3);
+    }
+
+    &:active {
+      transform: translateY(-2px) scale(0.99);
+    }
+  }
+}

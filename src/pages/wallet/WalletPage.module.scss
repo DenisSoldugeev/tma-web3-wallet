@@ -1,0 +1,152 @@
+.wallet {
+  min-height: 100vh;
+  padding: $spacing-xl $spacing-lg;
+}
+
+.content {
+  max-width: 600px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xl;
+  animation: fadeIn 0.2s ease-out;
+}
+
+.header {
+  text-align: center;
+}
+
+.title {
+  @include gradient-text($primary-gradient);
+  font-size: $font-size-3xl;
+  font-weight: $font-weight-bold;
+}
+
+.balanceCard {
+  padding: $spacing-2xl;
+  text-align: center;
+}
+
+.balanceHeader {
+  margin-bottom: $spacing-md;
+}
+
+.balanceLabel {
+  font-size: $font-size-sm;
+  color: $text-tertiary;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.balanceAmount {
+  margin-bottom: $spacing-lg;
+
+  h2 {
+    font-size: $font-size-4xl;
+    font-weight: $font-weight-bold;
+    color: $text-primary;
+
+    @include responsive(md) {
+      font-size: 3rem;
+    }
+  }
+}
+
+.skeleton {
+  height: 60px;
+  width: 200px;
+  margin: 0 auto;
+  @include shimmer;
+  border-radius: $radius-md;
+}
+
+.addressContainer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: $spacing-sm;
+  @include glass-effect($glass-blur-subtle, 0.05, 0.15);
+  padding: $spacing-sm $spacing-md;
+  border-radius: $radius-full;
+  max-width: fit-content;
+  margin: 0 auto;
+}
+
+.address {
+  font-family: $font-family-mono;
+  font-size: $font-size-sm;
+  color: $text-secondary;
+}
+
+.copyButton {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: $font-size-base;
+  padding: $spacing-xs;
+  transition: transform $transition-fast;
+
+  &:hover {
+    transform: scale(1.1);
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+}
+
+.actions {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: $spacing-md;
+}
+
+.actionCard {
+  padding: $spacing-lg;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: $spacing-md;
+  text-align: center;
+  cursor: pointer;
+}
+
+.actionIcon {
+  font-size: $font-size-4xl;
+  @include glass-effect($glass-blur-subtle, 0.1, 0.2);
+  width: 64px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: $radius-xl;
+}
+
+.actionContent {
+  h3 {
+    font-size: $font-size-lg;
+    font-weight: $font-weight-semibold;
+    color: $text-primary;
+    margin-bottom: $spacing-xs;
+  }
+
+  p {
+    font-size: $font-size-sm;
+    color: $text-tertiary;
+  }
+}
+
+.footer {
+  display: flex;
+  justify-content: center;
+  margin-top: $spacing-xl;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

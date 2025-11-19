@@ -1,0 +1,1 @@
+export { CreateWalletPage } from './CreateWalletPage';

@@ -1,0 +1,165 @@
+.card {
+  @include glass-effect($glass-blur, 0.1, 0.2);
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: $spacing-lg;
+  padding: $spacing-lg;
+  border-radius: $radius-xl;
+  cursor: pointer;
+  box-shadow: $shadow-md;
+  overflow: hidden;
+  transition: all $transition-base $ease-out-expo;
+  animation: fadeInUp 0.3s ease-out forwards;
+  opacity: 0;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 2px;
+    -webkit-mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    mask:
+      linear-gradient(#fff 0 0) content-box,
+      linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity $transition-base;
+  }
+
+  &.primary::before {
+    background: $primary-gradient;
+  }
+
+  &.secondary::before {
+    background: $secondary-gradient;
+  }
+
+  &.accent::before {
+    background: $accent-gradient;
+  }
+
+  &:hover {
+    @include glass-effect($glass-blur, 0.15, 0.3);
+    box-shadow: $shadow-lg;
+    transform: scale(1.02) translateY(-4px);
+
+    &::before {
+      opacity: 1;
+    }
+
+    .icon {
+      transform: scale(1.1);
+    }
+
+    .arrow {
+      transform: translateX(4px);
+    }
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
+
+  &.selected {
+    @include glass-effect($glass-blur, 0.2, 0.4);
+    box-shadow: $shadow-lg;
+    transform: scale(1.02);
+
+    &::before {
+      opacity: 1;
+    }
+
+    .icon {
+      transform: scale(1.1);
+    }
+  }
+}
+
+.iconWrapper {
+  flex-shrink: 0;
+}
+
+.icon {
+  width: 48px;
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: $font-size-2xl;
+  border-radius: $radius-md;
+  transition: transform $transition-base $ease-out-expo;
+
+  .primary & {
+    background: $primary-gradient;
+  }
+
+  .secondary & {
+    background: $secondary-gradient;
+  }
+
+  .accent & {
+    background: $accent-gradient;
+  }
+}
+
+.content {
+  flex: 1;
+  min-width: 0;
+}
+
+.title {
+  font-size: $font-size-lg;
+  font-weight: $font-weight-semibold;
+  color: $text-primary;
+  margin-bottom: $spacing-xs;
+}
+
+.description {
+  font-size: $font-size-sm;
+  color: $text-secondary;
+  line-height: 1.4;
+}
+
+.arrow {
+  flex-shrink: 0;
+  font-size: $font-size-xl;
+  color: $text-secondary;
+  transition: transform $transition-base $ease-out-expo;
+}
+
+@include responsive(md) {
+  .card {
+    padding: $spacing-xl;
+  }
+
+  .icon {
+    width: 56px;
+    height: 56px;
+    font-size: $font-size-3xl;
+  }
+
+  .title {
+    font-size: $font-size-xl;
+  }
+
+  .description {
+    font-size: $font-size-base;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

@@ -1,0 +1,131 @@
+.import {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: $spacing-lg;
+}
+
+.content {
+  max-width: 600px;
+  width: 100%;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-xl;
+  animation: fadeIn 0.2s ease-out;
+}
+
+.title {
+  @include gradient-text($secondary-gradient);
+  font-size: $font-size-3xl;
+  font-weight: $font-weight-bold;
+  text-align: center;
+
+  @include responsive(md) {
+    font-size: $font-size-4xl;
+  }
+}
+
+.description {
+  font-size: $font-size-base;
+  color: $text-secondary;
+  text-align: center;
+  line-height: 1.6;
+}
+
+.inputCard {
+  padding: $spacing-xl;
+}
+
+.label {
+  display: block;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  color: $text-secondary;
+  margin-bottom: $spacing-md;
+}
+
+.textarea {
+  width: 100%;
+  @include glass-effect($glass-blur-subtle, 0.05, 0.2);
+  padding: $spacing-md;
+  font-size: $font-size-base;
+  font-family: $font-family-mono;
+  color: $text-primary;
+  border-radius: $radius-md;
+  border: 1px solid transparent;
+  outline: none;
+  resize: vertical;
+  transition: all $transition-base $ease-out-expo;
+  line-height: 1.6;
+
+  &::placeholder {
+    color: $text-tertiary;
+  }
+
+  &:focus {
+    @include glass-effect($glass-blur, 0.1, 0.3);
+    border-color: rgba(240, 147, 251, 0.5);
+    box-shadow: 0 0 0 3px rgba(240, 147, 251, 0.1);
+  }
+}
+
+.error {
+  margin-top: $spacing-sm;
+  font-size: $font-size-sm;
+  color: #ff6b6b;
+}
+
+.infoCard {
+  background: rgba(79, 172, 254, 0.1);
+  border: 1px solid rgba(79, 172, 254, 0.3);
+
+  h3 {
+    color: $text-primary;
+    margin-bottom: $spacing-md;
+    font-size: $font-size-lg;
+  }
+}
+
+.tipsList {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-sm;
+
+  li {
+    padding-left: $spacing-lg;
+    position: relative;
+    color: $text-secondary;
+    font-size: $font-size-sm;
+
+    &::before {
+      content: '•';
+      position: absolute;
+      left: $spacing-sm;
+      color: rgba(79, 172, 254, 0.7);
+      font-weight: bold;
+    }
+  }
+}
+
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-md;
+  margin-top: $spacing-lg;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
