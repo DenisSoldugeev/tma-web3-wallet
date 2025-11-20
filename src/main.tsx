@@ -6,7 +6,7 @@ import { createRoot } from 'react-dom/client';
 import '@/styles/global.scss';
 import { router } from './router';
 
-import { initTelegramApp } from '@/utils/telegram.utils';
+import { initTelegramApp } from '@/utils/telegram';
 
 initTelegramApp();
 

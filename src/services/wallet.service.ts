@@ -1,10 +1,10 @@
 import { mnemonicToPrivateKey } from '@ton/crypto';
 import { WalletContractV4 } from '@ton/ton';
-import { generateMnemonic, validateMnemonic, encryptData } from '@utils/crypto.utils';
-
-import type { Wallet, CreateWalletParams, ImportWalletParams } from '../types/wallet.types';
+import { generateMnemonic, validateMnemonic, encryptData } from '@utils/crypto';
 
 import { StorageService } from './storage.service';
+
+import type { Wallet, CreateWalletParams, ImportWalletParams } from '@/types/wallet';
 
 /**
  * Wallet Service for managing TON wallet operations
