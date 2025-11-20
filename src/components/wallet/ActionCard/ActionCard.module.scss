@@ -1,165 +1,151 @@
-.card {
-  @include glass-effect($glass-blur, 0.1, 0.2);
+@use '@styles/variables';
+@use '@styles/mixins';
+@use "@styles/animations";
+
+// Block
+.action-card {
+  @include mixins.glass-effect(variables.$glass-blur, 0.1, 0.2);
   position: relative;
   display: flex;
   align-items: center;
-  gap: $spacing-lg;
-  padding: $spacing-lg;
-  border-radius: $radius-xl;
+  gap: variables.$spacing-sm;
+  padding: variables.$spacing-md;
+  border-radius: variables.$radius-lg;
   cursor: pointer;
-  box-shadow: $shadow-md;
+  box-shadow: variables.$shadow-md;
   overflow: hidden;
-  transition: all $transition-base $ease-out-expo;
-  animation: fadeInUp 0.3s ease-out forwards;
+  transition: all variables.$transition-base variables.$ease-out-expo;
+  animation: slideUp 0.3s variables.$ease-out-expo forwards;
   opacity: 0;
+  outline: none;
+  min-height: 100px;
 
-  &::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    padding: 2px;
-    -webkit-mask:
-      linear-gradient(#fff 0 0) content-box,
-      linear-gradient(#fff 0 0);
-    mask:
-      linear-gradient(#fff 0 0) content-box,
-      linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-    pointer-events: none;
-    opacity: 0;
-    transition: opacity $transition-base;
+  &--primary::before {
+    background: variables.$primary-gradient;
   }
 
-  &.primary::before {
-    background: $primary-gradient;
+  &--secondary::before {
+    background: variables.$secondary-gradient;
   }
 
-  &.secondary::before {
-    background: $secondary-gradient;
+  &--accent::before {
+    background: variables.$accent-gradient;
   }
 
-  &.accent::before {
-    background: $accent-gradient;
-  }
-
-  &:hover {
-    @include glass-effect($glass-blur, 0.15, 0.3);
-    box-shadow: $shadow-lg;
-    transform: scale(1.02) translateY(-4px);
+  &:hover,
+  &:focus-visible {
+    @include mixins.glass-effect(variables.$glass-blur, 0.15, 0.3);
+    box-shadow: variables.$shadow-lg;
+    transform: scale(1.02) translateY(-2px);
 
     &::before {
       opacity: 1;
     }
 
-    .icon {
+    .action-card__icon {
       transform: scale(1.1);
     }
 
-    .arrow {
+    .action-card__arrow {
       transform: translateX(4px);
     }
+  }
+
+  &:focus-visible {
+    outline: 2px solid rgba(255, 255, 255, 0.5);
+    outline-offset: 2px;
   }
 
   &:active {
     transform: scale(0.98);
   }
 
-  &.selected {
-    @include glass-effect($glass-blur, 0.2, 0.4);
-    box-shadow: $shadow-lg;
+  &--selected {
+    @include mixins.glass-effect(variables.$glass-blur, 0.2, 0.4);
+    box-shadow: variables.$shadow-lg;
     transform: scale(1.02);
 
     &::before {
       opacity: 1;
     }
 
-    .icon {
+    .action-card__icon {
       transform: scale(1.1);
     }
   }
 }
 
-.iconWrapper {
+// Elements
+.action-card__icon-wrapper {
   flex-shrink: 0;
 }
 
-.icon {
-  width: 48px;
-  height: 48px;
+.action-card__icon {
+  width: 40px;
+  height: 40px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: $font-size-2xl;
-  border-radius: $radius-md;
-  transition: transform $transition-base $ease-out-expo;
+  font-size: variables.$font-size-xl;
+  border-radius: variables.$radius-md;
+  transition: transform variables.$transition-base variables.$ease-out-expo;
 
-  .primary & {
-    background: $primary-gradient;
+  .action-card--primary & {
+    background: variables.$primary-gradient;
   }
 
-  .secondary & {
-    background: $secondary-gradient;
+  .action-card--secondary & {
+    background: variables.$secondary-gradient;
   }
 
-  .accent & {
-    background: $accent-gradient;
+  .action-card--accent & {
+    background: variables.$accent-gradient;
   }
 }
 
-.content {
+.action-card__content {
   flex: 1;
   min-width: 0;
 }
 
-.title {
-  font-size: $font-size-lg;
-  font-weight: $font-weight-semibold;
-  color: $text-primary;
-  margin-bottom: $spacing-xs;
+.action-card__title {
+  font-size: variables.$font-size-base;
+  font-weight: variables.$font-weight-semibold;
+  color: variables.$text-primary;
+  margin-bottom: variables.$spacing-xs;
+  line-height: 1.3;
 }
 
-.description {
-  font-size: $font-size-sm;
-  color: $text-secondary;
+.action-card__description {
+  font-size: variables.$font-size-xs;
+  color: variables.$text-secondary;
   line-height: 1.4;
 }
 
-.arrow {
+.action-card__arrow {
   flex-shrink: 0;
-  font-size: $font-size-xl;
-  color: $text-secondary;
-  transition: transform $transition-base $ease-out-expo;
+  font-size: variables.$font-size-lg;
+  color: variables.$text-secondary;
+  transition: transform variables.$transition-base variables.$ease-out-expo;
 }
 
-@include responsive(md) {
-  .card {
-    padding: $spacing-xl;
+@include mixins.responsive(md) {
+  .action-card {
+    gap: variables.$spacing-lg;
+    padding: variables.$spacing-xl;
   }
 
-  .icon {
+  .action-card__icon {
     width: 56px;
     height: 56px;
-    font-size: $font-size-3xl;
+    font-size: variables.$font-size-3xl;
   }
 
-  .title {
-    font-size: $font-size-xl;
+  .action-card__title {
+    font-size: variables.$font-size-xl;
   }
 
-  .description {
-    font-size: $font-size-base;
-  }
-}
-
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
+  .action-card__description {
+    font-size: variables.$font-size-base;
   }
 }

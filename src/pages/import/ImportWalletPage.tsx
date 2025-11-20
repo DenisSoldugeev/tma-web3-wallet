@@ -1,6 +1,6 @@
 import { Button } from '@components/ui/Button';
 import { Card } from '@components/ui/Card';
-import { WalletService } from '@services/wallet.service';
+import { WalletService } from '@services/wallet.ts';
 import { useNavigate } from '@tanstack/react-router';
 import { useState } from 'react';
 

@@ -1,4 +1,4 @@
-import type { Wallet } from '../types/wallet.types';
+import type { Wallet } from '@/types/wallet';
 
 const STORAGE_KEYS = {
   WALLET: 'tma_wallet',

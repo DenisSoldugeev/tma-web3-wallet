@@ -4,6 +4,7 @@ import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 
 import '@/styles/global.scss';
+import './styles/animations.css';
 import { router } from './router';
 
 import { initTelegramApp } from '@/utils/telegram';

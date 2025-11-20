@@ -1,10 +1,4 @@
-@use 'variables';
 
-// ====================================
-// Animations - "Liquid Eye" Design
-// ====================================
-
-// Fade animations
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -23,7 +17,6 @@
   }
 }
 
-// Slide animations
 @keyframes slideUp {
   from {
     opacity: 0;
@@ -68,7 +61,7 @@
   }
 }
 
-// Scale animations
+
 @keyframes scaleIn {
   from {
     opacity: 0;
@@ -91,7 +84,6 @@
   }
 }
 
-// Liquid wave effect
 @keyframes liquidWave {
   0%, 100% {
     border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
@@ -107,7 +99,6 @@
   }
 }
 
-// Blob morph animation
 @keyframes blobMorph {
   0%, 100% {
     border-radius: 63% 37% 54% 46% / 55% 48% 52% 45%;
@@ -132,7 +123,6 @@
   }
 }
 
-// Gradient animation
 @keyframes gradientShift {
   0% {
     background-position: 0% 50%;
@@ -145,7 +135,7 @@
   }
 }
 
-// Rotate animation
+
 @keyframes rotate {
   from {
     transform: rotate(0deg);
@@ -155,7 +145,6 @@
   }
 }
 
-// Pulse glow animation
 @keyframes pulseGlow {
   0%, 100% {
     opacity: 1;
@@ -167,7 +156,6 @@
   }
 }
 
-// Float animation
 @keyframes float {
   0%, 100% {
     transform: translateY(0px);
@@ -177,7 +165,7 @@
   }
 }
 
-// Bounce animation
+
 @keyframes bounce {
   0%, 100% {
     transform: translateY(0);
@@ -187,7 +175,7 @@
   }
 }
 
-// Shimmer loading
+
 @keyframes shimmer {
   0% {
     background-position: -1000px 0;
@@ -197,7 +185,6 @@
   }
 }
 
-// Ripple effect
 @keyframes ripple {
   0% {
     transform: scale(0);
@@ -209,7 +196,6 @@
   }
 }
 
-// Wiggle animation
 @keyframes wiggle {
   0%, 100% {
     transform: rotate(0deg);
@@ -222,7 +208,6 @@
   }
 }
 
-// Heartbeat animation
 @keyframes heartbeat {
   0%, 100% {
     transform: scale(1);
@@ -235,7 +220,6 @@
   }
 }
 
-// Typewriter effect
 @keyframes typewriter {
   from {
     width: 0;
@@ -245,7 +229,6 @@
   }
 }
 
-// Blink cursor
 @keyframes blinkCursor {
   0%, 100% {
     opacity: 1;
@@ -255,7 +238,6 @@
   }
 }
 
-// Slide and fade
 @keyframes slideAndFade {
   from {
     opacity: 0;
@@ -264,36 +246,5 @@
   to {
     opacity: 1;
     transform: translateY(0) scale(1);
-  }
-}
-
-// Utility animation classes
-.animate-fade-in {
-  animation: fadeIn 0.5s variables.$ease-out-expo forwards;
-}
-
-.animate-slide-up {
-  animation: slideUp 0.5s variables.$ease-out-expo forwards;
-}
-
-.animate-scale-in {
-  animation: scaleIn 0.3s variables.$ease-out-expo forwards;
-}
-
-.animate-float {
-  animation: float 3s ease-in-out infinite;
-}
-
-.animate-pulse-glow {
-  animation: pulseGlow 2s ease-in-out infinite;
-}
-
-.animate-shimmer {
-  animation: shimmer 2s linear infinite;
-}
-
-@for $i from 1 through 10 {
-  .animate-delay-#{$i} {
-    animation-delay: #{$i * 100}ms;
   }
 }
