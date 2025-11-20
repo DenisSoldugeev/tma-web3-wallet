@@ -1,0 +1,32 @@
+# Dependencies
+node_modules/
+
+# Build outputs
+dist/
+build/
+*.min.js
+
+# Generated files
+routeTree.gen.ts
+*.gen.ts
+
+# Config files
+*.config.js
+*.config.ts
+vite.config.ts
+
+# Cache
+.cache/
+.vite/
+.eslintcache
+
+# Environment files
+.env
+.env.local
+.env.production
+
+# Coverage
+coverage/
+
+# Other
+*.log
