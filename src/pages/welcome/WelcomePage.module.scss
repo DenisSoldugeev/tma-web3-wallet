@@ -1,11 +1,11 @@
 @use "@styles/variables";
+@use "@styles/mixins";
 
 .welcome-page {
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: variables.$spacing-lg;
 }
 
 .welcome-page__content {
@@ -13,8 +13,9 @@
   width: 100%;
   display: flex;
   flex-direction: column;
-  gap: variables.$spacing-3xl;
+  gap: variables.$spacing-2xl;
   animation: fadeIn 0.3s ease-out;
+  padding:0 variables.$spacing-lg;
 }
 
 .welcome-page__header {
@@ -22,19 +23,19 @@
 }
 
 .welcome-page__title {
-  @include gradient-text($primary-gradient);
-  font-size: $font-size-4xl;
-  font-weight: $font-weight-bold;
-  margin-bottom: $spacing-md;
+  @include mixins.gradient-text(variables.$secondary-gradient);
+  font-size: variables.$font-size-4xl;
+  font-weight: variables.$font-weight-bold;
+  margin-bottom: variables.$spacing-md;
 
-  @include responsive(md) {
+  @include mixins.responsive(md) {
     font-size: 3.5rem;
   }
 }
 
 .welcome-page__subtitle {
-  font-size: $font-size-lg;
-  color: $text-secondary;
+  font-size: variables.$font-size-lg;
+  color: variables.$text-secondary;
   max-width: 400px;
   margin: 0 auto;
 }
@@ -42,12 +43,12 @@
 .welcome-page__actions {
   display: flex;
   flex-direction: column;
-  gap: $spacing-lg;
+  gap: variables.$spacing-lg;
 }
 
 .welcome-page__footer {
   text-align: center;
-  font-size: $font-size-sm;
-  color: $text-tertiary;
+  font-size: variables.$font-size-sm;
+  color: variables.$text-tertiary;
   font-style: italic;
 }
