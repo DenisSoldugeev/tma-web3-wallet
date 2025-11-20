@@ -28,7 +28,6 @@ export default defineConfig([
       'import': importPlugin,
     },
     rules: {
-      // TypeScript правила
       '@typescript-eslint/no-explicit-any': 'warn',
       '@typescript-eslint/no-unused-vars': ['error', {
         argsIgnorePattern: '^_',
@@ -40,20 +39,17 @@ export default defineConfig([
         prefer: 'type-imports',
       }],
 
-      // React правила
       'react/react-in-jsx-scope': 'off',
       'react/prop-types': 'off',
       'react/jsx-uses-react': 'off',
       'react/self-closing-comp': 'warn',
       'react/jsx-curly-brace-presence': ['warn', { props: 'never', children: 'never' }],
 
-      // Доступность (a11y)
       'jsx-a11y/alt-text': 'warn',
       'jsx-a11y/anchor-is-valid': 'warn',
       'jsx-a11y/click-events-have-key-events': 'warn',
       'jsx-a11y/no-static-element-interactions': 'warn',
 
-      // Import правила
       'import/order': ['warn', {
         'groups': [
           'builtin',
@@ -72,7 +68,6 @@ export default defineConfig([
       'import/no-duplicates': 'error',
       'import/no-unresolved': 'off',
 
-      // Общие правила кода
       'no-console': ['warn', { allow: ['warn', 'error'] }],
       'no-debugger': 'warn',
       'no-var': 'error',

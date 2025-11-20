@@ -1,10 +1,10 @@
 import { Button } from '@components/ui/Button';
 import { Card } from '@components/ui/Card';
-import { TonService } from '@services/ton.service';
+import { TonService } from '@services/ton.ts';
 import { WalletService } from '@services/wallet.service';
 import { useQuery } from '@tanstack/react-query';
 import { useNavigate } from '@tanstack/react-router';
-import { truncateAddress } from '@utils/format.utils';
+import { truncateAddress } from '@utils/format';
 import { useEffect, useState } from 'react';
 
 import styles from './WalletPage.module.scss';
@@ -25,7 +25,7 @@ export function WalletPage() {
     queryKey: ['balance', wallet?.address],
     queryFn: () => TonService.getBalance(wallet!.address),
     enabled: !!wallet,
-    refetchInterval: 10000, // Refetch every 10 seconds
+    refetchInterval: 10000,
   });
 
   const handleCopyAddress = async () => {

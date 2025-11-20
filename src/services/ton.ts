@@ -1,5 +1,5 @@
 import { TonClient, Address } from '@ton/ton';
-import { formatTON } from '@utils/format.utils';
+import { formatTON } from '@utils/format';
 
 import type { WalletBalance, Transaction } from '@/types/wallet';
 

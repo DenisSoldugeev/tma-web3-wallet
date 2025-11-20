@@ -1,7 +1,9 @@
-import { Icon, type IconName } from '@components/ui/Icon';
+import { Icon } from '@components/ui/Icon';
 import classNames from 'classnames';
 
 import styles from './ActionCard.module.scss';
+
+import type { IconName } from '@/types/icons';
 
 interface ActionCardProps {
   icon: IconName;
