@@ -17,7 +17,7 @@
     "@ton/ton": "^16.0.0",
     "@tonconnect/ui-react": "^2.3.1",
     "@twa-dev/sdk": "^8.0.2",
-    "classnames": "^2.5.1",
+    "clsx": "^2.1.1",
     "react": "^19.2.0",
     "react-dom": "^19.2.0"
   },

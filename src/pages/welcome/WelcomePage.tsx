@@ -1,9 +1,9 @@
 import { useNavigate } from '@tanstack/react-router';
 import { useEffect, useState } from 'react';
+import { MainButton } from '@twa-dev/sdk/react';
 import { ActionCard } from '@components/wallet/ActionCard';
 import { WalletService } from '@services/wallet.service';
 import styles from './WelcomePage.module.scss';
-import {MainButton} from "@twa-dev/sdk/react";
 
 type WalletAction = 'create' | 'import' | null;
 
@@ -18,16 +18,16 @@ export function WelcomePage() {
   }, [navigate]);
 
   return (
-    <div className={styles.welcome}>
-      <div className={styles.content}>
-        <div className={styles.header}>
-          <h1 className={styles.title}>TMA Wallet</h1>
-          <p className={styles.subtitle}>
+    <div className={styles['welcome-page']}>
+      <div className={styles['welcome-page__content']}>
+        <div className={styles['welcome-page__header']}>
+          <h1 className={styles['welcome-page__title']}>TMA Wallet</h1>
+          <p className={styles['welcome-page__subtitle']}>
             Secure TON wallet for Telegram Mini Apps
           </p>
         </div>
 
-        <div className={styles.actions}>
+        <div className={styles['welcome-page__actions']}>
           <ActionCard
             icon="🔑"
             title="Create New Wallet"
@@ -47,11 +47,11 @@ export function WelcomePage() {
           />
         </div>
 
-        <p className={styles.footer}>
+        <p className={styles['welcome-page__footer']}>
           Your keys, your crypto. Always secure.
         </p>
       </div>
-        <MainButton text={selectedAction === 'create' ? 'Create Wallet' : 'Import Wallet'}  />
+      <MainButton text={selectedAction === 'create' ? 'Create Wallet' : 'Import Wallet'} />
     </div>
   );
 }
