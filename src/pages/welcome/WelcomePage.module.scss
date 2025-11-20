@@ -4,8 +4,10 @@
 .welcome-page {
   min-height: 100vh;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
+  padding: variables.$spacing-2xl 0;
 }
 
 .welcome-page__content {
@@ -15,7 +17,9 @@
   flex-direction: column;
   gap: variables.$spacing-2xl;
   animation: fadeIn 0.3s ease-out;
-  padding:0 variables.$spacing-lg;
+  padding: 0 variables.$spacing-lg;
+  flex: 1;
+  justify-content: center;
 }
 
 .welcome-page__header {
@@ -47,8 +51,21 @@
 }
 
 .welcome-page__footer {
+  width: 100%;
+  max-width: 600px;
   text-align: center;
+  padding: 0 variables.$spacing-lg variables.$spacing-xl;
+}
+
+.welcome-page__footer-text {
   font-size: variables.$font-size-sm;
+  color: variables.$text-secondary;
+  font-weight: variables.$font-weight-medium;
+  margin-bottom: variables.$spacing-xs;
+}
+
+.welcome-page__footer-subtitle {
+  font-size: variables.$font-size-xs;
   color: variables.$text-tertiary;
-  font-style: italic;
+  opacity: 0.7;
 }

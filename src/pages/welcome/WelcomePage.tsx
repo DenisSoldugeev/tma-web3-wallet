@@ -48,8 +48,13 @@ export function WelcomePage() {
                         selected={selectedAction === 'import'}
                     />
                 </div>
-                <p className={styles['welcome-page__footer']}>
-                    Your keys, your crypto. Always secure.
+            </div>
+            <div className={styles['welcome-page__footer']}>
+                <p className={styles['welcome-page__footer-text']}>
+                    Educational project for Telegram Mini Apps integration
+                </p>
+                <p className={styles['welcome-page__footer-subtitle']}>
+                    Learn how to build secure wallet apps with TON blockchain
                 </p>
             </div>
             {selectedAction && <MainButton
