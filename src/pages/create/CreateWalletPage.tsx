@@ -1,8 +1,9 @@
-import { useNavigate } from '@tanstack/react-router';
-import { useState, useCallback } from 'react';
 import { Button } from '@components/ui/Button';
 import { Card } from '@components/ui/Card';
 import { WalletService } from '@services/wallet.service';
+import { useNavigate } from '@tanstack/react-router';
+import { useState } from 'react';
+
 import styles from './CreateWalletPage.module.scss';
 
 export function CreateWalletPage() {
@@ -10,13 +11,6 @@ export function CreateWalletPage() {
   const [step, setStep] = useState<'intro' | 'mnemonic' | 'confirm'>('intro');
   const [mnemonic, setMnemonic] = useState<string[]>([]);
   const [isCreating, setIsCreating] = useState(false);
-  const handleBack = useCallback(() => {
-    if (step === 'intro') {
-      navigate({ to: '/' });
-    } else if (step === 'mnemonic') {
-      setStep('intro');
-    }
-  }, [step, navigate]);
 
   // Show BackButton in Telegram
   const handleCreateWallet = async () => {

@@ -1,6 +1,6 @@
 /// <reference types="@twa-dev/sdk" />
 
-import type { WebApp } from '@twa-dev/types'
+import type { WebApp } from '@twa-dev/types';
 
 declare global {
   interface Window {
@@ -10,4 +10,4 @@ declare global {
   }
 }
 
-export {}
+export {};

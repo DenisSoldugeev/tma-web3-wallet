@@ -1,7 +1,9 @@
 import { mnemonicToPrivateKey } from '@ton/crypto';
 import { WalletContractV4 } from '@ton/ton';
-import type { Wallet, CreateWalletParams, ImportWalletParams } from '../types/wallet.types';
 import { generateMnemonic, validateMnemonic, encryptData } from '@utils/crypto.utils';
+
+import type { Wallet, CreateWalletParams, ImportWalletParams } from '../types/wallet.types';
+
 import { StorageService } from './storage.service';
 
 /**
@@ -75,7 +77,7 @@ export class WalletService {
 
       // Create wallet using the mnemonic
       const { wallet } = await this.createWallet({
-        mnemonic: mnemonic.join(' ')
+        mnemonic: mnemonic.join(' '),
       });
 
       return wallet;

@@ -1,6 +1,7 @@
-import type { ReactNode } from 'react';
-import styles from './GlassContainer.module.scss';
 import classNames from 'classnames';
+import type { ReactNode } from 'react';
+
+import styles from './GlassContainer.module.scss';
 
 interface GlassContainerProps {
   children: ReactNode;
@@ -20,7 +21,7 @@ export const GlassContainer = ({
       className={classNames(
         styles.container,
         styles[variant],
-        className
+        className,
       )}
       onClick={onClick}
     >

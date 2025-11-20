@@ -1,6 +1,7 @@
-import type { ReactNode, ButtonHTMLAttributes } from 'react';
-import styles from './Button.module.scss';
 import classNames from 'classnames';
+import type { ReactNode, ButtonHTMLAttributes } from 'react';
+
+import styles from './Button.module.scss';
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   children: ReactNode;
@@ -33,7 +34,7 @@ export const Button = ({
           [styles.fullWidth]: fullWidth,
           [styles.loading]: loading,
         },
-        className
+        className,
       )}
       disabled={disabled || loading}
       onClick={onClick}

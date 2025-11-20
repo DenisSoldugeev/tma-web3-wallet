@@ -1,9 +1,10 @@
-import type { ReactNode } from 'react';
-import styles from './ActionCard.module.scss';
+import { Icon, type IconName } from '@components/ui/Icon';
 import classNames from 'classnames';
 
+import styles from './ActionCard.module.scss';
+
 interface ActionCardProps {
-  icon: ReactNode;
+  icon: IconName;
   title: string;
   description: string;
   gradient?: 'primary' | 'secondary' | 'accent';
@@ -27,7 +28,9 @@ export const ActionCard = ({
       onClick={onClick}
     >
       <div className={styles.iconWrapper}>
-        <div className={styles.icon}>{icon}</div>
+        <div className={styles.icon}>
+          <Icon name={icon} size={32} />
+        </div>
       </div>
       <div className={styles.content}>
         <h3 className={styles.title}>{title}</h3>

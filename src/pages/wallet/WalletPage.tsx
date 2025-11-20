@@ -1,11 +1,12 @@
-import { useNavigate } from '@tanstack/react-router';
-import { useEffect, useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { Card } from '@components/ui/Card';
 import { Button } from '@components/ui/Button';
-import { WalletService } from '@services/wallet.service';
+import { Card } from '@components/ui/Card';
 import { TonService } from '@services/ton.service';
+import { WalletService } from '@services/wallet.service';
+import { useQuery } from '@tanstack/react-query';
+import { useNavigate } from '@tanstack/react-router';
 import { truncateAddress } from '@utils/format.utils';
+import { useEffect, useState } from 'react';
+
 import styles from './WalletPage.module.scss';
 
 export function WalletPage() {

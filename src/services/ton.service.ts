@@ -1,6 +1,7 @@
 import { TonClient, Address } from '@ton/ton';
-import type { WalletBalance, Transaction } from '../types/wallet.types';
 import { formatTON } from '@utils/format.utils';
+
+import type { WalletBalance, Transaction } from '@/types/wallet';
 
 /**
  * TON Service for blockchain interactions
@@ -86,7 +87,7 @@ export class TonService {
     from: string,
     to: string,
     amount: bigint,
-    memo?: string
+    memo?: string,
   ): Promise<string> {
     try {
       // This is a placeholder

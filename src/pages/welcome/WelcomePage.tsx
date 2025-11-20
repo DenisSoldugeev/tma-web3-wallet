@@ -1,8 +1,9 @@
-import { useNavigate } from '@tanstack/react-router';
-import { useEffect, useState } from 'react';
-import { MainButton } from '@twa-dev/sdk/react';
 import { ActionCard } from '@components/wallet/ActionCard';
 import { WalletService } from '@services/wallet.service';
+import { useNavigate } from '@tanstack/react-router';
+import { MainButton } from '@twa-dev/sdk/react';
+import { useEffect, useState } from 'react';
+
 import styles from './WelcomePage.module.scss';
 
 type WalletAction = 'create' | 'import' | null;
@@ -29,7 +30,7 @@ export function WelcomePage() {
 
         <div className={styles['welcome-page__actions']}>
           <ActionCard
-            icon="🔑"
+            icon="key"
             title="Create New Wallet"
             description="Generate a new secure wallet with recovery phrase"
             gradient="primary"
@@ -38,7 +39,7 @@ export function WelcomePage() {
           />
 
           <ActionCard
-            icon="📥"
+            icon="import"
             title="Import Wallet"
             description="Restore your wallet using recovery phrase"
             gradient="secondary"
@@ -46,7 +47,6 @@ export function WelcomePage() {
             selected={selectedAction === 'import'}
           />
         </div>
-
         <p className={styles['welcome-page__footer']}>
           Your keys, your crypto. Always secure.
         </p>

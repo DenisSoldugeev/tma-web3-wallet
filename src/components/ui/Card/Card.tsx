@@ -1,6 +1,7 @@
-import type { ReactNode } from 'react';
-import styles from './Card.module.scss';
 import classNames from 'classnames';
+import type { ReactNode } from 'react';
+
+import styles from './Card.module.scss';
 
 interface CardProps {
   children: ReactNode;
@@ -25,7 +26,7 @@ export const Card = ({
           [styles.gradient]: gradient,
           [styles.hoverable]: hoverable,
         },
-        className
+        className,
       )}
       onClick={onClick}
     >

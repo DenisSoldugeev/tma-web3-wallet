@@ -36,7 +36,7 @@ export const decryptData = (encrypted: string, password: string): string => {
       throw new Error('Invalid password');
     }
     return data;
-  } catch (error) {
+  } catch  {
     throw new Error('Decryption failed');
   }
 };
