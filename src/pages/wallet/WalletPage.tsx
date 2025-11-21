@@ -71,24 +71,6 @@ export function WalletPage() {
                     </Card>
                 </div>
 
-                <div className={styles.actions}>
-                    <Card hoverable className={styles.actionCard}>
-                        <div className={styles.actionIcon}>📤</div>
-                        <div className={styles.actionContent}>
-                            <h3>Send</h3>
-                            <p>Send TON to address</p>
-                        </div>
-                    </Card>
-
-                    <Card hoverable className={styles.actionCard}>
-                        <div className={styles.actionIcon}>📥</div>
-                        <div className={styles.actionContent}>
-                            <h3>Receive</h3>
-                            <p>Show your address</p>
-                        </div>
-                    </Card>
-                </div>
-
                 <div className={styles.footer}>
                     <Button variant="ghost" size="sm" onClick={handleLogout}>
                         Logout

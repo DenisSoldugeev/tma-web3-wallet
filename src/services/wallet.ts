@@ -1,5 +1,5 @@
 import { mnemonicToPrivateKey } from '@ton/crypto';
-import { WalletContractV4 } from '@ton/ton';
+import { WalletContractV5R1 } from '@ton/ton';
 import { generateMnemonic, validateMnemonic, encryptData } from '@utils/crypto';
 
 import { StorageService } from './storage.service';
@@ -29,14 +29,14 @@ export class WalletService {
       // Generate keypair from mnemonic
       const keyPair = await mnemonicToPrivateKey(mnemonic);
 
-      // Create wallet contract
+      // Create wallet contract V5R1 (W5)
       const workchain = 0;
-      const walletContract = WalletContractV4.create({
+      const walletContract = WalletContractV5R1.create({
         workchain,
         publicKey: keyPair.publicKey,
       });
 
-      const address = walletContract.address.toString();
+      const address = walletContract.address.toString({ bounceable: false });
 
       // Encrypt the mnemonic for storage
       // In production, use proper encryption with user's password
