@@ -61,7 +61,7 @@
 
   &.secondary {
     background: $text-accent;
-    color: $white;
+    color: $button-text;
     box-shadow: $shadow-md;
 
     &:hover:not(:disabled) {
@@ -76,12 +76,12 @@
   }
 
   &.outline {
-    @include glass-effect($glass-blur, 0.05, 0.3);
+    background: $bg-secondary;
     color: $text-primary;
     border: 2px solid $button-bg;
 
     &:hover:not(:disabled) {
-      @include glass-effect($glass-blur, 0.1, 0.4);
+      background: $bg-section;
       transform: translateY(-2px);
       box-shadow: $shadow-md;
       border-color: $text-accent;
@@ -97,11 +97,11 @@
     color: $text-primary;
 
     &:hover:not(:disabled) {
-      @include glass-effect($glass-blur-subtle, 0.05, 0.1);
+      background: $bg-secondary;
     }
 
     &:active:not(:disabled) {
-      @include glass-effect($glass-blur-subtle, 0.1, 0.15);
+      background: $bg-section;
     }
   }
 
@@ -113,8 +113,8 @@
   .loader {
     width: 20px;
     height: 20px;
-    border: 2px solid rgba(255, 255, 255, 0.3);
-    border-top-color: $white;
+    border: 2px solid $text-tertiary;
+    border-top-color: $button-text;
     border-radius: 50%;
     animation: rotate 0.6s linear infinite;
   }

@@ -1,131 +1,226 @@
-.import {
+@use "@styles/variables";
+@use "@styles/mixins";
+
+.import-page {
   min-height: 100vh;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: center;
-  padding: $spacing-lg;
+  justify-content: space-between;
+  padding: variables.$spacing-lg 0 80px;
+
+  @include mixins.responsive(md) {
+    padding: variables.$spacing-2xl 0 80px;
+  }
 }
 
-.content {
+.import-page__content {
   max-width: 600px;
   width: 100%;
-}
-
-.form {
   display: flex;
   flex-direction: column;
-  gap: $spacing-xl;
-  animation: fadeIn 0.2s ease-out;
-}
+  gap: variables.$spacing-lg;
+  animation: fadeIn 0.3s ease-out;
+  padding: 0 variables.$spacing-lg;
+  flex: 1;
+  justify-content: center;
 
-.title {
-  color: $text-primary;
-  font-size: $font-size-3xl;
-  font-weight: $font-weight-bold;
-  text-align: center;
-
-  @include responsive(md) {
-    font-size: $font-size-4xl;
+  @include mixins.responsive(md) {
+    gap: variables.$spacing-xl;
   }
 }
 
-.description {
-  font-size: $font-size-base;
-  color: $text-secondary;
+.import-page__header {
   text-align: center;
-  line-height: 1.6;
 }
 
-.inputCard {
-  padding: $spacing-xl;
+.import-page__title {
+  color: variables.$text-primary;
+  font-size: variables.$font-size-3xl;
+  font-weight: variables.$font-weight-bold;
+  margin-bottom: variables.$spacing-sm;
+
+  @include mixins.responsive(md) {
+    font-size: variables.$font-size-4xl;
+    margin-bottom: variables.$spacing-md;
+  }
 }
 
-.label {
-  display: block;
-  font-size: $font-size-sm;
-  font-weight: $font-weight-medium;
-  color: $text-secondary;
-  margin-bottom: $spacing-md;
+.import-page__subtitle {
+  font-size: variables.$font-size-base;
+  color: variables.$text-secondary;
+  max-width: 450px;
+  margin: 0 auto;
+
+  @include mixins.responsive(md) {
+    font-size: variables.$font-size-lg;
+  }
 }
 
-.textarea {
-  width: 100%;
-  @include glass-effect($glass-blur-subtle, 0.05, 0.2);
-  padding: $spacing-md;
-  font-size: $font-size-base;
-  font-family: $font-family-mono;
-  color: $text-primary;
-  border-radius: $radius-md;
-  border: 1px solid transparent;
+.import-page__card {
+  // Card component already provides background and border-radius
+  // Override padding for better spacing
+  @include mixins.responsive(md) {
+    padding: variables.$spacing-xl;
+  }
+}
+
+.import-page__card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: variables.$spacing-md;
+}
+
+.import-page__label {
+  font-size: variables.$font-size-sm;
+  font-weight: variables.$font-weight-medium;
+  color: variables.$text-secondary;
+}
+
+.import-page__progress {
+  font-size: variables.$font-size-sm;
+  font-weight: variables.$font-weight-medium;
+  color: variables.$text-accent;
+}
+
+.import-page__grid {
+  display: grid;
+  grid-template-columns: repeat(1, 1fr);
+  gap: variables.$spacing-sm;
+
+  @include mixins.responsive(md) {
+    grid-template-columns: repeat(2, 1fr);
+    gap: variables.$spacing-md;
+  }
+}
+
+.import-page__input-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: variables.$spacing-sm;
+  background: variables.$bg-section;
+  padding: variables.$spacing-sm variables.$spacing-md;
+  border-radius: variables.$radius-lg;
+  border: 1px solid variables.$section-separator;
+  transition: all variables.$transition-base variables.$ease-out-expo;
+
+  &:focus-within {
+    background: variables.$bg-primary;
+    border-color: variables.$link-color;
+  }
+}
+
+.import-page__input-number {
+  font-size: variables.$font-size-xs;
+  font-weight: variables.$font-weight-medium;
+  color: variables.$text-tertiary;
+  min-width: 18px;
+  text-align: right;
+}
+
+.import-page__input {
+  flex: 1;
+  background: transparent;
+  border: none;
   outline: none;
-  resize: vertical;
-  transition: all $transition-base $ease-out-expo;
-  line-height: 1.6;
+  font-size: variables.$font-size-sm;
+  font-family: variables.$font-family-mono;
+  color: variables.$text-primary;
+  padding: 0;
 
   &::placeholder {
-    color: $text-tertiary;
-  }
-
-  &:focus {
-    @include glass-effect($glass-blur, 0.1, 0.3);
-    border-color: rgba(240, 147, 251, 0.5);
-    box-shadow: 0 0 0 3px rgba(240, 147, 251, 0.1);
+    color: variables.$text-tertiary;
+    opacity: 0.5;
   }
 }
 
-.error {
-  margin-top: $spacing-sm;
-  font-size: $font-size-sm;
-  color: #ff6b6b;
+.import-page__error {
+  margin-top: variables.$spacing-md;
+  padding: variables.$spacing-md;
+  background: variables.$bg-section;
+  border: 1px solid variables.$text-destructive;
+  border-radius: variables.$radius-lg;
+  font-size: variables.$font-size-sm;
+  color: variables.$text-destructive;
+  text-align: center;
 }
 
-.infoCard {
-  background: rgba(79, 172, 254, 0.1);
-  border: 1px solid rgba(79, 172, 254, 0.3);
+.import-page__info-card {
+  // Card component already provides background and border
+}
+
+.import-page__info-header {
+  display: flex;
+  align-items: center;
+  gap: variables.$spacing-sm;
+  color: variables.$text-primary;
+  margin-bottom: variables.$spacing-md;
 
   h3 {
-    color: $text-primary;
-    margin-bottom: $spacing-md;
-    font-size: $font-size-lg;
+    font-size: variables.$font-size-base;
+    font-weight: variables.$font-weight-semibold;
+    margin: 0;
+  }
+
+  svg {
+    color: variables.$text-secondary;
   }
 }
 
-.tipsList {
+.import-page__tips-list {
   list-style: none;
   padding: 0;
   margin: 0;
   display: flex;
   flex-direction: column;
-  gap: $spacing-sm;
+  gap: variables.$spacing-sm;
 
   li {
-    padding-left: $spacing-lg;
+    padding-left: variables.$spacing-lg;
     position: relative;
-    color: $text-secondary;
-    font-size: $font-size-sm;
+    color: variables.$text-secondary;
+    font-size: variables.$font-size-sm;
+    line-height: 1.5;
 
     &::before {
       content: '•';
       position: absolute;
-      left: $spacing-sm;
-      color: rgba(79, 172, 254, 0.7);
+      left: variables.$spacing-sm;
+      color: variables.$text-tertiary;
       font-weight: bold;
     }
   }
 }
 
-.actions {
-  display: flex;
-  flex-direction: column;
-  gap: $spacing-md;
-  margin-top: $spacing-lg;
+.import-page__footer {
+  width: 100%;
+  max-width: 600px;
+  text-align: center;
+  padding: 0 variables.$spacing-lg;
+}
+
+.import-page__footer-text {
+  font-size: variables.$font-size-sm;
+  color: variables.$text-secondary;
+  font-weight: variables.$font-weight-medium;
+  margin-bottom: variables.$spacing-xs;
+}
+
+.import-page__footer-subtitle {
+  font-size: variables.$font-size-xs;
+  color: variables.$text-tertiary;
+  opacity: 0.7;
 }
 
 @keyframes fadeIn {
   from {
     opacity: 0;
+    transform: translateY(10px);
   }
   to {
     opacity: 1;
+    transform: translateY(0);
   }
 }

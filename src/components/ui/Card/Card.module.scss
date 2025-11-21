@@ -1,3 +1,21 @@
+@use "@styles/variables";
+
 .card {
-  @include glass-effect($glass-blur, 0.1, 0.2);
+  background: variables.$bg-secondary;
+  border-radius: variables.$radius-lg;
+  padding: variables.$spacing-lg;
+  border: 1px solid variables.$section-separator;
+}
+
+.hoverable {
+  cursor: pointer;
+  transition: all variables.$transition-base;
+
+  &:hover {
+    background: variables.$bg-section;
+  }
+
+  &:active {
+    transform: scale(0.98);
+  }
 }
