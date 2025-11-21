@@ -34,7 +34,6 @@ A demonstration project of a TON wallet as a Telegram Mini App. Created as an ex
 - **WalletContractV5R1** - latest wallet contract version
 
 ### Telegram
-- **@tma.js/sdk-react** - SDK for Telegram Mini Apps
 - WebApp initialization and Telegram UI integration
 
 ## Quick Start
@@ -117,7 +116,7 @@ src/
 
 Convenient aliases configured for imports:
 
-```typescript
+```
 @/             → src/
 @components/   → src/components/
 @services/     → src/services/
@@ -168,7 +167,7 @@ Then create a bot via [@BotFather](https://t.me/BotFather) and set the ngrok URL
 
 Uses Telegram CSS variables to integrate with user's theme:
 
-```scss
+```
 background: var(--tg-theme-bg-color);
 color: var(--tg-theme-text-color);
 ```
