@@ -1,4 +1,4 @@
-import classNames from 'classnames';
+import clsx from 'clsx';
 import type { ReactNode, ButtonHTMLAttributes } from 'react';
 
 import styles from './Button.module.scss';
@@ -26,7 +26,7 @@ export const Button = ({
 
   return (
     <button
-      className={classNames(
+      className={clsx(
         styles.button,
         styles[variant],
         styles[size],

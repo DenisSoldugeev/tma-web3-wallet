@@ -1,4 +1,4 @@
-import classNames from 'classnames';
+import clsx from 'clsx';
 import { forwardRef } from 'react';
 import type { InputHTMLAttributes } from 'react';
 
@@ -17,7 +17,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         {label && <label className={styles.label}>{label}</label>}
         <input
           ref={ref}
-          className={classNames(
+          className={clsx(
             styles.input,
             {
               [styles.error]: error,

@@ -1,4 +1,4 @@
-import classNames from 'classnames';
+import clsx from 'clsx';
 import type { ReactNode } from 'react';
 
 import styles from './Card.module.scss';
@@ -20,7 +20,7 @@ export const Card = ({
 }: CardProps) => {
   return (
     <div
-      className={classNames(
+      className={clsx(
         styles.card,
         {
           [styles.gradient]: gradient,

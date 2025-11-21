@@ -1,4 +1,4 @@
-import classNames from 'classnames';
+import clsx from 'clsx';
 import type { ReactNode } from 'react';
 
 import styles from './ActionCard.module.scss';
@@ -29,7 +29,7 @@ export const ActionCard = ({
 
     return (
         <div
-            className={classNames(styles['action-card'], {
+            className={clsx(styles['action-card'], {
                 [styles[`action-card--${gradient}`]]: gradient,
                 [styles['action-card--selected']]: selected,
             })}

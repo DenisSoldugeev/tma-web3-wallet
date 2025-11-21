@@ -1,4 +1,4 @@
-import classNames from 'classnames';
+import clsx from 'clsx';
 import type { ReactNode } from 'react';
 
 import styles from './GlassContainer.module.scss';
@@ -18,7 +18,7 @@ export const GlassContainer = ({
 }: GlassContainerProps) => {
   return (
     <div
-      className={classNames(
+      className={clsx(
         styles.container,
         styles[variant],
         className,
