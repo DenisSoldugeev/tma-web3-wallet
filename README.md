@@ -26,7 +26,6 @@ A demonstration project of a TON wallet as a Telegram Mini App. Created as an ex
 ### Routing & State
 - **Tanstack Router** - file-based routing with type-safety
 - **Tanstack Query** - server state management and caching
-- **Framer Motion** - animations and transitions
 
 ### TON Blockchain
 - **@ton/ton** - TON blockchain interaction
