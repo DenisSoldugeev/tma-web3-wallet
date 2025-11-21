@@ -23,7 +23,6 @@
   animation: fadeIn 0.3s ease-out;
   padding: 0 variables.$spacing-lg;
   flex: 1;
-  justify-content: center;
 
   @include mixins.responsive(md) {
     gap: variables.$spacing-xl;
@@ -146,7 +145,7 @@
 }
 
 .import-page__info-card {
-  // Card component already provides background and border
+  // GlassContainer provides background and border
 }
 
 .import-page__info-header {
@@ -154,7 +153,9 @@
   align-items: center;
   gap: variables.$spacing-sm;
   color: variables.$text-primary;
+  padding-bottom: variables.$spacing-md;
   margin-bottom: variables.$spacing-md;
+  border-bottom: 1px solid rgba(0, 122, 255, 0.2);
 
   h3 {
     font-size: variables.$font-size-base;
@@ -163,7 +164,7 @@
   }
 
   svg {
-    color: variables.$text-secondary;
+    color: variables.$button-bg;
   }
 }
 
@@ -197,6 +198,7 @@
   max-width: 600px;
   text-align: center;
   padding: 0 variables.$spacing-lg;
+  margin-top: variables.$spacing-md;
 }
 
 .import-page__footer-text {

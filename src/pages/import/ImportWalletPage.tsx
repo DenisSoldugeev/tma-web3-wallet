@@ -1,4 +1,4 @@
-import { Card } from '@components/ui/Card';
+import { GlassContainer } from '@components/ui/GlassContainer';
 import { useTransitionNavigate } from '@hooks/useTransitionNavigate';
 import { WalletService } from '@services/wallet.ts';
 import { BackButton, MainButton } from '@twa-dev/sdk/react';
@@ -79,7 +79,7 @@ export function ImportWalletPage() {
           </p>
         </div>
 
-        <div className={styles['import-page__card']}>
+        <GlassContainer variant="strong" className={styles['import-page__card']}>
           <div className={styles['import-page__card-header']}>
             <span className={styles['import-page__label']}>Recovery Phrase</span>
             <span className={styles['import-page__progress']}>
@@ -109,9 +109,9 @@ export function ImportWalletPage() {
               {error}
             </div>
           )}
-        </div>
+        </GlassContainer>
 
-        <Card className={styles['import-page__info-card']}>
+        <GlassContainer variant="strong" className={styles['import-page__info-card']}>
           <div className={styles['import-page__info-header']}>
             <Shield size={20} />
             <h3>Security Tips</h3>
@@ -123,7 +123,7 @@ export function ImportWalletPage() {
             <li>Words must be in the correct order</li>
             <li>You can paste all 24 words at once</li>
           </ul>
-        </Card>
+        </GlassContainer>
       </div>
 
       <div className={styles['import-page__footer']}>

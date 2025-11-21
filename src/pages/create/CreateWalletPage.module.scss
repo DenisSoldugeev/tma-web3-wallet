@@ -1,9 +1,11 @@
+@use "@styles/variables";
+@use "@styles/mixins";
+
 .create-wallet-page {
   min-height: 100vh;
   display: flex;
-  align-items: center;
   justify-content: center;
-  padding: $spacing-lg;
+  padding: variables.$spacing-lg;
 
   &__content {
     max-width: 600px;
@@ -13,41 +15,38 @@
   &__step {
     display: flex;
     flex-direction: column;
-    gap: $spacing-xl;
+    gap: variables.$spacing-xl;
     animation: fadeIn 0.2s ease-out;
   }
 
   &__title {
-    color: $text-primary;
-    font-size: $font-size-3xl;
-    font-weight: $font-weight-bold;
+    color: variables.$text-primary;
+    font-size: variables.$font-size-3xl;
+    font-weight: variables.$font-weight-bold;
     text-align: center;
 
-    @include responsive(md) {
-      font-size: $font-size-4xl;
+    @include mixins.responsive(md) {
+      font-size: variables.$font-size-4xl;
     }
   }
 
   &__description {
-    font-size: $font-size-base;
-    color: $text-secondary;
+    font-size: variables.$font-size-base;
+    color: variables.$text-secondary;
     text-align: center;
     line-height: 1.6;
   }
 }
 
 .warning-card {
-  background: $bg-secondary;
-  border: 1px solid $section-separator;
-  border-radius: $radius-lg;
   overflow: hidden;
 
   &__header {
     display: flex;
     align-items: center;
-    gap: $spacing-sm;
-    padding: $spacing-md $spacing-lg;
-    background: rgba(255, 159, 10, 0.15);
+    gap: variables.$spacing-sm;
+    padding: variables.$spacing-md 0;
+    margin-bottom: variables.$spacing-md;
     border-bottom: 1px solid rgba(255, 159, 10, 0.2);
 
     svg {
@@ -57,33 +56,33 @@
   }
 
   &__title {
-    color: $text-primary;
-    font-size: $font-size-base;
-    font-weight: $font-weight-semibold;
+    color: variables.$text-primary;
+    font-size: variables.$font-size-base;
+    font-weight: variables.$font-weight-semibold;
     margin: 0;
   }
 
   &__list {
     list-style: none;
-    padding: $spacing-md $spacing-lg $spacing-lg;
+    padding: 0;
     margin: 0;
     display: flex;
     flex-direction: column;
-    gap: $spacing-sm;
+    gap: variables.$spacing-sm;
   }
 
   &__item {
-    padding-left: $spacing-lg;
+    padding-left: variables.$spacing-lg;
     position: relative;
-    color: $text-secondary;
-    font-size: $font-size-sm;
+    color: variables.$text-secondary;
+    font-size: variables.$font-size-sm;
     line-height: 1.5;
 
     &::before {
       content: '•';
       position: absolute;
-      left: $spacing-sm;
-      color: $text-tertiary;
+      left: variables.$spacing-sm;
+      color: variables.$text-tertiary;
       font-weight: bold;
     }
   }
@@ -93,9 +92,9 @@
   &__grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: $spacing-sm;
+    gap: variables.$spacing-sm;
 
-    @include responsive(md) {
+    @include mixins.responsive(md) {
       grid-template-columns: repeat(3, 1fr);
     }
   }
@@ -103,12 +102,12 @@
   &__word {
     display: flex;
     align-items: center;
-    gap: $spacing-sm;
-    padding: $spacing-sm $spacing-md;
-    background: $bg-section;
-    border: 1px solid $section-separator;
-    border-radius: $radius-md;
-    transition: all $transition-base;
+    gap: variables.$spacing-sm;
+    padding: variables.$spacing-sm variables.$spacing-md;
+    background: variables.$bg-section;
+    border: 1px solid variables.$section-separator;
+    border-radius: variables.$radius-md;
+    transition: all variables.$transition-base;
 
     &:active {
       background: rgba(255, 255, 255, 0.05);
@@ -117,17 +116,17 @@
   }
 
   &__word-number {
-    font-size: $font-size-xs;
-    color: $text-tertiary;
-    font-weight: $font-weight-medium;
+    font-size: variables.$font-size-xs;
+    color: variables.$text-tertiary;
+    font-weight: variables.$font-weight-medium;
     min-width: 20px;
   }
 
   &__word-text {
-    font-size: $font-size-sm;
-    color: $text-primary;
-    font-weight: $font-weight-medium;
-    font-family: $font-family-mono;
+    font-size: variables.$font-size-sm;
+    color: variables.$text-primary;
+    font-weight: variables.$font-weight-medium;
+    font-family: variables.$font-family-mono;
   }
 }
 

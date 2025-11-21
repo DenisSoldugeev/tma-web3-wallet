@@ -1,3 +1,4 @@
+import { GlassContainer } from '@components/ui/GlassContainer';
 import { useTransitionNavigate } from '@hooks/useTransitionNavigate';
 import { WalletService } from '@services/wallet.ts';
 import { BackButton, MainButton } from '@twa-dev/sdk/react';
@@ -44,7 +45,7 @@ export function CreateWalletPage() {
                             You're about to create a new TON wallet. We'll generate a secure recovery phrase for you.
                         </p>
 
-                        <div className={styles['warning-card']}>
+                        <GlassContainer variant="strong" className={styles['warning-card']}>
                             <div className={styles['warning-card__header']}>
                                 <AlertTriangle size={20} strokeWidth={2} />
                                 <h3 className={styles['warning-card__title']}>Important</h3>
@@ -55,7 +56,7 @@ export function CreateWalletPage() {
                                 <li className={styles['warning-card__item']}>Store it in a secure location</li>
                                 <li className={styles['warning-card__item']}>You'll need it to recover your wallet</li>
                             </ul>
-                        </div>
+                        </GlassContainer>
                     </div>
                 )}
 
@@ -66,7 +67,7 @@ export function CreateWalletPage() {
                             Write down these 24 words in order and keep them safe.
                         </p>
 
-                        <div className={styles['mnemonic-card']}>
+                        <GlassContainer variant="strong" className={styles['mnemonic-card']}>
                             <div className={styles['mnemonic-card__grid']}>
                                 {mnemonic.map((word, index) => (
                                     <div key={index} className={styles['mnemonic-card__word']}>
@@ -75,7 +76,7 @@ export function CreateWalletPage() {
                                     </div>
                                 ))}
                             </div>
-                        </div>
+                        </GlassContainer>
                     </div>
                 )}
             </div>
