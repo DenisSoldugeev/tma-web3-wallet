@@ -29,8 +29,8 @@ dist-ssr
 *.sw?
 
 # more files
-!README.md
 *.md
+!README.md
 
 # Tanstack Router generated files
 routeTree.gen.ts
