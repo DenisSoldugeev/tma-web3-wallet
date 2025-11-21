@@ -1,6 +1,6 @@
 import { Card } from '@components/ui/Card';
+import { useTransitionNavigate } from '@hooks/useTransitionNavigate';
 import { WalletService } from '@services/wallet.ts';
-import { useNavigate } from '@tanstack/react-router';
 import { BackButton, MainButton } from '@twa-dev/sdk/react';
 import { Shield } from 'lucide-react';
 import { useState } from 'react';
@@ -8,7 +8,7 @@ import { useState } from 'react';
 import styles from './ImportWalletPage.module.scss';
 
 export function ImportWalletPage() {
-  const navigate = useNavigate();
+  const navigate = useTransitionNavigate();
   const [words, setWords] = useState<string[]>(Array(24).fill(''));
   const [error, setError] = useState('');
   const [isImporting, setIsImporting] = useState(false);
@@ -48,7 +48,7 @@ export function ImportWalletPage() {
     try {
       const mnemonic = words.join(' ');
       await WalletService.importWallet({ mnemonic });
-      navigate({ to: '/wallet' });
+      navigate({ to: '/wallet' }, 'forward');
     } catch {
       setError('Invalid recovery phrase. Please check and try again.');
     } finally {
@@ -61,7 +61,7 @@ export function ImportWalletPage() {
 
   return (
     <div className={styles['import-page']}>
-      <BackButton onClick={() => navigate({ to: '/' })} />
+      <BackButton onClick={() => navigate({ to: '/' }, 'backward')} />
 
       {isComplete && (
         <MainButton

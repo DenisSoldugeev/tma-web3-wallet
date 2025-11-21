@@ -1,6 +1,6 @@
 import { ActionCard } from '@components/wallet/ActionCard';
+import { useTransitionNavigate } from '@hooks/useTransitionNavigate';
 import { WalletService } from '@services/wallet';
-import { useNavigate } from '@tanstack/react-router';
 import { MainButton } from '@twa-dev/sdk/react';
 import { KeyRound, Wallet } from 'lucide-react';
 import { useEffect, useState } from 'react';
@@ -10,12 +10,12 @@ import styles from './WelcomePage.module.scss';
 type WalletAction = 'create' | 'import' | null;
 
 export function WelcomePage() {
-    const navigate = useNavigate();
-    const [selectedAction, setSelectedAction] = useState<WalletAction>(null);
+    const navigate = useTransitionNavigate();
+    const [selectedAction, setSelectedAction] = useState<WalletAction>('create');
 
     useEffect(() => {
         if (WalletService.hasWallet()) {
-            navigate({ to: '/wallet' }).then();
+            navigate({ to: '/wallet' }, 'forward');
         }
     }, [navigate]);
 
@@ -58,13 +58,14 @@ export function WelcomePage() {
                 </p>
             </div>
             {selectedAction && <MainButton
+                hasShineEffect={true}
                 text={selectedAction === 'create' ? 'Create Wallet' : 'Import Wallet'}
                 disabled={!selectedAction}
                 onClick={() => {
                     if (selectedAction === 'create') {
-                        navigate({ to: '/create' }).then();
+                        navigate({ to: '/create' }, 'forward');
                     } else if (selectedAction === 'import') {
-                        navigate({ to: '/import' }).then();
+                        navigate({ to: '/import' }, 'forward');
                     }
                 }}
             />}

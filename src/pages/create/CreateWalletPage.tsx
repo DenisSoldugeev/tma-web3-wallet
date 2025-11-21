@@ -1,13 +1,13 @@
 import { Button } from '@components/ui/Button';
 import { Card } from '@components/ui/Card';
+import { useTransitionNavigate } from '@hooks/useTransitionNavigate';
 import { WalletService } from '@services/wallet.ts';
-import { useNavigate } from '@tanstack/react-router';
 import { useState } from 'react';
 
 import styles from './CreateWalletPage.module.scss';
 
 export function CreateWalletPage() {
-  const navigate = useNavigate();
+  const navigate = useTransitionNavigate();
   const [step, setStep] = useState<'intro' | 'mnemonic' | 'confirm'>('intro');
   const [mnemonic, setMnemonic] = useState<string[]>([]);
   const [isCreating, setIsCreating] = useState(false);
@@ -28,7 +28,7 @@ export function CreateWalletPage() {
   };
 
   const handleConfirm = () => {
-    navigate({ to: '/wallet' });
+    navigate({ to: '/wallet' }, 'forward');
   };
 
   return (
@@ -65,7 +65,7 @@ export function CreateWalletPage() {
                 variant="ghost"
                 size="lg"
                 fullWidth
-                onClick={() => navigate({ to: '/' })}
+                onClick={() => navigate({ to: '/' }, 'backward')}
               >
                 Back
               </Button>

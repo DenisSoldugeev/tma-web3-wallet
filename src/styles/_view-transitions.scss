@@ -1,0 +1,165 @@
+/**
+ * View Transitions API Styles
+ *
+ * Smooth page transitions using native browser View Transitions API
+ * Browser support: Chrome 111+, Safari 18+, Edge 111+
+ *
+ * @see https://developer.mozilla.org/en-US/docs/Web/API/View_Transitions_API
+ */
+
+@use 'variables';
+
+// ============================================================================
+// Configuration
+// ============================================================================
+
+$transition-duration: 250ms;
+$transition-timing: variables.$ease-out-expo;
+
+// Transition distance for slide animations
+$slide-distance: 30%;
+
+// ============================================================================
+// Root element - keeps background static during transitions
+// ============================================================================
+
+::view-transition {
+  pointer-events: none;
+}
+
+// Prevent root element from transitioning (keeps background stable)
+::view-transition-group(root) {
+  animation-duration: 0s;
+}
+
+// ============================================================================
+// Default Transition (Crossfade)
+// ============================================================================
+
+// Smooth crossfade as default transition for all pages
+::view-transition-old(page-content) {
+  animation: fade-out $transition-duration $transition-timing;
+}
+
+::view-transition-new(page-content) {
+  animation: fade-in $transition-duration $transition-timing;
+}
+
+// ============================================================================
+// Forward Navigation (e.g., / → /import)
+// ============================================================================
+
+// Current page slides out to the left
+[data-transition='forward']::view-transition-old(page-content) {
+  animation: slide-to-left $transition-duration $transition-timing;
+}
+
+// New page slides in from the right
+[data-transition='forward']::view-transition-new(page-content) {
+  animation: slide-from-right $transition-duration $transition-timing;
+}
+
+// ============================================================================
+// Backward Navigation (BackButton pressed)
+// ============================================================================
+
+// Current page slides out to the right
+[data-transition='backward']::view-transition-old(page-content) {
+  animation: slide-to-right $transition-duration $transition-timing;
+}
+
+// Previous page slides in from the left
+[data-transition='backward']::view-transition-new(page-content) {
+  animation: slide-from-left $transition-duration $transition-timing;
+}
+
+// ============================================================================
+// Keyframe Animations
+// ============================================================================
+
+// Fade animations
+@keyframes fade-out {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+// Forward navigation - slide left
+@keyframes slide-to-left {
+  from {
+    transform: translateX(0) scale(1);
+    opacity: 1;
+  }
+  to {
+    transform: translateX(-$slide-distance) scale(0.95);
+    opacity: 0;
+  }
+}
+
+@keyframes slide-from-right {
+  from {
+    transform: translateX($slide-distance) scale(1.05);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0) scale(1);
+    opacity: 1;
+  }
+}
+
+// Backward navigation - slide right
+@keyframes slide-to-right {
+  from {
+    transform: translateX(0) scale(1);
+    opacity: 1;
+  }
+  to {
+    transform: translateX($slide-distance) scale(1.05);
+    opacity: 0;
+  }
+}
+
+@keyframes slide-from-left {
+  from {
+    transform: translateX(-$slide-distance) scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0) scale(1);
+    opacity: 1;
+  }
+}
+
+// ============================================================================
+// Reduced Motion Support
+// ============================================================================
+
+// Respect user's preference for reduced motion
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+
+  // Simple fade for reduced motion users
+  ::view-transition-old(page-content) {
+    animation: fade-out 150ms ease !important;
+  }
+
+  ::view-transition-new(page-content) {
+    animation: fade-in 150ms ease !important;
+  }
+}

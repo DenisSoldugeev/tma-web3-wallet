@@ -1,11 +1,19 @@
 import { createRootRoute, Outlet } from '@tanstack/react-router';
 import { TanStackRouterDevtools } from '@tanstack/router-devtools';
 
+import './root.scss';
+
 export const Route = createRootRoute({
-  component: () => (
+  component: RootComponent,
+});
+
+function RootComponent() {
+  return (
     <>
-      <Outlet />
+      <div className="page-content">
+        <Outlet />
+      </div>
       {import.meta.env.DEV && <TanStackRouterDevtools />}
     </>
-  ),
-});
+  );
+}

@@ -1,22 +1,22 @@
 import { Button } from '@components/ui/Button';
 import { Card } from '@components/ui/Card';
+import { useTransitionNavigate } from '@hooks/useTransitionNavigate';
 import { TonService } from '@services/ton.ts';
 import { WalletService } from '@services/wallet.ts';
 import { useQuery } from '@tanstack/react-query';
-import { useNavigate } from '@tanstack/react-router';
 import { truncateAddress } from '@utils/format';
 import { useEffect, useState } from 'react';
 
 import styles from './WalletPage.module.scss';
 
 export function WalletPage() {
-    const navigate = useNavigate();
+    const navigate = useTransitionNavigate();
     const [wallet, setWallet] = useState(WalletService.getWallet());
     const [copiedAddress, setCopiedAddress] = useState(false);
 
     useEffect(() => {
         if (!wallet) {
-            navigate({ to: '/' }).then();
+            navigate({ to: '/' }, 'backward');
         }
     }, [wallet, navigate]);
 
@@ -39,7 +39,7 @@ export function WalletPage() {
     const handleLogout = () => {
         WalletService.deleteWallet();
         setWallet(null);
-        navigate({ to: '/' });
+        navigate({ to: '/' }, 'backward');
     };
 
     if (!wallet) return null;
