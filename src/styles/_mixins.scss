@@ -1,6 +1,7 @@
 @use 'variables' as *;
 
-// Glassmorphism effect
+// Glassmorphism effect - adaptive to any background
+// Uses white overlay by default (works well on dark backgrounds)
 @mixin glass-effect($blur: $glass-blur, $opacity: 0.1, $border-opacity: 0.2) {
   background: rgba(255, 255, 255, $opacity);
   backdrop-filter: blur($blur);
@@ -8,12 +9,25 @@
   border: $border-width-thin solid rgba(255, 255, 255, $border-opacity);
 }
 
-// Dark glassmorphism
+// Dark glassmorphism - uses dark overlay (works well on light backgrounds)
 @mixin glass-dark($blur: $glass-blur, $opacity: 0.2) {
   background: rgba(0, 0, 0, $opacity);
   backdrop-filter: blur($blur);
   -webkit-backdrop-filter: blur($blur);
   border: $border-width-thin solid $glass-dark-border;
+}
+
+// Adaptive glassmorphism - automatically adapts based on Telegram theme
+// Uses light overlay for dark themes, dark overlay for light themes
+@mixin glass-adaptive($blur: $glass-blur, $opacity: 0.1, $border-opacity: 0.2) {
+  // Default: light glass for dark backgrounds
+  background: rgba(255, 255, 255, $opacity);
+  backdrop-filter: blur($blur);
+  -webkit-backdrop-filter: blur($blur);
+  border: $border-width-thin solid rgba(255, 255, 255, $border-opacity);
+
+  // Note: Telegram themes are typically dark, but this can be extended
+  // if we detect light themes in the future
 }
 
 // Gradient border effect

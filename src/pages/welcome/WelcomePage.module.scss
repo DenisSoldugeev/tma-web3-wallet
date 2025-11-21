@@ -27,7 +27,7 @@
 }
 
 .welcome-page__title {
-  @include mixins.gradient-text(variables.$secondary-gradient);
+  color: variables.$text-primary;
   font-size: variables.$font-size-4xl;
   font-weight: variables.$font-weight-bold;
   margin-bottom: variables.$spacing-md;

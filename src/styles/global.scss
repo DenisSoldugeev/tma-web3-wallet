@@ -3,10 +3,6 @@
 @use 'reset';
 @use 'telegram-theme';
 
-:root {
-  --tg-theme-button-color: red !important;
-}
-
 body {
   margin: 0;
   font-family: variables.$font-family-base;
@@ -16,7 +12,7 @@ body {
   color: variables.$text-primary;
   min-height: 100vh;
   overflow-x: hidden;
-  background: black;
+  background: variables.$bg-primary;
   // Performance optimizations for mobile
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -191,8 +187,6 @@ a {
 
 // Telegram WebApp specific
 .tg-viewport {
-  height: 100vh;
-  height: var(--tg-viewport-height, 100vh);
   height: var(--tg-viewport-stable-height, 100vh);
 }
 

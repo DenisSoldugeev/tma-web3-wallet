@@ -1,14 +1,16 @@
+// Telegram Mini App Theme Integration
+// These CSS variables are automatically set by Telegram based on user's theme
+// See: https://core.telegram.org/bots/webapps#themeparams
 
-:root {
-  --tg-theme-button-color: red;
+// Apply theme to body
+body {
+  background: var(--tg-theme-bg-color, #000000);
+  color: var(--tg-theme-text-color, rgba(255, 255, 255, 0.95));
 }
 
-body.tg-theme-applied {
-  background: var(--tg-theme-bg-color);
-  color: var(--tg-theme-text-color);
-}
+// Utility classes for Telegram theme colors
 
-// Utility classes for Telegram theme
+// Background utilities
 .tg-bg {
   background: var(--tg-theme-bg-color);
 }
@@ -17,6 +19,19 @@ body.tg-theme-applied {
   background: var(--tg-theme-secondary-bg-color);
 }
 
+.tg-section-bg {
+  background: var(--tg-theme-section-bg-color);
+}
+
+.tg-header-bg {
+  background: var(--tg-theme-header-bg-color);
+}
+
+.tg-bottom-bar-bg {
+  background: var(--tg-theme-bottom-bar-bg-color);
+}
+
+// Text color utilities
 .tg-text {
   color: var(--tg-theme-text-color);
 }
@@ -25,11 +40,44 @@ body.tg-theme-applied {
   color: var(--tg-theme-hint-color);
 }
 
-.tg-link {
-  color: var(--tg-theme-link-color);
+.tg-subtitle-text {
+  color: var(--tg-theme-subtitle-text-color);
 }
 
-.tg-button-color {
+.tg-accent-text {
+  color: var(--tg-theme-accent-text-color);
+}
+
+.tg-section-header-text {
+  color: var(--tg-theme-section-header-text-color);
+}
+
+.tg-destructive-text {
+  color: var(--tg-theme-destructive-text-color);
+}
+
+// Link utility
+.tg-link {
+  color: var(--tg-theme-link-color);
+  text-decoration: none;
+
+  &:hover {
+    opacity: 0.8;
+  }
+}
+
+// Button utility
+.tg-button {
   background: var(--tg-theme-button-color);
   color: var(--tg-theme-button-text-color);
+  border: none;
+
+  &:hover {
+    opacity: 0.9;
+  }
+}
+
+// Section separator
+.tg-section-separator {
+  border-color: var(--tg-theme-section-separator-color);
 }

@@ -21,15 +21,15 @@
   min-height: 100px;
 
   &--primary::before {
-    background: variables.$primary-gradient;
+    background: variables.$button-bg;
   }
 
   &--secondary::before {
-    background: variables.$secondary-gradient;
+    background: variables.$text-accent;
   }
 
   &--accent::before {
-    background: variables.$accent-gradient;
+    background: variables.$link-color;
   }
 
   &:hover,
@@ -91,15 +91,15 @@
   transition: transform variables.$transition-base variables.$ease-out-expo;
 
   .action-card--primary & {
-    background: variables.$primary-gradient;
+    background: variables.$button-bg;
   }
 
   .action-card--secondary & {
-    background: variables.$secondary-gradient;
+    background: variables.$text-accent;
   }
 
   .action-card--accent & {
-    background: variables.$accent-gradient;
+    background: variables.$link-color;
   }
 }
 

@@ -19,7 +19,7 @@
 }
 
 .title {
-  @include gradient-text($primary-gradient);
+  color: $text-primary;
   font-size: $font-size-3xl;
   font-weight: $font-weight-bold;
   text-align: center;

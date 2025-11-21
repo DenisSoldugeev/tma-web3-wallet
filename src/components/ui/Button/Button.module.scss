@@ -44,26 +44,14 @@
 
   // Variants
   &.primary {
-    background: $primary-gradient;
-    color: $white;
+    background: $button-bg;
+    color: $button-text;
     box-shadow: $shadow-md;
 
-    &::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
-      opacity: 0;
-      transition: opacity $transition-base;
-    }
-
     &:hover:not(:disabled) {
-      @include hover-lift(1.02, $shadow-lg);
-      box-shadow: $shadow-lg, $glow-primary;
-
-      &::before {
-        opacity: 1;
-      }
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: $shadow-lg;
+      opacity: 0.9;
     }
 
     &:active:not(:disabled) {
@@ -72,26 +60,14 @@
   }
 
   &.secondary {
-    background: $secondary-gradient;
+    background: $text-accent;
     color: $white;
     box-shadow: $shadow-md;
 
-    &::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, #f5576c 0%, #f093fb 100%);
-      opacity: 0;
-      transition: opacity $transition-base;
-    }
-
     &:hover:not(:disabled) {
-      @include hover-lift(1.02, $shadow-lg);
-      box-shadow: $shadow-lg, $glow-secondary;
-
-      &::before {
-        opacity: 1;
-      }
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: $shadow-lg;
+      opacity: 0.9;
     }
 
     &:active:not(:disabled) {
@@ -102,30 +78,13 @@
   &.outline {
     @include glass-effect($glass-blur, 0.05, 0.3);
     color: $text-primary;
-    position: relative;
-
-    &::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      border-radius: inherit;
-      padding: 2px;
-      background: $primary-gradient;
-      -webkit-mask:
-        linear-gradient(#fff 0 0) content-box,
-        linear-gradient(#fff 0 0);
-      mask:
-        linear-gradient(#fff 0 0) content-box,
-        linear-gradient(#fff 0 0);
-      -webkit-mask-composite: xor;
-      mask-composite: exclude;
-      pointer-events: none;
-    }
+    border: 2px solid $button-bg;
 
     &:hover:not(:disabled) {
       @include glass-effect($glass-blur, 0.1, 0.4);
       transform: translateY(-2px);
       box-shadow: $shadow-md;
+      border-color: $text-accent;
     }
 
     &:active:not(:disabled) {
