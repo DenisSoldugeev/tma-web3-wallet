@@ -57,14 +57,6 @@
   }
 }
 
-.import-page__card {
-  // Card component already provides background and border-radius
-  // Override padding for better spacing
-  @include mixins.responsive(md) {
-    padding: variables.$spacing-xl;
-  }
-}
-
 .import-page__card-header {
   display: flex;
   justify-content: space-between;
@@ -86,11 +78,12 @@
 
 .import-page__grid {
   display: grid;
-  grid-template-columns: repeat(1, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: variables.$spacing-sm;
+  width: 100%;
 
   @include mixins.responsive(md) {
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: variables.$spacing-md;
   }
 }
@@ -102,13 +95,15 @@
   gap: variables.$spacing-sm;
   background: variables.$bg-section;
   padding: variables.$spacing-sm variables.$spacing-md;
-  border-radius: variables.$radius-lg;
+  border-radius: variables.$radius-md;
   border: 1px solid variables.$section-separator;
-  transition: all variables.$transition-base variables.$ease-out-expo;
+  transition: all variables.$transition-base;
+  box-sizing: border-box;
+  min-width: 0;
 
   &:focus-within {
-    background: variables.$bg-primary;
-    border-color: variables.$link-color;
+    background: rgba(255, 255, 255, 0.05);
+    border-color: variables.$button-bg;
   }
 }
 
@@ -118,10 +113,12 @@
   color: variables.$text-tertiary;
   min-width: 18px;
   text-align: right;
+  flex-shrink: 0;
 }
 
 .import-page__input {
   flex: 1;
+  min-width: 0;
   background: transparent;
   border: none;
   outline: none;
@@ -129,6 +126,7 @@
   font-family: variables.$font-family-mono;
   color: variables.$text-primary;
   padding: 0;
+  width: 100%;
 
   &::placeholder {
     color: variables.$text-tertiary;

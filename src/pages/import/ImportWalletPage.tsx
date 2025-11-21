@@ -79,7 +79,7 @@ export function ImportWalletPage() {
           </p>
         </div>
 
-        <Card gradient className={styles['import-page__card']}>
+        <div className={styles['import-page__card']}>
           <div className={styles['import-page__card-header']}>
             <span className={styles['import-page__label']}>Recovery Phrase</span>
             <span className={styles['import-page__progress']}>
@@ -109,7 +109,7 @@ export function ImportWalletPage() {
               {error}
             </div>
           )}
-        </Card>
+        </div>
 
         <Card className={styles['import-page__info-card']}>
           <div className={styles['import-page__info-header']}>
