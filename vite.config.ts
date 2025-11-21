@@ -7,6 +7,7 @@ import path from 'path'
 
 // https://vite.dev/config/
 export default defineConfig({
+    base: '/tma-web3-wallet/',
     plugins: [
         TanStackRouterVite(),
         react(),
