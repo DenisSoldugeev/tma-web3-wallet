@@ -1,17 +1,19 @@
+@use '@/styles/variables';
+
 .button {
   position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: $spacing-sm;
-  font-weight: $font-weight-semibold;
-  border-radius: $radius-xl;
+  gap: variables.$spacing-sm;
+  font-weight: variables.$font-weight-semibold;
+  border-radius: variables.$radius-xl;
   border: none;
   cursor: pointer;
-  transition: all $transition-base $ease-out-expo;
+  transition: all variables.$transition-base variables.$ease-out-expo;
   overflow: hidden;
   outline: none;
-  font-family: $font-family-base;
+  font-family: variables.$font-family-base;
 
   &:disabled {
     opacity: 0.5;
@@ -21,20 +23,20 @@
 
   // Sizes
   &.sm {
-    padding: $spacing-sm $spacing-md;
-    font-size: $font-size-sm;
+    padding: variables.$spacing-sm variables.$spacing-md;
+    font-size: variables.$font-size-sm;
     min-height: 36px;
   }
 
   &.md {
-    padding: $spacing-md $spacing-lg;
-    font-size: $font-size-base;
+    padding: variables.$spacing-md variables.$spacing-lg;
+    font-size: variables.$font-size-base;
     min-height: 44px;
   }
 
   &.lg {
-    padding: $spacing-lg $spacing-xl;
-    font-size: $font-size-lg;
+    padding: variables.$spacing-lg variables.$spacing-xl;
+    font-size: variables.$font-size-lg;
     min-height: 52px;
   }
 
@@ -44,13 +46,13 @@
 
   // Variants
   &.primary {
-    background: $button-bg;
-    color: $button-text;
-    box-shadow: $shadow-md;
+    background: variables.$button-bg;
+    color: variables.$button-text;
+    box-shadow: variables.$shadow-md;
 
     &:hover:not(:disabled) {
       transform: translateY(-2px) scale(1.02);
-      box-shadow: $shadow-lg;
+      box-shadow: variables.$shadow-lg;
       opacity: 0.9;
     }
 
@@ -60,13 +62,13 @@
   }
 
   &.secondary {
-    background: $text-accent;
-    color: $button-text;
-    box-shadow: $shadow-md;
+    background: variables.$text-accent;
+    color: variables.$button-text;
+    box-shadow: variables.$shadow-md;
 
     &:hover:not(:disabled) {
       transform: translateY(-2px) scale(1.02);
-      box-shadow: $shadow-lg;
+      box-shadow: variables.$shadow-lg;
       opacity: 0.9;
     }
 
@@ -76,15 +78,15 @@
   }
 
   &.outline {
-    background: $bg-secondary;
-    color: $text-primary;
-    border: 2px solid $button-bg;
+    background: variables.$bg-secondary;
+    color: variables.$text-primary;
+    border: 2px solid variables.$button-bg;
 
     &:hover:not(:disabled) {
-      background: $bg-section;
+      background: variables.$bg-section;
       transform: translateY(-2px);
-      box-shadow: $shadow-md;
-      border-color: $text-accent;
+      box-shadow: variables.$shadow-md;
+      border-color: variables.$text-accent;
     }
 
     &:active:not(:disabled) {
@@ -94,14 +96,14 @@
 
   &.ghost {
     background: transparent;
-    color: $text-primary;
+    color: variables.$text-primary;
 
     &:hover:not(:disabled) {
-      background: $bg-secondary;
+      background: variables.$bg-secondary;
     }
 
     &:active:not(:disabled) {
-      background: $bg-section;
+      background: variables.$bg-section;
     }
   }
 
@@ -113,8 +115,8 @@
   .loader {
     width: 20px;
     height: 20px;
-    border: 2px solid $text-tertiary;
-    border-top-color: $button-text;
+    border: 2px solid variables.$text-tertiary;
+    border-top-color: variables.$button-text;
     border-radius: 50%;
     animation: rotate 0.6s linear infinite;
   }

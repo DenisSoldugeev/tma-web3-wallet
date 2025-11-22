@@ -1,19 +1,22 @@
+@use '@/styles/variables';
+@use '@/styles/mixins';
+
 .container {
-  @include glass-effect($glass-blur, 0.1, 0.2);
-  border-radius: $radius-lg;
-  padding: $spacing-lg;
-  box-shadow: $shadow-md;
-  transition: all $transition-base $ease-out-expo;
+  @include mixins.glass-effect(variables.$glass-blur, 0.1, 0.2);
+  border-radius: variables.$radius-lg;
+  padding: variables.$spacing-lg;
+  box-shadow: variables.$shadow-md;
+  transition: all variables.$transition-base variables.$ease-out-expo;
 
   &.default {
-    @include glass-effect($glass-blur, 0.1, 0.2);
+    @include mixins.glass-effect(variables.$glass-blur, 0.1, 0.2);
   }
 
   &.strong {
-    @include glass-effect($glass-blur-strong, 0.15, 0.3);
+    @include mixins.glass-effect(variables.$glass-blur-strong, 0.15, 0.3);
   }
 
   &.subtle {
-    @include glass-effect($glass-blur-subtle, 0.05, 0.1);
+    @include mixins.glass-effect(variables.$glass-blur-subtle, 0.05, 0.1);
   }
 }

@@ -1,6 +1,9 @@
+@use '@/styles/variables';
+@use '@/styles/mixins';
+
 .wallet {
   min-height: 100vh;
-  padding: $spacing-xl $spacing-lg;
+  padding: variables.$spacing-xl variables.$spacing-lg;
 }
 
 .content {
@@ -8,7 +11,7 @@
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  gap: $spacing-xl;
+  gap: variables.$spacing-xl;
   animation: fadeIn 0.2s ease-out;
 }
 
@@ -17,36 +20,36 @@
 }
 
 .title {
-  color: $text-primary;
-  font-size: $font-size-3xl;
-  font-weight: $font-weight-bold;
+  color: variables.$text-primary;
+  font-size: variables.$font-size-3xl;
+  font-weight: variables.$font-weight-bold;
 }
 
 .balanceCard {
-  padding: $spacing-2xl;
+  padding: variables.$spacing-2xl;
   text-align: center;
 }
 
 .balanceHeader {
-  margin-bottom: $spacing-md;
+  margin-bottom: variables.$spacing-md;
 }
 
 .balanceLabel {
-  font-size: $font-size-sm;
-  color: $text-tertiary;
+  font-size: variables.$font-size-sm;
+  color: variables.$text-tertiary;
   text-transform: uppercase;
   letter-spacing: 0.05em;
 }
 
 .balanceAmount {
-  margin-bottom: $spacing-lg;
+  margin-bottom: variables.$spacing-lg;
 
   h2 {
-    font-size: $font-size-4xl;
-    font-weight: $font-weight-bold;
-    color: $text-primary;
+    font-size: variables.$font-size-4xl;
+    font-weight: variables.$font-weight-bold;
+    color: variables.$text-primary;
 
-    @include responsive(md) {
+    @include mixins.responsive(md) {
       font-size: 3rem;
     }
   }
@@ -56,35 +59,35 @@
   height: 60px;
   width: 200px;
   margin: 0 auto;
-  @include shimmer;
-  border-radius: $radius-md;
+  @include mixins.shimmer;
+  border-radius: variables.$radius-md;
 }
 
 .addressContainer {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: $spacing-sm;
-  @include glass-effect($glass-blur-subtle, 0.05, 0.15);
-  padding: $spacing-sm $spacing-md;
-  border-radius: $radius-full;
+  gap: variables.$spacing-sm;
+  @include mixins.glass-effect(variables.$glass-blur-subtle, 0.05, 0.15);
+  padding: variables.$spacing-sm variables.$spacing-md;
+  border-radius: variables.$radius-full;
   max-width: fit-content;
   margin: 0 auto;
 }
 
 .address {
-  font-family: $font-family-mono;
-  font-size: $font-size-sm;
-  color: $text-secondary;
+  font-family: variables.$font-family-mono;
+  font-size: variables.$font-size-sm;
+  color: variables.$text-secondary;
 }
 
 .copyButton {
   background: none;
   border: none;
   cursor: pointer;
-  font-size: $font-size-base;
-  padding: $spacing-xs;
-  transition: transform $transition-fast;
+  font-size: variables.$font-size-base;
+  padding: variables.$spacing-xs;
+  transition: transform variables.$transition-fast;
 
   &:hover {
     transform: scale(1.1);
@@ -98,48 +101,48 @@
 .actions {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: $spacing-md;
+  gap: variables.$spacing-md;
 }
 
 .actionCard {
-  padding: $spacing-lg;
+  padding: variables.$spacing-lg;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: $spacing-md;
+  gap: variables.$spacing-md;
   text-align: center;
   cursor: pointer;
 }
 
 .actionIcon {
-  font-size: $font-size-4xl;
-  @include glass-effect($glass-blur-subtle, 0.1, 0.2);
+  font-size: variables.$font-size-4xl;
+  @include mixins.glass-effect(variables.$glass-blur-subtle, 0.1, 0.2);
   width: 64px;
   height: 64px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: $radius-xl;
+  border-radius: variables.$radius-xl;
 }
 
 .actionContent {
   h3 {
-    font-size: $font-size-lg;
-    font-weight: $font-weight-semibold;
-    color: $text-primary;
-    margin-bottom: $spacing-xs;
+    font-size: variables.$font-size-lg;
+    font-weight: variables.$font-weight-semibold;
+    color: variables.$text-primary;
+    margin-bottom: variables.$spacing-xs;
   }
 
   p {
-    font-size: $font-size-sm;
-    color: $text-tertiary;
+    font-size: variables.$font-size-sm;
+    color: variables.$text-tertiary;
   }
 }
 
 .footer {
   display: flex;
   justify-content: center;
-  margin-top: $spacing-xl;
+  margin-top: variables.$spacing-xl;
 }
 
 @keyframes fadeIn {

@@ -24,8 +24,8 @@ body {
   perspective: 1000px;
 
   // Telegram WebApp safe area
-  @include safe-area-padding(top, 0);
-  @include safe-area-padding(bottom, 0);
+  @include mixins.safe-area-padding(top, 0);
+  @include mixins.safe-area-padding(bottom, 0);
 }
 
 // Root container
@@ -50,7 +50,7 @@ h1, h2, h3, h4, h5, h6 {
 h1 {
   font-size: variables.$font-size-4xl;
 
-  @include responsive(md) {
+  @include mixins.responsive(md) {
     font-size: 3rem;
   }
 }
@@ -58,7 +58,7 @@ h1 {
 h2 {
   font-size: variables.$font-size-3xl;
 
-  @include responsive(md) {
+  @include mixins.responsive(md) {
     font-size: variables.$font-size-4xl;
   }
 }
@@ -133,7 +133,7 @@ a {
   margin: 0 auto;
   padding: 0 variables.$spacing-md;
 
-  @include responsive(md) {
+  @include mixins.responsive(md) {
     padding: 0 variables.$spacing-xl;
   }
 }
@@ -151,11 +151,11 @@ a {
 }
 
 .text-gradient {
-  @include gradient-text(variables.$primary-gradient);
+  @include mixins.gradient-text(variables.$primary-gradient);
 }
 
 .truncate {
-  @include truncate;
+  @include mixins.truncate;
 }
 
 .sr-only {
@@ -172,14 +172,14 @@ a {
 
 // Loading skeleton
 .skeleton {
-  @include shimmer;
+  @include mixins.shimmer;
   background-color: rgba(255, 255, 255, 0.1);
   border-radius: variables.$radius-md;
 }
 
 // Glass card base
 .glass-card {
-  @include glass-effect(variables.$glass-blur, 0.1, 0.2);
+  @include mixins.glass-effect(variables.$glass-blur, 0.1, 0.2);
   border-radius: variables.$radius-lg;
   padding: variables.$spacing-lg;
   box-shadow: variables.$shadow-md;
