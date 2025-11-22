@@ -23,7 +23,7 @@ export function WalletPage() {
     // Fetch balance
     const { data: balance, isLoading } = useQuery({
         queryKey: ['balance', wallet?.address],
-        queryFn: () => TonService.getBalance(wallet!.address),
+        queryFn: () => wallet && TonService.getBalance(wallet.address),
         enabled: !!wallet,
         refetchInterval: 10000,
     });
@@ -39,7 +39,7 @@ export function WalletPage() {
     const handleLogout = () => {
         WalletService.deleteWallet();
         setWallet(null);
-        navigate({ to: '/' }, 'backward');
+        navigate({ to: '/' }, 'backward').then();
     };
 
     if (!wallet) return null;

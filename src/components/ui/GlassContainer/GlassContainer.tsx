@@ -1,5 +1,5 @@
 import clsx from 'clsx';
-import type { ReactNode } from 'react';
+import type { KeyboardEvent, MouseEventHandler, ReactNode } from 'react';
 
 import styles from './GlassContainer.module.scss';
 
@@ -16,14 +16,22 @@ export const GlassContainer = ({
   className,
   onClick,
 }: GlassContainerProps) => {
+  const handleKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
+    if (onClick && (e.key === 'Enter' || e.key === ' ')) {
+      e.preventDefault();
+      onClick();
+    }
+  };
+
   return (
     <div
-      className={clsx(
-        styles.container,
-        styles[variant],
-        className,
-      )}
-      onClick={onClick}
+      className={clsx(styles.container, styles[variant], className)}
+      {...(onClick && {
+        onClick: onClick as MouseEventHandler<HTMLDivElement>,
+        role: 'button',
+        tabIndex: 0,
+        onKeyDown: handleKeyDown,
+      })}
     >
       {children}
     </div>
