@@ -5,7 +5,9 @@
   min-height: 100%;
   display: flex;
   justify-content: center;
-  padding: variables.$spacing-lg;
+  padding-top: calc(var(--tg-safe-area-inset-top) + var(--tg-content-safe-area-inset-top));
+  padding-left: variables.$spacing-md;
+  padding-right: variables.$spacing-md;
 
   &__content {
     max-width: 600px;

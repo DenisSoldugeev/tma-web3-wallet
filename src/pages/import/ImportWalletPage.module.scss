@@ -7,7 +7,9 @@
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  padding: variables.$spacing-lg 0 80px;
+  padding-top: calc(var(--tg-safe-area-inset-top) + var(--tg-content-safe-area-inset-top));
+  padding-left: variables.$spacing-md;
+  padding-right: variables.$spacing-md;
 
   @include mixins.responsive(md) {
     padding: variables.$spacing-2xl 0 80px;
@@ -21,7 +23,6 @@
   flex-direction: column;
   gap: variables.$spacing-lg;
   animation: fadeIn 0.3s ease-out;
-  padding: 0 variables.$spacing-lg;
   flex: 1;
 
   @include mixins.responsive(md) {
