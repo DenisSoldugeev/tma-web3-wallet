@@ -7,7 +7,7 @@ import { TonService } from '@services/ton.ts';
 import { WalletService } from '@services/wallet.ts';
 import { useQuery } from '@tanstack/react-query';
 import { truncateAddress } from '@utils/format';
-import { getTelegramWebApp, triggerHapticImpact } from '@utils/telegram';
+import { triggerHapticImpact } from '@utils/telegram';
 import { LogOut, TrendingUp, TrendingDown } from 'lucide-react';
 import { useState, useEffect, useMemo } from 'react';
 
@@ -22,24 +22,6 @@ export function WalletPage() {
             navigate({ to: '/' }, 'backward').then();
         }
     }, [wallet, navigate]);
-
-    useEffect(() => {
-        if (!wallet) return;
-        const webApp = getTelegramWebApp();
-        if (!webApp) return;
-
-        const handleBackClick = () => {
-            navigate({ to: '/' }, 'backward').then();
-        };
-
-        webApp.BackButton.show();
-        webApp.BackButton.onClick(handleBackClick);
-
-        return () => {
-            webApp.BackButton.offClick(handleBackClick);
-            webApp.BackButton.hide();
-        };
-    }, [navigate, wallet]);
 
     // Fetch balance
     const { data: balance, isLoading: isBalanceLoading } = useQuery({
