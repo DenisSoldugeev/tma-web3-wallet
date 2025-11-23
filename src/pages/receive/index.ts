@@ -1,0 +1,1 @@
+export { ReceivePage } from './ReceivePage';

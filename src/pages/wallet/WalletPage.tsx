@@ -88,8 +88,7 @@ export function WalletPage() {
 
     const handleReceive = () => {
         triggerHapticImpact('light');
-        // TODO: Implement receive modal with QR code
-        console.warn('Receive action is not implemented yet');
+        navigate({ to: '/wallet/receive' }, 'forward').then();
     };
 
     const handleLogout = () => {

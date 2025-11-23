@@ -1,0 +1,170 @@
+@use '@/styles/variables';
+@use '@/styles/mixins';
+
+.receive {
+  min-height: 100vh;
+  padding: clamp(1.5rem, 5vw, 3.5rem);
+  display: flex;
+  flex-direction: column;
+  gap: variables.$spacing-md;
+  position: relative;
+  overflow: hidden;
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 20% -10%, rgba(0, 152, 234, 0.2), transparent 45%),
+    radial-gradient(circle at 85% 0%, rgba(45, 131, 236, 0.18), transparent 40%);
+    pointer-events: none;
+  }
+}
+
+:global([data-color-scheme='dark']) .receive {
+  background: linear-gradient(180deg, #0b1426 0%, #050812 80%);
+
+  &::after {
+    background: radial-gradient(circle at 25% -10%, rgba(0, 152, 234, 0.25), transparent 45%),
+    radial-gradient(circle at 80% 0%, rgba(26, 201, 255, 0.2), transparent 40%);
+  }
+}
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: variables.$spacing-md;
+  position: relative;
+  z-index: 1;
+}
+
+.backButton {
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: variables.$radius-full;
+  background: rgba(255, 255, 255, 0.75);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  box-shadow: variables.$shadow-sm;
+  transition: transform variables.$transition-base, box-shadow variables.$transition-base;
+
+  &:active {
+    transform: translateY(1px);
+  }
+}
+
+.toolbarTitle {
+  font-size: variables.$font-size-lg;
+  font-weight: variables.$font-weight-semibold;
+  color: variables.$text-primary;
+}
+
+.title {
+  text-align: center;
+  margin: 0;
+  font-size: clamp(1.6rem, 4vw, 2.1rem);
+  font-weight: variables.$font-weight-bold;
+  color: variables.$text-primary;
+  letter-spacing: 0.01em;
+  z-index: 1;
+}
+
+.card {
+  max-width: 620px;
+  width: 100%;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: variables.$spacing-xl;
+  padding: variables.$spacing-xl;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  gap: variables.$spacing-md;
+}
+
+.brandIcon {
+  width: 56px;
+  height: 56px;
+  border-radius: variables.$radius-xl;
+  background: linear-gradient(145deg, rgba(0, 152, 234, 0.15), rgba(45, 131, 236, 0.08));
+  @include mixins.flex-center;
+  box-shadow: variables.$shadow-md;
+}
+
+.label {
+  margin: 0;
+  font-size: variables.$font-size-sm;
+  color: variables.$text-secondary;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.address {
+  margin: 4px 0 0 0;
+  font-size: variables.$font-size-lg;
+  font-weight: variables.$font-weight-semibold;
+  color: variables.$text-primary;
+  word-break: break-all;
+  font-family: variables.$font-family-mono;
+}
+
+.qr {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: variables.$spacing-md;
+}
+
+.qrImage {
+  width: 260px;
+  height: 260px;
+  padding: variables.$spacing-md;
+  background: #ffffff;
+  border-radius: variables.$radius-lg;
+  border: 1px solid rgba(0, 152, 234, 0.08);
+}
+
+.qrSkeleton {
+  width: 260px;
+  height: 260px;
+  border-radius: variables.$radius-lg;
+  @include mixins.shimmer;
+}
+
+.qrHint {
+  margin: 0;
+  font-size: variables.$font-size-sm;
+  color: variables.$text-secondary;
+  text-align: center;
+  line-height: 1.5;
+}
+
+.actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: variables.$spacing-sm;
+
+  button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: variables.$spacing-xs;
+  }
+}
+
+@media (max-width: variables.$breakpoint-sm) {
+  .receive {
+    padding: variables.$spacing-lg;
+  }
+
+  .actions {
+    grid-template-columns: 1fr;
+  }
+}

@@ -120,6 +120,11 @@
   border: none;
   color: variables.$text-accent;
   cursor: pointer;
+  background: transparent;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
 
   &:active {
     transform: scale(0.95);
