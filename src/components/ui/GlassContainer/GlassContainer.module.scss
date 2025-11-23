@@ -4,7 +4,6 @@
 .container {
   @include mixins.glass-effect(variables.$glass-blur, 0.1, 0.2);
   border-radius: variables.$radius-lg;
-  padding: variables.$spacing-lg;
   box-shadow: variables.$shadow-md;
   transition: all variables.$transition-base variables.$ease-out-expo;
 
@@ -18,5 +17,17 @@
 
   &.subtle {
     @include mixins.glass-effect(variables.$glass-blur-subtle, 0.05, 0.1);
+  }
+
+  &.sm {
+    padding: variables.$spacing-md;
+  }
+
+  &.md {
+    padding: variables.$spacing-lg;
+  }
+
+  &.lg {
+    padding: variables.$spacing-xl;
   }
 }

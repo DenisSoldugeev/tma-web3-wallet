@@ -6,6 +6,7 @@ import styles from './GlassContainer.module.scss';
 interface GlassContainerProps {
   children: ReactNode;
   variant?: 'default' | 'strong' | 'subtle';
+  size?: 'sm' | 'md' | 'lg';
   className?: string;
   onClick?: () => void;
 }
@@ -13,6 +14,7 @@ interface GlassContainerProps {
 export const GlassContainer = ({
   children,
   variant = 'default',
+  size = 'md',
   className,
   onClick,
 }: GlassContainerProps) => {
@@ -25,7 +27,7 @@ export const GlassContainer = ({
 
   return (
     <div
-      className={clsx(styles.container, styles[variant], className)}
+      className={clsx(styles.container, styles[variant], styles[size], className)}
       {...(onClick && {
         onClick: onClick as MouseEventHandler<HTMLDivElement>,
         role: 'button',
