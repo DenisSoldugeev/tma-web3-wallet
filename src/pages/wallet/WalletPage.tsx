@@ -64,8 +64,7 @@ export function WalletPage() {
 
     const handleSend = () => {
         triggerHapticImpact('medium');
-        // TODO: Implement send modal
-        console.warn('Send action is not implemented yet');
+        navigate({ to: '/wallet/send' }, 'forward').then();
     };
 
     const handleReceive = () => {

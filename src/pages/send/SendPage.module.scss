@@ -1,0 +1,159 @@
+@use '@/styles/variables';
+@use '@/styles/mixins';
+
+.send {
+  min-height: 100vh;
+  padding: clamp(1.5rem, 5vw, 3.5rem);
+  display: flex;
+  flex-direction: column;
+  gap: variables.$spacing-md;
+  position: relative;
+  overflow: hidden;
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 20% -10%, rgba(0, 152, 234, 0.2), transparent 45%),
+    radial-gradient(circle at 85% 0%, rgba(45, 131, 236, 0.18), transparent 40%);
+    pointer-events: none;
+  }
+}
+
+:global([data-color-scheme='dark']) .send {
+  background: linear-gradient(180deg, #0b1426 0%, #050812 80%);
+
+  &::after {
+    background: radial-gradient(circle at 25% -10%, rgba(0, 152, 234, 0.25), transparent 45%),
+    radial-gradient(circle at 80% 0%, rgba(26, 201, 255, 0.2), transparent 40%);
+  }
+}
+
+.title {
+  text-align: center;
+  margin: 0;
+  font-size: clamp(1.6rem, 4vw, 2.1rem);
+  font-weight: variables.$font-weight-bold;
+  color: variables.$text-primary;
+  letter-spacing: 0.01em;
+  z-index: 1;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: variables.$spacing-md;
+  max-width: 620px;
+  width: 100%;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+.card {
+  padding: variables.$spacing-lg;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: variables.$spacing-xs;
+}
+
+.labelRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.label {
+  font-size: variables.$font-size-sm;
+  color: variables.$text-secondary;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  font-weight: variables.$font-weight-medium;
+}
+
+.balance {
+  font-size: variables.$font-size-sm;
+  color: variables.$text-secondary;
+  font-weight: variables.$font-weight-medium;
+}
+
+.input {
+  padding: variables.$spacing-md;
+  font-size: variables.$font-size-base;
+  color: variables.$text-primary;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(0, 152, 234, 0.15);
+  border-radius: variables.$radius-md;
+  outline: none;
+  transition: border-color variables.$transition-base, background variables.$transition-base;
+  font-family: variables.$font-family-mono;
+
+  &::placeholder {
+    color: variables.$text-tertiary;
+  }
+
+  &:focus {
+    border-color: rgba(0, 152, 234, 0.4);
+    background: rgba(255, 255, 255, 0.08);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  &[type='number'] {
+    -moz-appearance: textfield;
+
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+  }
+}
+
+.amountInput {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.currency {
+  position: absolute;
+  right: variables.$spacing-md;
+  font-size: variables.$font-size-base;
+  font-weight: variables.$font-weight-semibold;
+  color: variables.$text-secondary;
+  pointer-events: none;
+}
+
+.error {
+  margin: 0;
+  font-size: variables.$font-size-xs;
+  color: #ff4757;
+  font-weight: variables.$font-weight-medium;
+}
+
+.hint {
+  margin: variables.$spacing-sm 0 0 0;
+  font-size: variables.$font-size-sm;
+  color: variables.$text-secondary;
+  text-align: center;
+  line-height: 1.5;
+  max-width: 620px;
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  z-index: 1;
+  position: relative;
+}
+
+@media (max-width: variables.$breakpoint-sm) {
+  .send {
+    padding: variables.$spacing-lg;
+  }
+}
