@@ -15,19 +15,7 @@ export class TonService {
   static initialize() {
     if (!this.client) {
       const endpoint = import.meta.env.VITE_TON_API_ENDPOINT || 'https://testnet.toncenter.com/api/v2/jsonRPC';
-      let apiKey = import.meta.env.VITE_TON_API_KEY;
-
-      // Check if endpoint is mainnet - mainnet works without API key
-      const isMainnet = endpoint.includes('toncenter.com') && !endpoint.includes('testnet');
-
-      if (isMainnet) {
-        // For mainnet, don't use API key as it may be testnet-only
-        // Public mainnet endpoint works without key (with rate limits)
-        apiKey = undefined;
-        console.info('Using public mainnet endpoint (rate limited)');
-      } else if (!apiKey) {
-        console.warn('TON API key not configured. Set VITE_TON_API_KEY in .env file');
-      }
+      const apiKey = import.meta.env.VITE_TON_API_KEY;
 
       this.client = new TonClient({
         endpoint,
@@ -131,6 +119,12 @@ export class TonService {
 
       const response = await fetch(url, { headers });
 
+      // Handle rate limiting
+      if (response.status === 429) {
+        console.warn('Rate limit exceeded. Using cached/mock data.');
+        throw new Error('Rate limit exceeded');
+      }
+
       if (!response.ok) {
         console.warn('TON Center API request failed:', response.status, response.statusText);
         const errorText = await response.text();
@@ -150,9 +144,16 @@ export class TonService {
         });
       }
 
-      // Parse jetton wallets
+      // Parse jetton wallets with minimum balance filter
+      // Minimum balance: 100,000 nano-tokens (0.0001 with 9 decimals)
+      const MIN_BALANCE = 100000;
+
       const jettons: Jetton[] = (data.jetton_wallets || [])
-        .filter((wallet: any) => parseFloat(wallet.balance) > 0)
+        .filter((wallet: any) => {
+          const balance = parseFloat(wallet.balance);
+          // Filter out zero and dust balances
+          return balance >= MIN_BALANCE;
+        })
         .map((wallet: any) => {
           const jettonAddress = wallet.jetton;
           const jettonInfo = jettonMasters.get(jettonAddress);
@@ -175,8 +176,11 @@ export class TonService {
             decimals: 9, // Default for TON jettons
             verified: !!jettonInfo?.domain,
           };
-        });
+        })
+        // Sort by balance (highest first)
+        .sort((a: Jetton, b: Jetton) => parseFloat(b.balance) - parseFloat(a.balance));
 
+      console.info(`Found ${jettons.length} jettons with meaningful balance`);
       return jettons;
     } catch (error) {
       console.error('Failed to get jettons:', error);

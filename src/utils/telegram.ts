@@ -1,24 +1,39 @@
-import WebApp from '@twa-dev/sdk';
+import type { WebApp as TelegramWebApp } from '@twa-dev/types';
+
+export function getTelegramWebApp(): TelegramWebApp | null {
+  if (typeof window === 'undefined') {
+    return null;
+  }
+
+  return window.Telegram?.WebApp ?? null;
+}
 
 export function isTelegramEnvironment(): boolean {
-  const webapp = window.Telegram?.WebApp;
-  if (!webapp) {
-    return false;
-  }
-  return !!(webapp.initData);
+  const webApp = getTelegramWebApp();
+  return !!webApp?.initData;
 }
 
 export function initTelegramApp(): void {
-  if (!isTelegramEnvironment()) {
+  const webApp = getTelegramWebApp();
+  if (!webApp) {
     console.warn('Not running in Telegram environment');
     return;
   }
 
-  WebApp.expand();
-  WebApp.ready();
+  webApp.expand();
+  webApp.ready();
 
-  console.log('Telegram Mini App initialized', {
-    version: WebApp.version,
-    platform: WebApp.platform,
+  console.warn('Telegram Mini App initialized', {
+    version: webApp.version,
+    platform: webApp.platform,
   });
+}
+
+export function triggerHapticImpact(
+  style: Parameters<
+    TelegramWebApp['HapticFeedback']['impactOccurred']
+  >[0] = 'light',
+): void {
+  const webApp = getTelegramWebApp();
+  webApp?.HapticFeedback?.impactOccurred(style);
 }

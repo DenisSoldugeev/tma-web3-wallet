@@ -3,7 +3,7 @@
 
 .quickActions {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: variables.$spacing-md;
   animation: fadeInUp 0.4s variables.$ease-out-expo;
 
@@ -13,118 +13,77 @@
 }
 
 .actionButton {
-  @include mixins.glass-effect(variables.$glass-blur-subtle, 0.08, 0.15);
   position: relative;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: variables.$spacing-sm;
-  padding: variables.$spacing-lg variables.$spacing-sm;
-  border: none;
-  border-radius: variables.$radius-lg;
-  background: transparent;
+  padding: variables.$spacing-md variables.$spacing-lg;
+  border: 1px solid rgba(0, 152, 234, 0.25);
+  border-radius: variables.$radius-2xl;
+  background: rgba(255, 255, 255, 0.12);
   cursor: pointer;
-  transition: all variables.$transition-base variables.$ease-out-expo;
-  overflow: hidden;
-  min-height: 90px;
+  transition: transform variables.$transition-base variables.$ease-out-expo, box-shadow variables.$transition-base;
   animation: slideUp 0.3s variables.$ease-out-expo forwards;
   opacity: 0;
 
-  &::before {
+  &::after {
     content: '';
     position: absolute;
     inset: 0;
     border-radius: inherit;
-    padding: 1px;
-    background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.05));
-    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
+    background: linear-gradient(130deg, rgba(255, 255, 255, 0.25), transparent 60%);
     opacity: 0;
     transition: opacity variables.$transition-base;
   }
 
   &:hover {
-    @include mixins.glass-effect(variables.$glass-blur, 0.12, 0.25);
-    transform: translateY(-4px) scale(1.02);
-    box-shadow: variables.$shadow-lg;
+    transform: translateY(-3px);
+    box-shadow: 0 25px 40px rgba(0, 152, 234, 0.25);
 
-    &::before {
+    &::after {
       opacity: 1;
-    }
-
-    .actionButton__icon {
-      transform: scale(1.1);
     }
   }
 
   &:active {
-    transform: translateY(-2px) scale(0.98);
+    transform: translateY(0);
   }
 
-  &:focus-visible {
-    outline: 2px solid rgba(102, 126, 234, 0.5);
-    outline-offset: 2px;
-  }
-
-  // Варианты кнопок
-  &--primary .actionButton__icon {
-    background: variables.$button-bg;
+  &--primary {
+    background: var(--ton-brand-gradient);
     color: variables.$button-text;
   }
 
-  &--secondary .actionButton__icon {
-    background: variables.$text-accent;
+  &--secondary {
+    background: linear-gradient(135deg, #0098ea 0%, #33d4ff 100%);
     color: variables.$button-text;
-  }
-
-  &--accent .actionButton__icon {
-    background: variables.$link-color;
-    color: variables.$button-text;
-  }
-
-  &--neutral .actionButton__icon {
-    background: rgba(255, 255, 255, 0.1);
-    color: variables.$text-primary;
   }
 
   @media (max-width: variables.$breakpoint-sm) {
-    padding: variables.$spacing-md variables.$spacing-xs;
-    min-height: 80px;
+    padding: variables.$spacing-md;
   }
 }
 
 .actionButton__icon {
-  display: flex;
+  display: inline-flex;
   align-items: center;
   justify-content: center;
   width: 44px;
   height: 44px;
-  border-radius: variables.$radius-md;
-  transition: all variables.$transition-base variables.$ease-out-expo;
+  border-radius: variables.$radius-full;
+  background: rgba(255, 255, 255, 0.2);
 
-  @media (max-width: variables.$breakpoint-sm) {
-    width: 36px;
-    height: 36px;
-
-    svg {
-      width: 20px;
-      height: 20px;
-    }
+  svg {
+    width: 22px;
+    height: 22px;
   }
 }
 
 .actionButton__label {
-  font-size: variables.$font-size-sm;
-  font-weight: variables.$font-weight-medium;
-  color: variables.$text-primary;
-  white-space: nowrap;
-  line-height: 1.2;
-
-  @media (max-width: variables.$breakpoint-sm) {
-    font-size: variables.$font-size-xs;
-  }
+  font-size: variables.$font-size-lg;
+  font-weight: variables.$font-weight-semibold;
+  letter-spacing: 0.02em;
 }
 
 @keyframes fadeInUp {

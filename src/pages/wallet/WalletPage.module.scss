@@ -2,53 +2,124 @@
 @use '@/styles/mixins';
 
 .wallet {
-  min-height: 100vh;
-  padding: variables.$spacing-xl variables.$spacing-lg;
-}
-
-.content {
-  max-width: 600px;
-  margin: 0 auto;
+  padding: clamp(1.5rem, 5vw, 4rem);
   display: flex;
+  justify-content: center;
   flex-direction: column;
-  gap: variables.$spacing-2xl;
-  animation: fadeIn 0.3s ease-out;
+  position: relative;
+  overflow: hidden;
 
-  @media (max-width: variables.$breakpoint-sm) {
-    gap: variables.$spacing-xl;
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 25% -10%, rgba(0, 152, 234, 0.25), transparent 45%),
+    radial-gradient(circle at 90% 0%, rgba(45, 131, 236, 0.2), transparent 35%);
+    pointer-events: none;
   }
 }
 
-.header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+:global([data-color-scheme='dark']) .wallet {
+  background: linear-gradient(180deg, #0b1426 0%, #050812 80%);
+
+  &::after {
+    background: radial-gradient(circle at 20% -10%, rgba(0, 152, 234, 0.3), transparent 45%),
+    radial-gradient(circle at 80% 0%, rgba(26, 201, 255, 0.25), transparent 40%);
+  }
 }
 
-.title {
-  color: variables.$text-primary;
-  font-size: variables.$font-size-3xl;
+.panel {
+  width: min(440px, 100%);
+  padding: variables.$spacing-2xl;
+  border-radius: 36px;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(
+                  145deg,
+                  rgba(255, 255, 255, 0.95),
+                  rgba(255, 255, 255, 0.75)
+  );
+  border: 1px solid rgba(30, 35, 55, 0.08);
+  box-shadow: 0 35px 70px rgba(22, 47, 87, 0.25);
+  display: flex;
+  flex-direction: column;
+  gap: variables.$spacing-xl;
+  animation: fadeIn 0.4s variables.$ease-out-expo;
+  z-index: 1;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: linear-gradient(120deg, rgba(45, 131, 236, 0.15), transparent 55%);
+  }
+
+  > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  @media (max-width: variables.$breakpoint-sm) {
+    padding: variables.$spacing-xl;
+    border-radius: 28px;
+  }
+}
+
+:global([data-color-scheme='dark']) .panel {
+  background: linear-gradient(160deg, rgba(16, 23, 45, 0.95), rgba(12, 16, 32, 0.92));
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 25px 80px rgba(0, 0, 0, 0.5);
+}
+
+.panelHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.branding {
+  display: flex;
+  align-items: flex-start;
+  gap: variables.$spacing-md;
+}
+
+.brandIcon {
+  border-radius: 18px;
+  //background: var(--ton-brand-gradient);
+  @include mixins.flex-center;
+  color: #ffffff;
   font-weight: variables.$font-weight-bold;
+  letter-spacing: 0.08em;
+  font-size: variables.$font-size-sm;
+  box-shadow: variables.$shadow-md;
+}
+
+.brandText {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.brandLabel {
   margin: 0;
+  font-size: variables.$font-size-xl;
+  font-weight: variables.$font-weight-semibold;
+  color: variables.$text-primary;
+}
+
+.brandAddress {
+  margin: 0;
+  font-size: variables.$font-size-sm;
+  color: variables.$text-secondary;
+  font-family: variables.$font-family-mono;
 }
 
 .logoutButton {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 40px;
-  height: 40px;
-  border: none;
   border-radius: variables.$radius-full;
-  background: rgba(255, 59, 48, 0.1);
-  color: #FF3B30;
+  border: none;
+  color: variables.$text-primary;
   cursor: pointer;
-  transition: all variables.$transition-base;
-
-  &:hover {
-    background: rgba(255, 59, 48, 0.2);
-    transform: scale(1.05);
-  }
 
   &:active {
     transform: scale(0.95);
@@ -56,178 +127,126 @@
 }
 
 .balanceCard {
-  padding: variables.$spacing-2xl;
-  text-align: center;
-  position: relative;
-  overflow: hidden;
-  animation: balanceCardFadeIn 0.4s variables.$ease-out-expo;
-
-  &::before {
-    content: '';
-    position: absolute;
-    inset: -50%;
-    background: linear-gradient(
-      135deg,
-      rgba(102, 126, 234, 0.1),
-      rgba(118, 75, 162, 0.1),
-      transparent
-    );
-    animation: rotateGradient 8s linear infinite;
-    opacity: 0.5;
-  }
-}
-
-.balanceHeader {
-  margin-bottom: variables.$spacing-md;
+  margin-top: variables.$spacing-lg;
   position: relative;
   z-index: 1;
 }
 
-.balanceLabel {
-  font-size: variables.$font-size-sm;
-  color: variables.$text-tertiary;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  font-weight: variables.$font-weight-medium;
+.balanceContent {
+  display: flex;
+  flex-direction: column;
+  gap: variables.$spacing-lg;
 }
 
-.balanceAmount {
-  margin-bottom: variables.$spacing-lg;
-  position: relative;
-  z-index: 1;
+.balanceMain {
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: variables.$spacing-sm;
 }
 
-.balance {
-  font-size: variables.$font-size-4xl;
+.tonBalance {
+  display: flex;
+  align-items: baseline;
+  gap: variables.$spacing-sm;
+}
+
+.tonAmount {
+  font-size: clamp(2.75rem, 7vw, 3.75rem);
   font-weight: variables.$font-weight-bold;
   color: variables.$text-primary;
-  margin: 0;
-  animation: countUp 0.6s variables.$ease-out-expo;
+  letter-spacing: 0.02em;
+}
 
-  @include mixins.responsive(md) {
-    font-size: 3.5rem;
-  }
+.tonSymbol {
+  font-size: variables.$font-size-xl;
+  font-weight: variables.$font-weight-semibold;
+  color: variables.$text-secondary;
 }
 
 .usdValue {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 4px;
-  animation: fadeIn 0.5s variables.$ease-out-expo 0.2s both;
+  margin: 0;
+  font-size: variables.$font-size-lg;
+  color: variables.$text-secondary;
+  font-family: variables.$font-family-mono;
 }
 
-.usdAmount {
-  font-size: variables.$font-size-lg;
+.priceDivider {
+  height: 1px;
+  background: linear-gradient(
+                  90deg,
+                  transparent,
+                  rgba(0, 152, 234, 0.2) 50%,
+                  transparent
+  );
+}
+
+.priceInfo {
+  display: flex;
+  flex-direction: column;
+  gap: variables.$spacing-md;
+}
+
+.priceRow,
+.priceChangeRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.priceLabel,
+.priceChangeLabel {
+  font-size: variables.$font-size-sm;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: variables.$text-tertiary;
+}
+
+.priceValue {
+  font-size: variables.$font-size-xl;
   font-weight: variables.$font-weight-semibold;
-  color: variables.$text-secondary;
+  color: variables.$text-primary;
   font-family: variables.$font-family-mono;
 }
 
 .priceChange {
   display: flex;
   align-items: center;
-  gap: 4px;
-  font-size: variables.$font-size-xs;
-  color: variables.$text-tertiary;
-  padding: 2px variables.$spacing-sm;
-  border-radius: variables.$radius-sm;
-  background: rgba(52, 199, 89, 0.1);
-
-  svg {
-    color: #34C759;
-  }
-
-  span {
-    color: variables.$text-tertiary;
-  }
-}
-
-.skeleton {
-  height: 60px;
-  width: 200px;
-  margin: 0 auto;
-  @include mixins.shimmer;
+  gap: 6px;
+  font-size: variables.$font-size-base;
+  font-weight: variables.$font-weight-semibold;
+  padding: 4px 12px;
   border-radius: variables.$radius-md;
-}
-
-.addressContainer {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: variables.$spacing-md;
-  @include mixins.glass-effect(variables.$glass-blur-subtle, 0.08, 0.2);
-  padding: variables.$spacing-sm variables.$spacing-md;
-  border-radius: variables.$radius-full;
-  max-width: fit-content;
-  margin: 0 auto;
-  position: relative;
-  z-index: 1;
-}
-
-.address {
-  font-family: variables.$font-family-mono;
-  font-size: variables.$font-size-sm;
-  color: variables.$text-secondary;
-  font-weight: variables.$font-weight-medium;
-}
-
-.addressActions {
-  display: flex;
-  align-items: center;
-  gap: variables.$spacing-xs;
-}
-
-.iconButton {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 28px;
-  height: 28px;
-  border: none;
-  border-radius: variables.$radius-sm;
-  background: rgba(255, 255, 255, 0.08);
-  color: variables.$text-secondary;
-  cursor: pointer;
   transition: all variables.$transition-base;
 
-  &:hover {
-    background: rgba(255, 255, 255, 0.15);
-    color: variables.$text-primary;
-    transform: scale(1.05);
+  &[data-trend='up'] {
+    color: #10b981;
+    background: rgba(16, 185, 129, 0.1);
+
+    svg {
+      stroke-width: 2.5;
+    }
   }
 
-  &:active {
-    transform: scale(0.95);
+  &[data-trend='down'] {
+    color: #ef4444;
+    background: rgba(239, 68, 68, 0.1);
+
+    svg {
+      stroke-width: 2.5;
+    }
   }
 }
 
-// Animations
+.balanceSkeleton {
+  width: 100%;
+  height: 200px;
+  border-radius: variables.$radius-xl;
+  @include mixins.shimmer;
+  background: rgba(0, 152, 234, 0.1);
+}
+
 @keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
-}
-
-@keyframes balanceCardFadeIn {
-  from {
-    opacity: 0;
-    transform: scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-@keyframes countUp {
   from {
     opacity: 0;
     transform: translateY(10px);
@@ -235,14 +254,5 @@
   to {
     opacity: 1;
     transform: translateY(0);
-  }
-}
-
-@keyframes rotateGradient {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
   }
 }

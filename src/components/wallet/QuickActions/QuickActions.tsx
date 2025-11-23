@@ -1,4 +1,4 @@
-import { ArrowDownCircle, ArrowUpCircle, RefreshCw, Settings } from 'lucide-react';
+import { ArrowDownLeft, ArrowUpRight } from 'lucide-react';
 import type { FC } from 'react';
 
 import styles from './QuickActions.module.scss';
@@ -6,44 +6,23 @@ import styles from './QuickActions.module.scss';
 interface QuickActionsProps {
   onSend?: () => void;
   onReceive?: () => void;
-  onSwap?: () => void;
-  onSettings?: () => void;
 }
 
-export const QuickActions: FC<QuickActionsProps> = ({
-  onSend,
-  onReceive,
-  onSwap,
-  onSettings,
-}) => {
+export const QuickActions: FC<QuickActionsProps> = ({ onSend, onReceive }) => {
   const actions = [
     {
       id: 'send',
       label: 'Send',
-      icon: ArrowUpCircle,
+      icon: ArrowUpRight,
       onClick: onSend,
       variant: 'primary' as const,
     },
     {
       id: 'receive',
       label: 'Receive',
-      icon: ArrowDownCircle,
+      icon: ArrowDownLeft,
       onClick: onReceive,
       variant: 'secondary' as const,
-    },
-    {
-      id: 'swap',
-      label: 'Swap',
-      icon: RefreshCw,
-      onClick: onSwap,
-      variant: 'accent' as const,
-    },
-    {
-      id: 'settings',
-      label: 'Settings',
-      icon: Settings,
-      onClick: onSettings,
-      variant: 'neutral' as const,
     },
   ];
 
@@ -52,7 +31,7 @@ export const QuickActions: FC<QuickActionsProps> = ({
       {actions.map((action, index) => (
         <button
           key={action.id}
-          type="button"
+          type='button'
           className={`${styles.actionButton} ${styles[`actionButton--${action.variant}`]}`}
           onClick={action.onClick}
           style={{

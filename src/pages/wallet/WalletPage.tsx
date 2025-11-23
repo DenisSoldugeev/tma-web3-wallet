@@ -1,5 +1,5 @@
-import { Card } from '@components/ui/Card';
-import { JettonList } from '@components/wallet/JettonList';
+import { GlassContainer } from '@components/ui/GlassContainer';
+import { Icon } from '@components/ui/Icon';
 import { QuickActions } from '@components/wallet/QuickActions';
 import { TransactionList } from '@components/wallet/TransactionList';
 import { useTransitionNavigate } from '@hooks/useTransitionNavigate';
@@ -8,21 +8,39 @@ import { TonService } from '@services/ton.ts';
 import { WalletService } from '@services/wallet.ts';
 import { useQuery } from '@tanstack/react-query';
 import { truncateAddress } from '@utils/format';
-import { Copy, Check, LogOut, QrCode, TrendingUp } from 'lucide-react';
-import { useState, useEffect } from 'react';
+import { getTelegramWebApp, triggerHapticImpact } from '@utils/telegram';
+import { LogOut, TrendingUp, TrendingDown } from 'lucide-react';
+import { useState, useEffect, useMemo } from 'react';
 
 import styles from './WalletPage.module.scss';
 
 export function WalletPage() {
     const navigate = useTransitionNavigate();
     const [wallet, setWallet] = useState(WalletService.getWallet());
-    const [copiedAddress, setCopiedAddress] = useState(false);
 
     useEffect(() => {
         if (!wallet) {
-            navigate({ to: '/' }, 'backward');
+            navigate({ to: '/' }, 'backward').then();
         }
     }, [wallet, navigate]);
+
+    useEffect(() => {
+        if (!wallet) return;
+        const webApp = getTelegramWebApp();
+        if (!webApp) return;
+
+        const handleBackClick = () => {
+            navigate({ to: '/' }, 'backward').then();
+        };
+
+        webApp.BackButton.show();
+        webApp.BackButton.onClick(handleBackClick);
+
+        return () => {
+            webApp.BackButton.offClick(handleBackClick);
+            webApp.BackButton.hide();
+        };
+    }, [navigate, wallet]);
 
     // Fetch balance
     const { data: balance, isLoading: isBalanceLoading } = useQuery({
@@ -33,15 +51,16 @@ export function WalletPage() {
     });
 
     // Fetch transactions
-    const { data: transactions = [], isLoading: isTransactionsLoading } = useQuery({
-        queryKey: ['transactions', wallet?.address],
-        queryFn: async () => {
-            if (!wallet) return [];
-            return await TonService.getTransactions(wallet.address, 10);
-        },
-        enabled: !!wallet,
-        refetchInterval: 30000,
-    });
+    const { data: transactions = [], isLoading: isTransactionsLoading } =
+        useQuery({
+            queryKey: ['transactions', wallet?.address],
+            queryFn: async () => {
+                if (!wallet) return [];
+                return await TonService.getTransactions(wallet.address, 10);
+            },
+            enabled: !!wallet,
+            refetchInterval: 30000,
+        });
 
     // Fetch TON price in USD
     const { data: tonPrice } = useQuery({
@@ -50,51 +69,44 @@ export function WalletPage() {
         refetchInterval: 60000, // Update every minute
     });
 
-    // Fetch Jettons
-    const { data: jettons = [], isLoading: isJettonsLoading } = useQuery({
-        queryKey: ['jettons', wallet?.address],
-        queryFn: async () => {
-            if (!wallet) return [];
-            return await TonService.getJettons(wallet.address);
-        },
-        enabled: !!wallet,
-        refetchInterval: 60000,
-    });
+    const tonAmount = balance?.formatted ? parseFloat(balance.formatted) : 0;
 
-    // Calculate USD value
-    const usdValue = balance && tonPrice
-        ? parseFloat(balance.formatted) * tonPrice
-        : 0;
+    const formattedTonAmount = useMemo(() => {
+        return new Intl.NumberFormat('ru-RU', {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2,
+        }).format(tonAmount);
+    }, [tonAmount]);
 
-    const handleCopyAddress = async () => {
-        if (wallet) {
-            await navigator.clipboard.writeText(wallet.address);
-            setCopiedAddress(true);
-            setTimeout(() => setCopiedAddress(false), 2000);
-        }
-    };
+    const usdValue = tonPrice?.price ? tonAmount * tonPrice.price : null;
+
+    const formattedUsdValue = useMemo(() => {
+        if (usdValue === null) return null;
+        return PriceService.formatUSD(usdValue);
+    }, [usdValue]);
+
+    const formattedTonPrice = useMemo(() => {
+        if (!tonPrice?.price) return null;
+        return PriceService.formatUSD(tonPrice.price);
+    }, [tonPrice]);
+
+    const priceChange24h = tonPrice?.change24h ?? 0;
+    const isPriceUp = priceChange24h > 0;
 
     const handleSend = () => {
+        triggerHapticImpact('medium');
         // TODO: Implement send modal
-        console.log('Send clicked');
+        console.warn('Send action is not implemented yet');
     };
 
     const handleReceive = () => {
+        triggerHapticImpact('light');
         // TODO: Implement receive modal with QR code
-        console.log('Receive clicked');
-    };
-
-    const handleSwap = () => {
-        // TODO: Implement swap functionality
-        console.log('Swap clicked');
-    };
-
-    const handleSettings = () => {
-        // TODO: Implement settings page
-        console.log('Settings clicked');
+        console.warn('Receive action is not implemented yet');
     };
 
     const handleLogout = () => {
+        triggerHapticImpact('soft');
         WalletService.deleteWallet();
         setWallet(null);
         navigate({ to: '/' }, 'backward').then();
@@ -104,79 +116,73 @@ export function WalletPage() {
 
     return (
         <div className={styles.wallet}>
-            <div className={styles.content}>
-                {/* Header */}
-                <div className={styles.header}>
-                    <h1 className={styles.title}>My Wallet</h1>
-                    <button className={styles.logoutButton} onClick={handleLogout} title="Logout">
-                        <LogOut size={20} />
-                    </button>
-                </div>
-
-                {/* Balance Card */}
-                <Card gradient className={styles.balanceCard}>
-                    <div className={styles.balanceHeader}>
-                        <span className={styles.balanceLabel}>Total Balance</span>
-                    </div>
-                    <div className={styles.balanceAmount}>
-                        {isBalanceLoading ? (
-                            <div className={styles.skeleton}/>
-                        ) : (
-                            <>
-                                <h2 className={styles.balance}>{balance?.formatted || '0.0000'} TON</h2>
-                                {tonPrice && (
-                                    <div className={styles.usdValue}>
-                                        <span className={styles.usdAmount}>
-                                            ≈ {PriceService.formatUSD(usdValue)}
-                                        </span>
-                                        <div className={styles.priceChange}>
-                                            <TrendingUp size={12} />
-                                            <span>TON @ ${tonPrice.toFixed(2)}</span>
-                                        </div>
-                                    </div>
-                                )}
-                            </>
-                        )}
-                    </div>
-                    <div className={styles.addressContainer}>
-                        <span className={styles.address}>{truncateAddress(wallet.address, 8, 6)}</span>
-                        <div className={styles.addressActions}>
-                            <button
-                                className={styles.iconButton}
-                                onClick={handleCopyAddress}
-                                title="Copy address"
-                            >
-                                {copiedAddress ? <Check size={16} /> : <Copy size={16} />}
-                            </button>
-                            <button
-                                className={styles.iconButton}
-                                onClick={handleReceive}
-                                title="Show QR code"
-                            >
-                                <QrCode size={16} />
-                            </button>
+            <GlassContainer variant="subtle">
+                <div className={styles.panelHeader}>
+                    <div className={styles.branding}>
+                        <div className={styles.brandIcon}>
+                            <Icon name='tonSymbol' size={32}/>
+                        </div>
+                        <div className={styles.brandText}>
+                            <p className={styles.brandLabel}>Wallet</p>
+                            <p className={styles.brandAddress}>
+                                {truncateAddress(wallet.address, 6, 6)}
+                            </p>
                         </div>
                     </div>
-                </Card>
+                    <button
+                        className={styles.logoutButton}
+                        onClick={handleLogout}
+                        title='Logout'
+                    >
+                        <LogOut size={18}/>
+                    </button>
+                </div>
+            </GlassContainer>
 
-                {/* Quick Actions */}
-                <QuickActions
-                    onSend={handleSend}
-                    onReceive={handleReceive}
-                    onSwap={handleSwap}
-                    onSettings={handleSettings}
-                />
+            <GlassContainer className={styles.balanceCard} variant="subtle">
+                {isBalanceLoading ? (
+                    <div className={styles.balanceSkeleton}/>
+                ) : (
+                    <div className={styles.balanceContent}>
+                        <div className={styles.balanceMain}>
+                            <div className={styles.tonBalance}>
+                                <span className={styles.tonAmount}>{formattedTonAmount}</span>
+                                <span className={styles.tonSymbol}>TON</span>
+                            </div>
+                            {formattedUsdValue && (
+                                <p className={styles.usdValue}>≈ {formattedUsdValue}</p>
+                            )}
+                        </div>
 
-                {/* Jettons List */}
-                <JettonList jettons={jettons} isLoading={isJettonsLoading} />
+                        <div className={styles.priceDivider}/>
 
-                {/* Transaction List */}
-                <TransactionList
-                    transactions={transactions}
-                    currentAddress={wallet.address}
-                    isLoading={isTransactionsLoading}
-                />
-            </div>
+                        <div className={styles.priceInfo}>
+                            <div className={styles.priceRow}>
+                                <span className={styles.priceLabel}>TON Price</span>
+                                <span className={styles.priceValue}>{formattedTonPrice ?? '—'}</span>
+                            </div>
+                            {priceChange24h !== 0 && (
+                                <div className={styles.priceChangeRow}>
+                                    <span className={styles.priceChangeLabel}>24h Change</span>
+                                    <div className={styles.priceChange} data-trend={isPriceUp ? 'up' : 'down'}>
+                                        {isPriceUp ? <TrendingUp size={14}/> : <TrendingDown size={14}/>}
+                                        <span>{isPriceUp ? '+' : ''}{priceChange24h.toFixed(2)}%</span>
+                                    </div>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                )}
+            </GlassContainer>
+
+            {/*<QuickActions onSend={handleSend} onReceive={handleReceive}/>*/}
+
+            {/*<TransactionList*/}
+            {/*    transactions={transactions}*/}
+            {/*    currentAddress={wallet.address}*/}
+            {/*    isLoading={isTransactionsLoading}*/}
+            {/*    title='Transactions'*/}
+            {/*/>*/}
         </div>
     );
 }
