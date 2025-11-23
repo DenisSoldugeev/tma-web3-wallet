@@ -175,7 +175,7 @@ export function WalletPage() {
                 )}
             </GlassContainer>
 
-            {/*<QuickActions onSend={handleSend} onReceive={handleReceive}/>*/}
+            <QuickActions onSend={handleSend} onReceive={handleReceive}/>
 
             {/*<TransactionList*/}
             {/*    transactions={transactions}*/}

@@ -5,105 +5,55 @@
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: variables.$spacing-md;
-  animation: fadeInUp 0.4s variables.$ease-out-expo;
+  margin-top: variables.$spacing-lg;
 
   @media (max-width: variables.$breakpoint-sm) {
     gap: variables.$spacing-sm;
   }
 }
 
-.actionButton {
-  position: relative;
+.actionCard {
   display: flex;
+  flex-direction: row;
   align-items: center;
   justify-content: center;
   gap: variables.$spacing-sm;
-  padding: variables.$spacing-md variables.$spacing-lg;
-  border: 1px solid rgba(0, 152, 234, 0.25);
-  border-radius: variables.$radius-2xl;
-  background: rgba(255, 255, 255, 0.12);
   cursor: pointer;
-  transition: transform variables.$transition-base variables.$ease-out-expo, box-shadow variables.$transition-base;
-  animation: slideUp 0.3s variables.$ease-out-expo forwards;
-  opacity: 0;
-
-  &::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    background: linear-gradient(130deg, rgba(255, 255, 255, 0.25), transparent 60%);
-    opacity: 0;
-    transition: opacity variables.$transition-base;
-  }
+  transition: transform variables.$transition-base variables.$ease-out-expo;
 
   &:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 25px 40px rgba(0, 152, 234, 0.25);
-
-    &::after {
-      opacity: 1;
-    }
+    transform: translateY(-2px);
   }
 
   &:active {
     transform: translateY(0);
   }
-
-  &--primary {
-    background: var(--ton-brand-gradient);
-    color: variables.$button-text;
-  }
-
-  &--secondary {
-    background: linear-gradient(135deg, #0098ea 0%, #33d4ff 100%);
-    color: variables.$button-text;
-  }
-
-  @media (max-width: variables.$breakpoint-sm) {
-    padding: variables.$spacing-md;
-  }
 }
 
-.actionButton__icon {
-  display: inline-flex;
+.actionIcon {
+  display: flex;
   align-items: center;
   justify-content: center;
-  width: 44px;
-  height: 44px;
+  width: 40px;
+  height: 40px;
   border-radius: variables.$radius-full;
-  background: rgba(255, 255, 255, 0.2);
+  background: linear-gradient(135deg, rgba(0, 152, 234, 0.15), rgba(45, 131, 236, 0.2));
+  color: variables.$text-accent;
+  transition: all variables.$transition-base;
 
   svg {
-    width: 22px;
-    height: 22px;
+    stroke: currentColor;
+  }
+
+  .actionCard:hover & {
+    background: linear-gradient(135deg, rgba(0, 152, 234, 0.25), rgba(45, 131, 236, 0.3));
+    transform: scale(1.05);
   }
 }
 
-.actionButton__label {
-  font-size: variables.$font-size-lg;
+.actionLabel {
+  font-size: variables.$font-size-base;
   font-weight: variables.$font-weight-semibold;
+  color: variables.$text-primary;
   letter-spacing: 0.02em;
-}
-
-@keyframes fadeInUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-@keyframes slideUp {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }

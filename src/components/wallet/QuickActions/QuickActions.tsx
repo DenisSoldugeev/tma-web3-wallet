@@ -1,3 +1,4 @@
+import { GlassContainer } from '@components/ui/GlassContainer';
 import { ArrowDownLeft, ArrowUpRight } from 'lucide-react';
 import type { FC } from 'react';
 
@@ -9,41 +10,31 @@ interface QuickActionsProps {
 }
 
 export const QuickActions: FC<QuickActionsProps> = ({ onSend, onReceive }) => {
-  const actions = [
-    {
-      id: 'send',
-      label: 'Send',
-      icon: ArrowUpRight,
-      onClick: onSend,
-      variant: 'primary' as const,
-    },
-    {
-      id: 'receive',
-      label: 'Receive',
-      icon: ArrowDownLeft,
-      onClick: onReceive,
-      variant: 'secondary' as const,
-    },
-  ];
-
   return (
     <div className={styles.quickActions}>
-      {actions.map((action, index) => (
-        <button
-          key={action.id}
-          type='button'
-          className={`${styles.actionButton} ${styles[`actionButton--${action.variant}`]}`}
-          onClick={action.onClick}
-          style={{
-            animationDelay: `${index * 0.05}s`,
-          }}
-        >
-          <div className={styles.actionButton__icon}>
-            <action.icon size={24} strokeWidth={2} />
-          </div>
-          <span className={styles.actionButton__label}>{action.label}</span>
-        </button>
-      ))}
+      <GlassContainer
+        variant="subtle"
+        size="sm"
+        onClick={onSend}
+        className={styles.actionCard}
+      >
+        <div className={styles.actionIcon}>
+          <ArrowUpRight size={24} strokeWidth={2.5} />
+        </div>
+        <span className={styles.actionLabel}>Send</span>
+      </GlassContainer>
+
+      <GlassContainer
+        variant="subtle"
+        size="sm"
+        onClick={onReceive}
+        className={styles.actionCard}
+      >
+        <div className={styles.actionIcon}>
+          <ArrowDownLeft size={24} strokeWidth={2.5} />
+        </div>
+        <span className={styles.actionLabel}>Receive</span>
+      </GlassContainer>
     </div>
   );
 };
