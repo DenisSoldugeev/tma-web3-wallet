@@ -9,6 +9,15 @@ import type { WalletBalance, Transaction, Jetton } from '@/types/wallet';
 export class TonService {
   private static client: TonClient | null = null;
 
+  private static normalizeAddress(address: string): string {
+    if (!address) return '';
+    try {
+      return Address.parse(address).toRawString();
+    } catch {
+      return address;
+    }
+  }
+
   /**
    * Initialize TON client
    */
@@ -51,7 +60,102 @@ export class TonService {
    * Get transaction history
    */
   static async getTransactions(address: string, limit = 10): Promise<Transaction[]> {
+    const normalizedAddress = this.normalizeAddress(address);
+
     try {
+      const url = `https://tonapi.io/v2/accounts/${normalizedAddress}/events?limit=${limit}`;
+      const headers: Record<string, string> = { Accept: 'application/json' };
+      const response = await fetch(url, { headers });
+
+      if (!response.ok) {
+        throw new Error(`TON API request failed with status ${response.status}`);
+      }
+
+      const data = await response.json();
+      const transactions: Transaction[] = [];
+
+      (data.events || []).forEach((event: any, eventIndex: number) => {
+        const timestamp = (event.timestamp ?? event.utime ?? Math.floor(Date.now() / 1000)) * 1000;
+        const actions = Array.isArray(event.actions) ? event.actions : [];
+
+        actions.forEach((action: any, actionIndex: number) => {
+          const actionType = (action.type || '').toLowerCase();
+          const status: Transaction['status'] =
+            action.status === 'ok' ? 'confirmed' : (action.status as Transaction['status']) || 'confirmed';
+
+          const tonTransfer = action.ton_transfer ?? action.TonTransfer ?? (actionType === 'tontransfer' ? action : null);
+          if (tonTransfer) {
+            const from = this.normalizeAddress(
+              tonTransfer.sender?.address ?? tonTransfer.sender ?? action.sender?.address ?? action.sender,
+            );
+            const to = this.normalizeAddress(
+              tonTransfer.recipient?.address ?? tonTransfer.recipient ?? action.recipient?.address ?? action.recipient,
+            );
+            const amount = (tonTransfer.amount ?? tonTransfer.value ?? action.amount ?? '0').toString();
+
+            transactions.push({
+              hash: event.event_id ?? action.event_id ?? `${timestamp}-${eventIndex}-${actionIndex}`,
+              from,
+              to,
+              amount,
+              decimals: 9,
+              assetSymbol: 'TON',
+              timestamp,
+              status,
+              isIncoming: to === normalizedAddress,
+              comment: tonTransfer.comment ?? action.comment,
+            });
+            return;
+          }
+
+          const jettonTransfer =
+            action.jetton_transfer ?? action.JettonTransfer ?? (actionType === 'jettontransfer' ? action : null);
+          if (jettonTransfer) {
+            const jettonMeta = jettonTransfer.jetton ?? jettonTransfer.jetton_info ?? {};
+            const decimals = Number(jettonMeta.decimals ?? jettonMeta.scale ?? 9);
+            const from = this.normalizeAddress(
+              jettonTransfer.sender?.address ?? jettonTransfer.sender ?? action.sender?.address ?? action.sender,
+            );
+            const to = this.normalizeAddress(
+              jettonTransfer.recipient?.address ??
+                jettonTransfer.recipient ??
+                action.recipient?.address ??
+                action.recipient,
+            );
+            const amount = (jettonTransfer.amount ?? action.amount ?? '0').toString();
+
+            transactions.push({
+              hash: `${event.event_id ?? action.event_id ?? timestamp}-${eventIndex}-${actionIndex}`,
+              from,
+              to,
+              amount,
+              decimals: Number.isFinite(decimals) ? decimals : 9,
+              assetSymbol: jettonMeta.symbol || 'JETTON',
+              timestamp,
+              status,
+              isIncoming: to === normalizedAddress,
+              comment: jettonTransfer.comment ?? action.comment,
+              icon: jettonMeta.image ?? jettonMeta.image_preview,
+              jettonAddress: jettonMeta.address ?? jettonTransfer.jetton,
+            });
+          }
+        });
+      });
+
+      if (transactions.length > 0) {
+        return transactions.sort((a, b) => b.timestamp - a.timestamp).slice(0, limit);
+      }
+    } catch (error) {
+      console.error('Failed to get transactions from TON API:', error);
+    }
+
+    // Fallback to on-chain client if TON API is unavailable
+    return this.getFallbackTransactions(address, limit);
+  }
+
+  private static async getFallbackTransactions(address: string, limit: number): Promise<Transaction[]> {
+    try {
+      const normalizedWallet = this.normalizeAddress(address);
       const client = this.initialize();
       const addr = Address.parse(address);
       const transactions = await client.getTransactions(addr, { limit });
@@ -59,14 +163,19 @@ export class TonService {
       return transactions.map((tx) => {
         const info = tx.inMessage?.info;
         const value = info && 'value' in info ? info.value.coins.toString() : '0';
+        const to = this.normalizeAddress(info?.dest?.toString() || address);
+        const from = this.normalizeAddress(info?.src?.toString() || '');
 
         return {
           hash: tx.hash().toString('hex'),
-          from: info?.src?.toString() || '',
-          to: info?.dest?.toString() || address,
-          value,
+          from,
+          to,
+          amount: value,
+          decimals: 9,
+          assetSymbol: 'TON',
           timestamp: tx.now * 1000,
           status: 'confirmed' as const,
+          isIncoming: to === normalizedWallet,
         };
       });
     } catch (error) {
@@ -100,93 +209,50 @@ export class TonService {
 
   /**
    * Get Jettons (tokens) for a wallet
-   * Uses TON Center API v3
+   * Uses TON API v2
    */
   static async getJettons(address: string): Promise<Jetton[]> {
     try {
-      // Convert user-friendly address to raw format (0:hex)
-      const addr = Address.parse(address);
-      const rawAddress = addr.toRawString();
-
-      // Use TON Center API v3
-      const endpoint = 'https://toncenter.com';
-
-      // Note: API v3 works without key for mainnet
-      const url = `${endpoint}/api/v3/jetton/wallets?owner_address=${rawAddress}&limit=100`;
-      const headers: Record<string, string> = {
-        'Accept': 'application/json',
-      };
-
+      const rawAddress = this.normalizeAddress(address);
+      const url = `https://tonapi.io/v2/accounts/${rawAddress}/jettons`;
+      const headers: Record<string, string> = { Accept: 'application/json' };
       const response = await fetch(url, { headers });
 
-      // Handle rate limiting
-      if (response.status === 429) {
-        console.warn('Rate limit exceeded. Using cached/mock data.');
-        throw new Error('Rate limit exceeded');
-      }
-
       if (!response.ok) {
-        console.warn('TON Center API request failed:', response.status, response.statusText);
-        const errorText = await response.text();
-        console.warn('Error response:', errorText);
-        throw new Error('Failed to fetch jettons');
+        throw new Error(`TON API request failed with status ${response.status}`);
       }
 
       const data = await response.json();
+      const balances = data.balances || data.jettons || [];
 
-      // Get jetton master metadata
-      const jettonMasters = new Map<string, any>();
-      if (data.address_book) {
-        Object.entries(data.address_book).forEach(([addr, info]: [string, any]) => {
-          if (info.interfaces?.includes('jetton_master')) {
-            jettonMasters.set(addr, info);
-          }
-        });
-      }
-
-      // Parse jetton wallets with minimum balance filter
-      // Minimum balance: 100,000 nano-tokens (0.0001 with 9 decimals)
-      const MIN_BALANCE = 100000;
-
-      const jettons: Jetton[] = (data.jetton_wallets || [])
-        .filter((wallet: any) => {
-          const balance = parseFloat(wallet.balance);
-          // Filter out zero and dust balances
-          return balance >= MIN_BALANCE;
-        })
-        .map((wallet: any) => {
-          const jettonAddress = wallet.jetton;
-          const jettonInfo = jettonMasters.get(jettonAddress);
-
-          // Extract symbol from domain or use default
-          let symbol = '???';
-          let name = 'Unknown Token';
-
-          if (jettonInfo?.domain) {
-            // e.g., "usdt-minter.ton" -> "USDT"
-            symbol = jettonInfo.domain.split('-')[0].toUpperCase();
-            name = symbol + ' Token';
-          }
+      const jettons: Jetton[] = balances
+        .filter((item: any) => Number(item.balance) > 0)
+        .map((item: any) => {
+          const meta = item.jetton ?? item.jetton_info ?? {};
+          const decimals = Number(meta.decimals ?? meta.scale ?? 9);
 
           return {
-            address: jettonInfo?.user_friendly || jettonAddress,
-            name,
-            symbol,
-            balance: wallet.balance,
-            decimals: 9, // Default for TON jettons
-            verified: !!jettonInfo?.domain,
+            address: meta.address ?? item.wallet_address ?? item.address ?? '',
+            name: meta.name || meta.symbol || 'Unknown Token',
+            symbol: meta.symbol || 'JETTON',
+            balance: item.balance?.toString?.() ?? '0',
+            decimals: Number.isFinite(decimals) ? decimals : 9,
+            image: meta.image ?? meta.image_preview,
+            verified: meta.verification === 'whitelist' || meta.verification === 'verified' || meta.blacklist === false,
           };
         })
-        // Sort by balance (highest first)
         .sort((a: Jetton, b: Jetton) => parseFloat(b.balance) - parseFloat(a.balance));
 
-      console.info(`Found ${jettons.length} jettons with meaningful balance`);
-      return jettons;
+      if (jettons.length > 0) {
+        console.info(`Found ${jettons.length} jettons with meaningful balance`);
+        return jettons;
+      }
     } catch (error) {
       console.error('Failed to get jettons:', error);
-      // Return mock data for demo/development
-      return this.getMockJettons();
     }
+
+    // Return mock data for demo/development when API returns empty or fails
+    return this.getMockJettons();
   }
 
   /**

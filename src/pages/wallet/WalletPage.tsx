@@ -1,7 +1,6 @@
 import { GlassContainer } from '@components/ui/GlassContainer';
 import { Icon } from '@components/ui/Icon';
 import { QuickActions } from '@components/wallet/QuickActions';
-import { TransactionList } from '@components/wallet/TransactionList';
 import { useTransitionNavigate } from '@hooks/useTransitionNavigate';
 import { PriceService } from '@services/price';
 import { TonService } from '@services/ton.ts';
@@ -49,18 +48,6 @@ export function WalletPage() {
         enabled: !!wallet,
         refetchInterval: 10000,
     });
-
-    // Fetch transactions
-    const { data: transactions = [], isLoading: isTransactionsLoading } =
-        useQuery({
-            queryKey: ['transactions', wallet?.address],
-            queryFn: async () => {
-                if (!wallet) return [];
-                return await TonService.getTransactions(wallet.address, 10);
-            },
-            enabled: !!wallet,
-            refetchInterval: 30000,
-        });
 
     // Fetch TON price in USD
     const { data: tonPrice } = useQuery({
@@ -177,12 +164,6 @@ export function WalletPage() {
 
             <QuickActions onSend={handleSend} onReceive={handleReceive}/>
 
-            {/*<TransactionList*/}
-            {/*    transactions={transactions}*/}
-            {/*    currentAddress={wallet.address}*/}
-            {/*    isLoading={isTransactionsLoading}*/}
-            {/*    title='Transactions'*/}
-            {/*/>*/}
         </div>
     );
 }

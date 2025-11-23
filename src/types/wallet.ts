@@ -14,9 +14,15 @@ export interface Transaction {
   hash: string;
   from: string;
   to: string;
-  value: string;
+  amount: string;
+  decimals: number;
+  assetSymbol: string;
   timestamp: number;
   status: 'pending' | 'confirmed' | 'failed';
+  isIncoming: boolean;
+  comment?: string;
+  icon?: string;
+  jettonAddress?: string;
 }
 
 export interface CreateWalletParams {
