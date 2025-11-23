@@ -1,15 +1,13 @@
 @use 'variables' as *;
 
 // Glassmorphism effect - adaptive to any background
-// Uses white overlay by default (works well on dark backgrounds)
 @mixin glass-effect($blur: $glass-blur, $opacity: 0.1, $border-opacity: 0.2) {
   background: rgba(255, 255, 255, $opacity);
   backdrop-filter: blur($blur);
   -webkit-backdrop-filter: blur($blur);
+  //border: $border-width-thin solid var(--tg-theme-button-color, rgba(255, 255, 255, $border-opacity));
   border: $border-width-thin solid rgba(255, 255, 255, $border-opacity);
 }
-
-
 
 // Responsive breakpoint mixin
 @mixin responsive($breakpoint) {

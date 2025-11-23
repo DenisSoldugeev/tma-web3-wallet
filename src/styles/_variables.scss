@@ -41,6 +41,12 @@ $success-gradient: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
 $warning-gradient: linear-gradient(135deg, #f2994a 0%, #f2c94c 100%);
 $danger-gradient: linear-gradient(135deg, $text-destructive 0%, #f45c43 100%);
 
+// Shadows - Depth & Elevation
+$shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.1);
+$shadow-md: 0 8px 30px rgba(0, 0, 0, 0.12);
+$shadow-lg: 0 20px 60px rgba(0, 0, 0, 0.15);
+$shadow-xl: 0 30px 90px rgba(0, 0, 0, 0.2);
+
 $glass-blur: 20px;
 $glass-blur-strong: 30px;
 $glass-blur-subtle: 10px;
