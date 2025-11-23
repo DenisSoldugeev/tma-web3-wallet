@@ -107,4 +107,18 @@ export class WalletService {
   static deleteWallet(): void {
     StorageService.deleteWallet();
   }
+
+  /**
+   * Get decrypted mnemonic for wallet
+   */
+  static async getMnemonic(wallet: Wallet): Promise<string[]> {
+    try {
+      const { decryptData } = await import('@utils/crypto');
+      const mnemonic = decryptData(wallet.encrypted, 'default_password');
+      return mnemonic.split(' ');
+    } catch (error) {
+      console.error('Failed to decrypt mnemonic:', error);
+      throw new Error('Failed to decrypt wallet');
+    }
+  }
 }

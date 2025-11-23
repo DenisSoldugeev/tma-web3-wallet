@@ -73,8 +73,13 @@ export function SendPage() {
         setIsSending(true);
 
         try {
+            // Get decrypted mnemonic
+            const mnemonic = await WalletService.getMnemonic(wallet);
+
+            // Send transaction
             await TonService.sendTransaction(
-                wallet.address,
+                wallet,
+                mnemonic,
                 recipientAddress,
                 amountInNano,
                 comment || undefined,

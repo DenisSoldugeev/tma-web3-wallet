@@ -1,7 +1,8 @@
-import { TonClient, Address } from '@ton/ton';
+import { mnemonicToPrivateKey } from '@ton/crypto';
+import { TonClient, Address, WalletContractV5R1, internal, SendMode } from '@ton/ton';
 import { formatTON } from '@utils/format';
 
-import type { WalletBalance, Transaction, Jetton } from '@/types/wallet';
+import type { WalletBalance, Transaction, Jetton, Wallet } from '@/types/wallet';
 
 /**
  * TON Service for blockchain interactions
@@ -185,22 +186,59 @@ export class TonService {
   }
 
   /**
-   * Send transaction (simplified)
-   * In production, this would require proper signing with the wallet's private key
+   * Send transaction
    */
   static async sendTransaction(
-    from: string,
+    wallet: Wallet,
+    mnemonic: string[],
     to: string,
     amount: bigint,
     memo?: string,
   ): Promise<string> {
     try {
-      // This is a placeholder
-      // In production, implement proper transaction signing and sending
-      console.log('Sending transaction:', { from, to, amount: amount.toString(), memo });
+      const client = this.initialize();
 
-      // Return mock transaction hash
-      return 'mock_tx_hash_' + Date.now();
+      // Generate keypair from mnemonic
+      const keyPair = await mnemonicToPrivateKey(mnemonic);
+
+      // Create wallet contract
+      const workchain = 0;
+      const walletContract = WalletContractV5R1.create({
+        workchain,
+        publicKey: keyPair.publicKey,
+      });
+
+      // Verify wallet address matches
+      const contractAddress = walletContract.address.toString({ bounceable: false });
+      if (contractAddress !== wallet.address) {
+        throw new Error('Wallet address mismatch');
+      }
+
+      // Open wallet
+      const contract = client.open(walletContract);
+
+      // Get seqno
+      const seqno = await contract.getSeqno();
+
+      // Send transfer
+      await contract.sendTransfer({
+        seqno,
+        secretKey: keyPair.secretKey,
+        sendMode: SendMode.PAY_GAS_SEPARATELY + SendMode.IGNORE_ERRORS,
+        messages: [
+          internal({
+            to: Address.parse(to),
+            value: amount,
+            body: memo,
+            bounce: false,
+          }),
+        ],
+      });
+
+      // Return a transaction identifier
+      // In a real app, you might want to return the actual transaction hash
+      // which requires additional logic to track the transaction
+      return `transfer_${Date.now()}_${seqno}`;
     } catch (error) {
       console.error('Failed to send transaction:', error);
       throw new Error('Failed to send transaction');
