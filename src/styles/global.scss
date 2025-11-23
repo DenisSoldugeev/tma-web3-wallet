@@ -19,8 +19,8 @@ body {
   font-weight: variables.$font-weight-normal;
   line-height: 1.5;
   color: variables.$text-primary;
-  min-height: 100vh;
-  overflow-x: hidden;
+  height: 100vh;
+  overflow: hidden;
   background: radial-gradient(circle at top, rgba(0, 152, 234, 0.12), transparent 55%),
     variables.$bg-primary;
   -webkit-font-smoothing: antialiased;
@@ -38,11 +38,12 @@ body {
 // Root container
 #root {
   position: relative;
-  min-height: 100vh;
+  height: 100vh;
   display: flex;
   flex-direction: column;
   transform: translateZ(0);
   will-change: transform;
+  overflow: hidden;
 }
 
 // Typography
@@ -97,22 +98,12 @@ a {
 }
 
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  display: none;
 }
 
-::-webkit-scrollbar-track {
-  background: rgba(0, 0, 0, 0.1);
-  border-radius: variables.$radius-full;
-}
-
-::-webkit-scrollbar-thumb {
-  background: rgba(255, 255, 255, 0.2);
-  border-radius: variables.$radius-full;
-
-  &:hover {
-    background: rgba(255, 255, 255, 0.3);
-  }
+* {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
 }
 
 ::selection {

@@ -2,7 +2,7 @@
 @use "@styles/mixins";
 
 .create-wallet-page {
-  min-height: 100vh;
+  min-height: 100%;
   display: flex;
   justify-content: center;
   padding: variables.$spacing-lg;

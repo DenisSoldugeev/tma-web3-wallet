@@ -2,13 +2,12 @@
 @use '@/styles/mixins';
 
 .receive {
-  min-height: 100vh;
+  min-height: 100%;
   padding: clamp(1.5rem, 5vw, 3.5rem);
   display: flex;
   flex-direction: column;
   gap: variables.$spacing-md;
   position: relative;
-  overflow: hidden;
 
   &::after {
     content: '';
@@ -17,6 +16,7 @@
     background: radial-gradient(circle at 20% -10%, rgba(0, 152, 234, 0.2), transparent 45%),
     radial-gradient(circle at 85% 0%, rgba(45, 131, 236, 0.18), transparent 40%);
     pointer-events: none;
+    z-index: 0;
   }
 }
 

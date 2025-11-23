@@ -7,7 +7,7 @@
   justify-content: center;
   flex-direction: column;
   position: relative;
-  overflow: hidden;
+  min-height: 100%;
 
   &::after {
     content: '';
@@ -16,6 +16,7 @@
     background: radial-gradient(circle at 25% -10%, rgba(0, 152, 234, 0.25), transparent 45%),
     radial-gradient(circle at 90% 0%, rgba(45, 131, 236, 0.2), transparent 35%);
     pointer-events: none;
+    z-index: 0;
   }
 }
 
