@@ -2,7 +2,7 @@ import { mnemonicToPrivateKey } from '@ton/crypto';
 import { WalletContractV5R1 } from '@ton/ton';
 import { generateMnemonic, validateMnemonic, encryptData } from '@utils/crypto';
 
-import { StorageService } from './storage.service';
+import { StorageService } from './storage';
 
 import type { Wallet, CreateWalletParams, ImportWalletParams } from '@/types/wallet';
 

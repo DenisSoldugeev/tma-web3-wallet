@@ -1,0 +1,212 @@
+@use '@/styles/variables';
+@use '@/styles/mixins';
+
+.jettonList {
+  display: flex;
+  flex-direction: column;
+  gap: variables.$spacing-md;
+  animation: fadeInUp 0.5s variables.$ease-out-expo 0.3s both;
+}
+
+.jettonList__title {
+  font-size: variables.$font-size-lg;
+  font-weight: variables.$font-weight-semibold;
+  color: variables.$text-primary;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  gap: variables.$spacing-xs;
+}
+
+.jettonList__count {
+  font-size: variables.$font-size-sm;
+  font-weight: variables.$font-weight-normal;
+  color: variables.$text-tertiary;
+}
+
+.jettonList__items {
+  display: flex;
+  flex-direction: column;
+  gap: variables.$spacing-sm;
+}
+
+.jettonList__skeletons {
+  display: flex;
+  flex-direction: column;
+  gap: variables.$spacing-sm;
+}
+
+// Jetton Item
+.jettonItem {
+  @include mixins.glass-effect(variables.$glass-blur-subtle, 0.05, 0.15);
+  display: flex;
+  align-items: center;
+  gap: variables.$spacing-md;
+  padding: variables.$spacing-md;
+  border-radius: variables.$radius-lg;
+  transition: all variables.$transition-base variables.$ease-out-expo;
+  cursor: pointer;
+  animation: slideUp 0.3s variables.$ease-out-expo forwards;
+  opacity: 0;
+
+  &:hover {
+    @include mixins.glass-effect(variables.$glass-blur-subtle, 0.08, 0.2);
+    transform: translateY(-2px);
+    box-shadow: variables.$shadow-md;
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+.jettonItem__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: variables.$radius-full;
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.15), rgba(118, 75, 162, 0.15));
+  flex-shrink: 0;
+  transition: transform variables.$transition-base;
+  color: variables.$text-primary;
+
+  .jettonItem:hover & {
+    transform: scale(1.05);
+  }
+}
+
+.jettonItem__image {
+  width: 100%;
+  height: 100%;
+  border-radius: variables.$radius-full;
+  object-fit: cover;
+}
+
+.jettonItem__content {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.jettonItem__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: variables.$spacing-sm;
+}
+
+.jettonItem__name {
+  display: flex;
+  align-items: center;
+  gap: variables.$spacing-xs;
+}
+
+.jettonItem__symbol {
+  font-size: variables.$font-size-base;
+  font-weight: variables.$font-weight-bold;
+  color: variables.$text-primary;
+}
+
+.jettonItem__verified {
+  color: #667EEA;
+  flex-shrink: 0;
+}
+
+.jettonItem__balance {
+  font-size: variables.$font-size-base;
+  font-weight: variables.$font-weight-semibold;
+  font-family: variables.$font-family-mono;
+  color: variables.$text-primary;
+  white-space: nowrap;
+}
+
+.jettonItem__details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.jettonItem__fullName {
+  font-size: variables.$font-size-sm;
+  color: variables.$text-secondary;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+// Empty State
+.emptyState {
+  @include mixins.glass-effect(variables.$glass-blur-subtle, 0.05, 0.15);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: variables.$spacing-2xl variables.$spacing-xl;
+  border-radius: variables.$radius-lg;
+  text-align: center;
+  animation: fadeIn 0.4s variables.$ease-out-expo;
+}
+
+.emptyState__icon {
+  margin-bottom: variables.$spacing-md;
+  color: variables.$text-tertiary;
+  opacity: 0.5;
+}
+
+.emptyState__title {
+  font-size: variables.$font-size-base;
+  font-weight: variables.$font-weight-semibold;
+  color: variables.$text-primary;
+  margin: 0 0 variables.$spacing-xs 0;
+}
+
+.emptyState__description {
+  font-size: variables.$font-size-sm;
+  color: variables.$text-secondary;
+  margin: 0;
+}
+
+// Skeleton
+.skeleton {
+  @include mixins.shimmer;
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: variables.$radius-lg;
+  height: 64px;
+  animation: fadeIn 0.3s variables.$ease-out-expo;
+}
+
+// Animations
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}

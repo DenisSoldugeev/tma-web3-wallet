@@ -1,7 +1,7 @@
 import { TonClient, Address } from '@ton/ton';
 import { formatTON } from '@utils/format';
 
-import type { WalletBalance, Transaction } from '@/types/wallet';
+import type { WalletBalance, Transaction, Jetton } from '@/types/wallet';
 
 /**
  * TON Service for blockchain interactions
@@ -15,9 +15,17 @@ export class TonService {
   static initialize() {
     if (!this.client) {
       const endpoint = import.meta.env.VITE_TON_API_ENDPOINT || 'https://testnet.toncenter.com/api/v2/jsonRPC';
-      const apiKey = import.meta.env.VITE_TON_API_KEY;
+      let apiKey = import.meta.env.VITE_TON_API_KEY;
 
-      if (!apiKey) {
+      // Check if endpoint is mainnet - mainnet works without API key
+      const isMainnet = endpoint.includes('toncenter.com') && !endpoint.includes('testnet');
+
+      if (isMainnet) {
+        // For mainnet, don't use API key as it may be testnet-only
+        // Public mainnet endpoint works without key (with rate limits)
+        apiKey = undefined;
+        console.info('Using public mainnet endpoint (rate limited)');
+      } else if (!apiKey) {
         console.warn('TON API key not configured. Set VITE_TON_API_KEY in .env file');
       }
 
@@ -100,5 +108,104 @@ export class TonService {
       console.error('Failed to send transaction:', error);
       throw new Error('Failed to send transaction');
     }
+  }
+
+  /**
+   * Get Jettons (tokens) for a wallet
+   * Uses TON Center API v3
+   */
+  static async getJettons(address: string): Promise<Jetton[]> {
+    try {
+      // Convert user-friendly address to raw format (0:hex)
+      const addr = Address.parse(address);
+      const rawAddress = addr.toRawString();
+
+      // Use TON Center API v3
+      const endpoint = 'https://toncenter.com';
+
+      // Note: API v3 works without key for mainnet
+      const url = `${endpoint}/api/v3/jetton/wallets?owner_address=${rawAddress}&limit=100`;
+      const headers: Record<string, string> = {
+        'Accept': 'application/json',
+      };
+
+      const response = await fetch(url, { headers });
+
+      if (!response.ok) {
+        console.warn('TON Center API request failed:', response.status, response.statusText);
+        const errorText = await response.text();
+        console.warn('Error response:', errorText);
+        throw new Error('Failed to fetch jettons');
+      }
+
+      const data = await response.json();
+
+      // Get jetton master metadata
+      const jettonMasters = new Map<string, any>();
+      if (data.address_book) {
+        Object.entries(data.address_book).forEach(([addr, info]: [string, any]) => {
+          if (info.interfaces?.includes('jetton_master')) {
+            jettonMasters.set(addr, info);
+          }
+        });
+      }
+
+      // Parse jetton wallets
+      const jettons: Jetton[] = (data.jetton_wallets || [])
+        .filter((wallet: any) => parseFloat(wallet.balance) > 0)
+        .map((wallet: any) => {
+          const jettonAddress = wallet.jetton;
+          const jettonInfo = jettonMasters.get(jettonAddress);
+
+          // Extract symbol from domain or use default
+          let symbol = '???';
+          let name = 'Unknown Token';
+
+          if (jettonInfo?.domain) {
+            // e.g., "usdt-minter.ton" -> "USDT"
+            symbol = jettonInfo.domain.split('-')[0].toUpperCase();
+            name = symbol + ' Token';
+          }
+
+          return {
+            address: jettonInfo?.user_friendly || jettonAddress,
+            name,
+            symbol,
+            balance: wallet.balance,
+            decimals: 9, // Default for TON jettons
+            verified: !!jettonInfo?.domain,
+          };
+        });
+
+      return jettons;
+    } catch (error) {
+      console.error('Failed to get jettons:', error);
+      // Return mock data for demo/development
+      return this.getMockJettons();
+    }
+  }
+
+  /**
+   * Mock Jettons for demo/development
+   */
+  private static getMockJettons(): Jetton[] {
+    return [
+      {
+        address: 'EQAvDfWFG0oYX19jwNDNBBL1rKNT9XfaGP9HyTb5nb2Eml6y',
+        name: 'Tether USD',
+        symbol: 'USDT',
+        balance: '1000000000', // 1000 USDT (9 decimals)
+        decimals: 9,
+        verified: true,
+      },
+      {
+        address: 'EQCxE6mUtQJKFnGfaROTKOt1lZbDiiX1kCixRv7Nw2Id_sDs',
+        name: 'Wrapped TON',
+        symbol: 'WTON',
+        balance: '500000000000', // 500 WTON (9 decimals)
+        decimals: 9,
+        verified: true,
+      },
+    ];
   }
 }

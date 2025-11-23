@@ -11,47 +11,139 @@
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  gap: variables.$spacing-xl;
-  animation: fadeIn 0.2s ease-out;
+  gap: variables.$spacing-2xl;
+  animation: fadeIn 0.3s ease-out;
+
+  @media (max-width: variables.$breakpoint-sm) {
+    gap: variables.$spacing-xl;
+  }
 }
 
 .header {
-  text-align: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .title {
   color: variables.$text-primary;
   font-size: variables.$font-size-3xl;
   font-weight: variables.$font-weight-bold;
+  margin: 0;
+}
+
+.logoutButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border: none;
+  border-radius: variables.$radius-full;
+  background: rgba(255, 59, 48, 0.1);
+  color: #FF3B30;
+  cursor: pointer;
+  transition: all variables.$transition-base;
+
+  &:hover {
+    background: rgba(255, 59, 48, 0.2);
+    transform: scale(1.05);
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
 }
 
 .balanceCard {
   padding: variables.$spacing-2xl;
   text-align: center;
+  position: relative;
+  overflow: hidden;
+  animation: balanceCardFadeIn 0.4s variables.$ease-out-expo;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: -50%;
+    background: linear-gradient(
+      135deg,
+      rgba(102, 126, 234, 0.1),
+      rgba(118, 75, 162, 0.1),
+      transparent
+    );
+    animation: rotateGradient 8s linear infinite;
+    opacity: 0.5;
+  }
 }
 
 .balanceHeader {
   margin-bottom: variables.$spacing-md;
+  position: relative;
+  z-index: 1;
 }
 
 .balanceLabel {
   font-size: variables.$font-size-sm;
   color: variables.$text-tertiary;
   text-transform: uppercase;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.1em;
+  font-weight: variables.$font-weight-medium;
 }
 
 .balanceAmount {
   margin-bottom: variables.$spacing-lg;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: variables.$spacing-sm;
+}
 
-  h2 {
-    font-size: variables.$font-size-4xl;
-    font-weight: variables.$font-weight-bold;
-    color: variables.$text-primary;
+.balance {
+  font-size: variables.$font-size-4xl;
+  font-weight: variables.$font-weight-bold;
+  color: variables.$text-primary;
+  margin: 0;
+  animation: countUp 0.6s variables.$ease-out-expo;
 
-    @include mixins.responsive(md) {
-      font-size: 3rem;
-    }
+  @include mixins.responsive(md) {
+    font-size: 3.5rem;
+  }
+}
+
+.usdValue {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  animation: fadeIn 0.5s variables.$ease-out-expo 0.2s both;
+}
+
+.usdAmount {
+  font-size: variables.$font-size-lg;
+  font-weight: variables.$font-weight-semibold;
+  color: variables.$text-secondary;
+  font-family: variables.$font-family-mono;
+}
+
+.priceChange {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: variables.$font-size-xs;
+  color: variables.$text-tertiary;
+  padding: 2px variables.$spacing-sm;
+  border-radius: variables.$radius-sm;
+  background: rgba(52, 199, 89, 0.1);
+
+  svg {
+    color: #34C759;
+  }
+
+  span {
+    color: variables.$text-tertiary;
   }
 }
 
@@ -67,30 +159,46 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: variables.$spacing-sm;
-  @include mixins.glass-effect(variables.$glass-blur-subtle, 0.05, 0.15);
+  gap: variables.$spacing-md;
+  @include mixins.glass-effect(variables.$glass-blur-subtle, 0.08, 0.2);
   padding: variables.$spacing-sm variables.$spacing-md;
   border-radius: variables.$radius-full;
   max-width: fit-content;
   margin: 0 auto;
+  position: relative;
+  z-index: 1;
 }
 
 .address {
   font-family: variables.$font-family-mono;
   font-size: variables.$font-size-sm;
   color: variables.$text-secondary;
+  font-weight: variables.$font-weight-medium;
 }
 
-.copyButton {
-  background: none;
+.addressActions {
+  display: flex;
+  align-items: center;
+  gap: variables.$spacing-xs;
+}
+
+.iconButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
   border: none;
+  border-radius: variables.$radius-sm;
+  background: rgba(255, 255, 255, 0.08);
+  color: variables.$text-secondary;
   cursor: pointer;
-  font-size: variables.$font-size-base;
-  padding: variables.$spacing-xs;
-  transition: transform variables.$transition-fast;
+  transition: all variables.$transition-base;
 
   &:hover {
-    transform: scale(1.1);
+    background: rgba(255, 255, 255, 0.15);
+    color: variables.$text-primary;
+    transform: scale(1.05);
   }
 
   &:active {
@@ -98,58 +206,43 @@
   }
 }
 
-.actions {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: variables.$spacing-md;
-}
-
-.actionCard {
-  padding: variables.$spacing-lg;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: variables.$spacing-md;
-  text-align: center;
-  cursor: pointer;
-}
-
-.actionIcon {
-  font-size: variables.$font-size-4xl;
-  @include mixins.glass-effect(variables.$glass-blur-subtle, 0.1, 0.2);
-  width: 64px;
-  height: 64px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: variables.$radius-xl;
-}
-
-.actionContent {
-  h3 {
-    font-size: variables.$font-size-lg;
-    font-weight: variables.$font-weight-semibold;
-    color: variables.$text-primary;
-    margin-bottom: variables.$spacing-xs;
-  }
-
-  p {
-    font-size: variables.$font-size-sm;
-    color: variables.$text-tertiary;
-  }
-}
-
-.footer {
-  display: flex;
-  justify-content: center;
-  margin-top: variables.$spacing-xl;
-}
-
+// Animations
 @keyframes fadeIn {
   from {
     opacity: 0;
   }
   to {
     opacity: 1;
+  }
+}
+
+@keyframes balanceCardFadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes countUp {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes rotateGradient {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
   }
 }

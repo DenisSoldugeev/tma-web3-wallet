@@ -32,3 +32,13 @@ export interface SendTransactionParams {
   amount: string;
   memo?: string;
 }
+
+export interface Jetton {
+  address: string;
+  name: string;
+  symbol: string;
+  balance: string;
+  decimals: number;
+  image?: string;
+  verified?: boolean;
+}

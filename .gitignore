@@ -31,3 +31,6 @@ dist-ssr
 # more files
 *.md
 !README.md
+
+# Documentation
+docs/

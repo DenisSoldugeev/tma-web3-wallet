@@ -1,0 +1,150 @@
+@use '@/styles/variables';
+@use '@/styles/mixins';
+
+.quickActions {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: variables.$spacing-md;
+  animation: fadeInUp 0.4s variables.$ease-out-expo;
+
+  @media (max-width: variables.$breakpoint-sm) {
+    gap: variables.$spacing-sm;
+  }
+}
+
+.actionButton {
+  @include mixins.glass-effect(variables.$glass-blur-subtle, 0.08, 0.15);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: variables.$spacing-sm;
+  padding: variables.$spacing-lg variables.$spacing-sm;
+  border: none;
+  border-radius: variables.$radius-lg;
+  background: transparent;
+  cursor: pointer;
+  transition: all variables.$transition-base variables.$ease-out-expo;
+  overflow: hidden;
+  min-height: 90px;
+  animation: slideUp 0.3s variables.$ease-out-expo forwards;
+  opacity: 0;
+
+  &::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), rgba(255, 255, 255, 0.05));
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity variables.$transition-base;
+  }
+
+  &:hover {
+    @include mixins.glass-effect(variables.$glass-blur, 0.12, 0.25);
+    transform: translateY(-4px) scale(1.02);
+    box-shadow: variables.$shadow-lg;
+
+    &::before {
+      opacity: 1;
+    }
+
+    .actionButton__icon {
+      transform: scale(1.1);
+    }
+  }
+
+  &:active {
+    transform: translateY(-2px) scale(0.98);
+  }
+
+  &:focus-visible {
+    outline: 2px solid rgba(102, 126, 234, 0.5);
+    outline-offset: 2px;
+  }
+
+  // Варианты кнопок
+  &--primary .actionButton__icon {
+    background: variables.$button-bg;
+    color: variables.$button-text;
+  }
+
+  &--secondary .actionButton__icon {
+    background: variables.$text-accent;
+    color: variables.$button-text;
+  }
+
+  &--accent .actionButton__icon {
+    background: variables.$link-color;
+    color: variables.$button-text;
+  }
+
+  &--neutral .actionButton__icon {
+    background: rgba(255, 255, 255, 0.1);
+    color: variables.$text-primary;
+  }
+
+  @media (max-width: variables.$breakpoint-sm) {
+    padding: variables.$spacing-md variables.$spacing-xs;
+    min-height: 80px;
+  }
+}
+
+.actionButton__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: variables.$radius-md;
+  transition: all variables.$transition-base variables.$ease-out-expo;
+
+  @media (max-width: variables.$breakpoint-sm) {
+    width: 36px;
+    height: 36px;
+
+    svg {
+      width: 20px;
+      height: 20px;
+    }
+  }
+}
+
+.actionButton__label {
+  font-size: variables.$font-size-sm;
+  font-weight: variables.$font-weight-medium;
+  color: variables.$text-primary;
+  white-space: nowrap;
+  line-height: 1.2;
+
+  @media (max-width: variables.$breakpoint-sm) {
+    font-size: variables.$font-size-xs;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

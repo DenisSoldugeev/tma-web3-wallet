@@ -1,0 +1,233 @@
+@use '@/styles/variables';
+@use '@/styles/mixins';
+
+.transactionList {
+  display: flex;
+  flex-direction: column;
+  gap: variables.$spacing-md;
+  animation: fadeInUp 0.5s variables.$ease-out-expo 0.2s both;
+}
+
+.transactionList__title {
+  font-size: variables.$font-size-lg;
+  font-weight: variables.$font-weight-semibold;
+  color: variables.$text-primary;
+  margin: 0;
+}
+
+.transactionList__items {
+  display: flex;
+  flex-direction: column;
+  gap: variables.$spacing-sm;
+}
+
+.transactionList__skeletons {
+  display: flex;
+  flex-direction: column;
+  gap: variables.$spacing-sm;
+}
+
+// Transaction Item
+.transactionItem {
+  @include mixins.glass-effect(variables.$glass-blur-subtle, 0.05, 0.15);
+  display: flex;
+  align-items: center;
+  gap: variables.$spacing-md;
+  padding: variables.$spacing-md;
+  border-radius: variables.$radius-lg;
+  transition: all variables.$transition-base variables.$ease-out-expo;
+  cursor: pointer;
+  animation: slideUp 0.3s variables.$ease-out-expo forwards;
+  opacity: 0;
+
+  &:hover {
+    @include mixins.glass-effect(variables.$glass-blur-subtle, 0.08, 0.2);
+    transform: translateX(4px);
+    box-shadow: variables.$shadow-md;
+  }
+
+  &:active {
+    transform: translateX(2px);
+  }
+}
+
+.transactionItem__icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: variables.$radius-md;
+  flex-shrink: 0;
+  transition: transform variables.$transition-base;
+
+  .transactionItem:hover & {
+    transform: scale(1.1);
+  }
+
+  &--received {
+    background: rgba(52, 199, 89, 0.15);
+    color: #34C759;
+  }
+
+  &--sent {
+    background: rgba(255, 59, 48, 0.15);
+    color: #FF3B30;
+  }
+}
+
+.transactionItem__content {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: variables.$spacing-xs;
+}
+
+.transactionItem__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: variables.$spacing-sm;
+}
+
+.transactionItem__type {
+  font-size: variables.$font-size-base;
+  font-weight: variables.$font-weight-semibold;
+  color: variables.$text-primary;
+}
+
+.transactionItem__amount {
+  font-size: variables.$font-size-base;
+  font-weight: variables.$font-weight-bold;
+  font-family: variables.$font-family-mono;
+  white-space: nowrap;
+
+  &--positive {
+    color: #34C759;
+  }
+
+  &--negative {
+    color: #FF3B30;
+  }
+}
+
+.transactionItem__details {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: variables.$spacing-sm;
+}
+
+.transactionItem__address {
+  font-size: variables.$font-size-sm;
+  color: variables.$text-secondary;
+  font-family: variables.$font-family-mono;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.transactionItem__time {
+  font-size: variables.$font-size-sm;
+  color: variables.$text-tertiary;
+  white-space: nowrap;
+}
+
+.transactionItem__status {
+  margin-top: variables.$spacing-xs;
+}
+
+.statusBadge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px variables.$spacing-sm;
+  border-radius: variables.$radius-sm;
+  font-size: variables.$font-size-xs;
+  font-weight: variables.$font-weight-medium;
+  text-transform: capitalize;
+
+  &--pending {
+    background: rgba(255, 149, 0, 0.15);
+    color: #FF9500;
+  }
+
+  &--failed {
+    background: rgba(255, 59, 48, 0.15);
+    color: #FF3B30;
+  }
+}
+
+// Empty State
+.emptyState {
+  @include mixins.glass-effect(variables.$glass-blur-subtle, 0.05, 0.15);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: variables.$spacing-3xl variables.$spacing-xl;
+  border-radius: variables.$radius-lg;
+  text-align: center;
+  animation: fadeIn 0.4s variables.$ease-out-expo;
+}
+
+.emptyState__icon {
+  margin-bottom: variables.$spacing-lg;
+  color: variables.$text-tertiary;
+  opacity: 0.5;
+}
+
+.emptyState__title {
+  font-size: variables.$font-size-lg;
+  font-weight: variables.$font-weight-semibold;
+  color: variables.$text-primary;
+  margin: 0 0 variables.$spacing-sm 0;
+}
+
+.emptyState__description {
+  font-size: variables.$font-size-sm;
+  color: variables.$text-secondary;
+  margin: 0;
+  max-width: 300px;
+}
+
+// Skeleton
+.skeleton {
+  @include mixins.shimmer;
+  background-color: rgba(255, 255, 255, 0.05);
+  border-radius: variables.$radius-lg;
+  height: 72px;
+  animation: fadeIn 0.3s variables.$ease-out-expo;
+}
+
+// Animations
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
