@@ -3,6 +3,15 @@
 @use 'reset';
 @use 'view-transitions';
 
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+  --ton-brand-main: #0098ea;
+  --ton-brand-gray: #f7f9fb;
+  --ton-brand-black: #1e2337;
+  --ton-brand-gradient: linear-gradient(135deg, #2d83ec 0%, #1ac9ff 100%);
+}
+
 body {
   margin: 0;
   font-family: variables.$font-family-base;
@@ -12,13 +21,11 @@ body {
   color: variables.$text-primary;
   min-height: 100vh;
   overflow-x: hidden;
-  background: variables.$bg-primary;
-  // Performance optimizations for mobile
+  background: radial-gradient(circle at top, rgba(0, 152, 234, 0.12), transparent 55%),
+    variables.$bg-primary;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-rendering: optimizeLegibility;
-
-  // Hardware acceleration
   transform: translateZ(0);
   backface-visibility: hidden;
   perspective: 1000px;
@@ -34,8 +41,6 @@ body {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-
-  // Hardware acceleration for smooth transitions
   transform: translateZ(0);
   will-change: transform;
 }
@@ -110,7 +115,6 @@ a {
   }
 }
 
-// Selection
 ::selection {
   color: variables.$white;
 }
@@ -126,76 +130,10 @@ a {
   border-radius: variables.$radius-sm;
 }
 
-// Utility classes
-.container {
-  width: 100%;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 variables.$spacing-md;
-
-  @include mixins.responsive(md) {
-    padding: 0 variables.$spacing-xl;
-  }
-}
-
-.text-center {
-  text-align: center;
-}
-
-.text-left {
-  text-align: left;
-}
-
-.text-right {
-  text-align: right;
-}
-
-.text-gradient {
-  @include mixins.gradient-text(variables.$primary-gradient);
-}
-
-.truncate {
-  @include mixins.truncate;
-}
-
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border-width: 0;
-}
-
-// Loading skeleton
-.skeleton {
-  @include mixins.shimmer;
-  background-color: rgba(255, 255, 255, 0.1);
-  border-radius: variables.$radius-md;
-}
-
-// Glass card base
-.glass-card {
-  @include mixins.glass-effect(variables.$glass-blur, 0.1, 0.2);
-  border-radius: variables.$radius-lg;
-  padding: variables.$spacing-lg;
-  box-shadow: variables.$shadow-md;
-}
-
-// Telegram WebApp specific
-.tg-viewport {
-  height: var(--tg-viewport-stable-height, 100vh);
-}
-
-// Disable pull-to-refresh on mobile
 body {
   overscroll-behavior-y: none;
 }
 
-// Safe area for iOS devices
 @supports (padding: max(0px)) {
   body {
     padding-left: max(0px, env(safe-area-inset-left));
