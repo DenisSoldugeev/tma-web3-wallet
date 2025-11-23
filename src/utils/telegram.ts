@@ -20,7 +20,7 @@ export function initTelegramApp(): void {
     return;
   }
 
-  webApp.expand();
+  webApp.requestFullscreen();
   webApp.ready();
 
   console.warn('Telegram Mini App initialized', {

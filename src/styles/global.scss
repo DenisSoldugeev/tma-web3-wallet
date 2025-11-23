@@ -29,10 +29,6 @@ body {
   transform: translateZ(0);
   backface-visibility: hidden;
   perspective: 1000px;
-
-  // Telegram WebApp safe area
-  @include mixins.safe-area-padding(top, 0);
-  @include mixins.safe-area-padding(bottom, 0);
 }
 
 // Root container

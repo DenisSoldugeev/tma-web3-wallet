@@ -110,10 +110,10 @@
 
 // Safe area padding using Telegram-provided content inset variables
 @mixin safe-area-padding($position: bottom, $fallback: $spacing-md) {
-  $safe-top: var(--tg-content-safe-area-inset-top, env(safe-area-inset-top, 0px));
-  $safe-bottom: var(--tg-content-safe-area-inset-bottom, env(safe-area-inset-bottom, 0px));
-  $safe-left: var(--tg-content-safe-area-inset-left, env(safe-area-inset-left, 0px));
-  $safe-right: var(--tg-content-safe-area-inset-right, env(safe-area-inset-right, 0px));
+  $safe-top: var(--tg-safe-area-inset-top);
+  $safe-bottom: var(--tg-safe-area-inset-bottom);
+  $safe-left: var(--tg-safe-area-inset-left);
+  $safe-right: var(--tg-safe-area-inset-right);
 
   @if $position == top {
     padding-top: max($fallback, $safe-top);
@@ -126,5 +126,26 @@
   }
   @else if $position == right {
     padding-right: max($fallback, $safe-right);
+  }
+}
+
+// Safe area margin for specific position
+@mixin safe-area-content($position: bottom, $fallback: $spacing-md) {
+  $safe-top: var(--tg-content-safe-area-inset-top);
+  $safe-bottom: var(--tg-content-safe-area-inset-bottom);
+  $safe-left: var(--tg-content-safe-area-inset-left);
+  $safe-right: var(--tg-content-safe-area-inset-right);
+
+  @if $position == top {
+    padding-top: max($fallback, $safe-top);
+  }
+  @else if $position == bottom {
+    padding-bottom: max($fallback, $safe-bottom);
+  }
+  @else if $position == left {
+    padding-top: max($fallback, $safe-left);
+  }
+  @else if $position == right {
+    padding-top: max($fallback, $safe-right);
   }
 }
