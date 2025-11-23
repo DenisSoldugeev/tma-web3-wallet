@@ -21,33 +21,33 @@ export const JettonItem: FC<JettonItemProps> = ({ jetton, index }) => {
 
   return (
     <div
-      className={styles.jettonItem}
+      className={styles['jetton-item']}
       style={{
         animationDelay: `${index * 0.05}s`,
       }}
     >
-      <div className={styles.jettonItem__icon}>
+      <div className={styles['jetton-item__icon']}>
         {jetton.image ? (
-          <img src={jetton.image} alt={jetton.symbol} className={styles.jettonItem__image} />
+          <img src={jetton.image} alt={jetton.symbol} className={styles['jetton-item__image']} />
         ) : (
           <Coins size={24} />
         )}
       </div>
 
-      <div className={styles.jettonItem__content}>
-        <div className={styles.jettonItem__header}>
-          <div className={styles.jettonItem__name}>
-            <span className={styles.jettonItem__symbol}>{jetton.symbol}</span>
+      <div className={styles['jetton-item__content']}>
+        <div className={styles['jetton-item__header']}>
+          <div className={styles['jetton-item__name']}>
+            <span className={styles['jetton-item__symbol']}>{jetton.symbol}</span>
             {jetton.verified && (
-              <BadgeCheck size={14} className={styles.jettonItem__verified} />
+              <BadgeCheck size={14} className={styles['jetton-item__verified']} />
             )}
           </div>
-          <span className={styles.jettonItem__balance}>
+          <span className={styles['jetton-item__balance']}>
             {formatBalance(jetton.balance, jetton.decimals)}
           </span>
         </div>
-        <div className={styles.jettonItem__details}>
-          <span className={styles.jettonItem__fullName}>{jetton.name}</span>
+        <div className={styles['jetton-item__details']}>
+          <span className={styles['jetton-item__full-name']}>{jetton.name}</span>
         </div>
       </div>
     </div>

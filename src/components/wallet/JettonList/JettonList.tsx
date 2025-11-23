@@ -14,11 +14,11 @@ interface JettonListProps {
 export const JettonList: FC<JettonListProps> = ({ jettons, isLoading }) => {
   if (isLoading) {
     return (
-      <div className={styles.jettonList}>
-        <h3 className={styles.jettonList__title}>Tokens</h3>
-        <div className={styles.jettonList__skeletons}>
+      <div className={styles['jetton-list']}>
+        <h3 className={styles['jetton-list__title']}>Tokens</h3>
+        <div className={styles['jetton-list__skeletons']}>
           {[...Array(2)].map((_, i) => (
-            <div key={i} className={styles.skeleton} />
+            <div key={i} className={styles['skeleton']} />
           ))}
         </div>
       </div>
@@ -27,25 +27,25 @@ export const JettonList: FC<JettonListProps> = ({ jettons, isLoading }) => {
 
   if (!jettons || jettons.length === 0) {
     return (
-      <div className={styles.jettonList}>
-        <h3 className={styles.jettonList__title}>Tokens</h3>
-        <div className={styles.emptyState}>
-          <div className={styles.emptyState__icon}>
+      <div className={styles['jetton-list']}>
+        <h3 className={styles['jetton-list__title']}>Tokens</h3>
+        <div className={styles['empty-state']}>
+          <div className={styles['empty-state__icon']}>
             <Wallet size={40} strokeWidth={1.5} />
           </div>
-          <p className={styles.emptyState__title}>No tokens</p>
-          <p className={styles.emptyState__description}>You don't have any tokens yet</p>
+          <p className={styles['empty-state__title']}>No tokens</p>
+          <p className={styles['empty-state__description']}>You don't have any tokens yet</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className={styles.jettonList}>
-      <h3 className={styles.jettonList__title}>
-        Tokens <span className={styles.jettonList__count}>({jettons.length})</span>
+    <div className={styles['jetton-list']}>
+      <h3 className={styles['jetton-list__title']}>
+        Tokens <span className={styles['jetton-list__count']}>({jettons.length})</span>
       </h3>
-      <div className={styles.jettonList__items}>
+      <div className={styles['jetton-list__items']}>
         {jettons.map((jetton, index) => (
           <JettonItem key={jetton.address} jetton={jetton} index={index} />
         ))}

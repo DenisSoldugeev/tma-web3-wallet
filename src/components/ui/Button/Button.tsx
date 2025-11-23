@@ -27,12 +27,12 @@ export const Button = ({
   return (
     <button
       className={clsx(
-        styles.button,
-        styles[variant],
-        styles[size],
+        styles['button'],
+        styles[`button--${variant}`],
+        styles[`button--${size}`],
         {
-          [styles.fullWidth]: fullWidth,
-          [styles.loading]: loading,
+          [styles['button--full-width']]: fullWidth,
+          [styles['button--loading']]: loading,
         },
         className,
       )}
@@ -41,7 +41,7 @@ export const Button = ({
       {...props}
     >
       {loading ? (
-        <span className={styles.loader} />
+        <span className={styles['button__loader']} />
       ) : (
         children
       )}

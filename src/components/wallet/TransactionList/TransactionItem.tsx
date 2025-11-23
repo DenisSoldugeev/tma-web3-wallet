@@ -1,4 +1,5 @@
 import { formatRelativeTime, truncateAddress } from '@utils/format';
+import clsx from 'clsx';
 import { ArrowDownRight, ArrowUpRight } from 'lucide-react';
 import type { FC } from 'react';
 
@@ -30,35 +31,56 @@ export const TransactionItem: FC<TransactionItemProps> = ({ transaction, current
 
   return (
     <div
-      className={styles.transactionItem}
+      className={styles['transaction-item']}
       style={{
         animationDelay: `${index * 0.05}s`,
       }}
     >
-      <div className={`${styles.transactionItem__icon} ${isReceived ? styles['transactionItem__icon--received'] : styles['transactionItem__icon--sent']}`}>
+      <div
+        className={clsx(
+          styles['transaction-item__icon'],
+          isReceived
+            ? styles['transaction-item__icon--received']
+            : styles['transaction-item__icon--sent'],
+        )}
+      >
         {isReceived ? <ArrowDownRight size={20} /> : <ArrowUpRight size={20} />}
       </div>
 
-      <div className={styles.transactionItem__content}>
-        <div className={styles.transactionItem__header}>
-          <span className={styles.transactionItem__type}>
+      <div className={styles['transaction-item__content']}>
+        <div className={styles['transaction-item__header']}>
+          <span className={styles['transaction-item__type']}>
             {isReceived ? 'Received' : 'Sent'} {symbol}
           </span>
-          <span className={`${styles.transactionItem__amount} ${isReceived ? styles['transactionItem__amount--positive'] : styles['transactionItem__amount--negative']}`}>
+          <span
+            className={clsx(
+              styles['transaction-item__amount'],
+              isReceived
+                ? styles['transaction-item__amount--positive']
+                : styles['transaction-item__amount--negative'],
+            )}
+          >
             {isReceived ? '+' : '-'}{formatAmount(transaction.amount, decimals)} {symbol}
           </span>
         </div>
 
-        <div className={styles.transactionItem__details}>
-          <span className={styles.transactionItem__address}>
+        <div className={styles['transaction-item__details']}>
+          <span className={styles['transaction-item__address']}>
             {isReceived ? 'from' : 'to'} {truncateAddress(otherAddress || '', 6, 4)}
           </span>
-          <span className={styles.transactionItem__time}>{formatRelativeTime(transaction.timestamp / 1000)}</span>
+          <span className={styles['transaction-item__time']}>
+            {formatRelativeTime(transaction.timestamp / 1000)}
+          </span>
         </div>
 
         {!isConfirmed && (
-          <div className={styles.transactionItem__status}>
-            <span className={`${styles.statusBadge} ${styles[`statusBadge--${transaction.status}`]}`}>
+          <div className={styles['transaction-item__status']}>
+            <span
+              className={clsx(
+                styles['status-badge'],
+                styles[`status-badge--${transaction.status}`],
+              )}
+            >
               {transaction.status}
             </span>
           </div>

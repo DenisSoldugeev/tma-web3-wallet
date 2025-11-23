@@ -11,29 +11,29 @@ interface QuickActionsProps {
 
 export const QuickActions: FC<QuickActionsProps> = ({ onSend, onReceive }) => {
   return (
-    <div className={styles.quickActions}>
+    <div className={styles['quick-actions']}>
       <GlassContainer
         variant="subtle"
         size="sm"
         onClick={onSend}
-        className={styles.actionCard}
+        className={styles['quick-actions__action-card']}
       >
-        <div className={styles.actionIcon}>
+        <div className={styles['quick-actions__action-icon']}>
           <ArrowUpRight size={24} strokeWidth={2.5} />
         </div>
-        <span className={styles.actionLabel}>Send</span>
+        <span className={styles['quick-actions__action-label']}>Send</span>
       </GlassContainer>
 
       <GlassContainer
         variant="subtle"
         size="sm"
         onClick={onReceive}
-        className={styles.actionCard}
+        className={styles['quick-actions__action-card']}
       >
-        <div className={styles.actionIcon}>
+        <div className={styles['quick-actions__action-icon']}>
           <ArrowDownLeft size={24} strokeWidth={2.5} />
         </div>
-        <span className={styles.actionLabel}>Receive</span>
+        <span className={styles['quick-actions__action-label']}>Receive</span>
       </GlassContainer>
     </div>
   );

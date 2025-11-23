@@ -7,27 +7,27 @@
   box-shadow: variables.$shadow-md;
   transition: all variables.$transition-base variables.$ease-out-expo;
 
-  &.default {
+  &--default {
     @include mixins.glass-effect(variables.$glass-blur, 0.1, 0.2);
   }
 
-  &.strong {
+  &--strong {
     @include mixins.glass-effect(variables.$glass-blur-strong, 0.15, 0.3);
   }
 
-  &.subtle {
+  &--subtle {
     @include mixins.glass-effect(variables.$glass-blur-subtle, 0.05, 0.1);
   }
 
-  &.sm {
+  &--sm {
     padding: variables.$spacing-md;
   }
 
-  &.md {
+  &--md {
     padding: variables.$spacing-lg;
   }
 
-  &.lg {
+  &--lg {
     padding: variables.$spacing-xl;
   }
 }

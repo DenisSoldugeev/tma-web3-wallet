@@ -5,17 +5,21 @@
   border-radius: variables.$radius-lg;
   padding: variables.$spacing-lg;
   border: 1px solid variables.$section-separator;
-}
 
-.hoverable {
-  cursor: pointer;
-  transition: all variables.$transition-base;
+  &--hoverable {
+    cursor: pointer;
+    transition: all variables.$transition-base;
 
-  &:hover {
-    background: variables.$bg-section;
+    &:hover {
+      background: variables.$bg-section;
+    }
+
+    &:active {
+      transform: scale(0.98);
+    }
   }
 
-  &:active {
-    transform: scale(0.98);
+  &--gradient {
+    background: linear-gradient(135deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.05));
   }
 }

@@ -4,19 +4,19 @@ import styles from './Footer.module.scss';
 
 export const Footer: FC = () => {
   return (
-    <footer className={styles.footer}>
-      <div className={styles.content}>
-        <div className={styles.text}>
-          <span className={styles.label}>Educational Web3 Project</span>
-          <span className={styles.divider}>•</span>
+    <footer className={styles['footer']}>
+      <div className={styles['footer__content']}>
+        <div className={styles['footer__text']}>
+          <span className={styles['footer__label']}>Educational Web3 Project</span>
+          <span className={styles['footer__divider']}>•</span>
           <a
             href="https://github.com/DenisSoldugeev/tma-web3-wallet"
             target="_blank"
             rel="noopener noreferrer"
-            className={styles.link}
+            className={styles['footer__link']}
           >
             <svg
-              className={styles.icon}
+              className={styles['footer__icon']}
               viewBox="0 0 24 24"
               fill="currentColor"
               xmlns="http://www.w3.org/2000/svg"

@@ -1,21 +1,21 @@
 @use '@/styles/variables';
 @use '@/styles/mixins';
 
-.wrapper {
+.input {
   display: flex;
   flex-direction: column;
   gap: variables.$spacing-sm;
   width: 100%;
 }
 
-.label {
+.input__label {
   font-size: variables.$font-size-sm;
   font-weight: variables.$font-weight-medium;
   color: variables.$text-secondary;
   margin-bottom: variables.$spacing-xs;
 }
 
-.input {
+.input__field {
   @include mixins.glass-effect(variables.$glass-blur-subtle, 0.05, 0.2);
   width: 100%;
   padding: variables.$spacing-md variables.$spacing-lg;
@@ -46,7 +46,7 @@
     cursor: not-allowed;
   }
 
-  &.error {
+  &--error {
     border-color: rgba(235, 51, 73, 0.5);
 
     &:focus {
@@ -54,7 +54,7 @@
     }
   }
 
-  &.success {
+  &--success {
     border-color: rgba(56, 239, 125, 0.5);
 
     &:focus {
@@ -63,7 +63,7 @@
   }
 }
 
-.errorText {
+.input__error-text {
   font-size: variables.$font-size-sm;
   color: #ff6b6b;
   margin-top: variables.$spacing-xs;

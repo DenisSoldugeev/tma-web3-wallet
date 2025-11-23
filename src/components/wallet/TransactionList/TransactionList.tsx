@@ -21,11 +21,11 @@ export const TransactionList: FC<TransactionListProps> = ({
 }) => {
   if (isLoading) {
     return (
-      <div className={styles.transactionList}>
-        <h3 className={styles.transactionList__title}>{title}</h3>
-        <div className={styles.transactionList__skeletons}>
+      <div className={styles['transaction-list']}>
+        <h3 className={styles['transaction-list__title']}>{title}</h3>
+        <div className={styles['transaction-list__skeletons']}>
           {[...Array(3)].map((_, i) => (
-            <div key={i} className={styles.skeleton} />
+            <div key={i} className={styles['skeleton']} />
           ))}
         </div>
       </div>
@@ -34,14 +34,14 @@ export const TransactionList: FC<TransactionListProps> = ({
 
   if (!transactions || transactions.length === 0) {
     return (
-      <div className={styles.transactionList}>
-        <h3 className={styles.transactionList__title}>{title}</h3>
-        <div className={styles.emptyState}>
-          <div className={styles.emptyState__icon}>
+      <div className={styles['transaction-list']}>
+        <h3 className={styles['transaction-list__title']}>{title}</h3>
+        <div className={styles['empty-state']}>
+          <div className={styles['empty-state__icon']}>
             <Inbox size={48} strokeWidth={1.5} />
           </div>
-          <p className={styles.emptyState__title}>No transactions yet</p>
-          <p className={styles.emptyState__description}>
+          <p className={styles['empty-state__title']}>No transactions yet</p>
+          <p className={styles['empty-state__description']}>
             Your transaction history will appear here
           </p>
         </div>
@@ -50,9 +50,9 @@ export const TransactionList: FC<TransactionListProps> = ({
   }
 
   return (
-    <div className={styles.transactionList}>
-      <h3 className={styles.transactionList__title}>{title}</h3>
-      <div className={styles.transactionList__items}>
+    <div className={styles['transaction-list']}>
+      <h3 className={styles['transaction-list__title']}>{title}</h3>
+      <div className={styles['transaction-list__items']}>
         {transactions.map((transaction, index) => (
           <TransactionItem
             key={transaction.hash}

@@ -22,30 +22,30 @@
   }
 
   // Sizes
-  &.sm {
+  &--sm {
     padding: variables.$spacing-sm variables.$spacing-md;
     font-size: variables.$font-size-sm;
     min-height: 36px;
   }
 
-  &.md {
+  &--md {
     padding: variables.$spacing-md variables.$spacing-lg;
     font-size: variables.$font-size-base;
     min-height: 44px;
   }
 
-  &.lg {
+  &--lg {
     padding: variables.$spacing-lg variables.$spacing-xl;
     font-size: variables.$font-size-lg;
     min-height: 52px;
   }
 
-  &.fullWidth {
+  &--full-width {
     width: 100%;
   }
 
   // Variants
-  &.primary {
+  &--primary {
     background: variables.$button-bg;
     color: variables.$button-text;
     box-shadow: variables.$shadow-md;
@@ -61,7 +61,7 @@
     }
   }
 
-  &.secondary {
+  &--secondary {
     background: variables.$text-accent;
     color: variables.$button-text;
     box-shadow: variables.$shadow-md;
@@ -77,7 +77,7 @@
     }
   }
 
-  &.outline {
+  &--outline {
     background: variables.$bg-secondary;
     color: variables.$text-primary;
     border: 2px solid variables.$button-bg;
@@ -94,7 +94,7 @@
     }
   }
 
-  &.ghost {
+  &--ghost {
     background: transparent;
     color: variables.$text-primary;
 
@@ -108,18 +108,18 @@
   }
 
   // Loading state
-  &.loading {
+  &--loading {
     pointer-events: none;
   }
+}
 
-  .loader {
-    width: 20px;
-    height: 20px;
-    border: 2px solid variables.$text-tertiary;
-    border-top-color: variables.$button-text;
-    border-radius: 50%;
-    animation: rotate 0.6s linear infinite;
-  }
+.button__loader {
+  width: 20px;
+  height: 20px;
+  border: 2px solid variables.$text-tertiary;
+  border-top-color: variables.$button-text;
+  border-radius: 50%;
+  animation: rotate 0.6s linear infinite;
 }
 
 @keyframes rotate {

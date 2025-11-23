@@ -1,7 +1,7 @@
 @use '@/styles/variables';
 @use '@/styles/mixins';
 
-.quickActions {
+.quick-actions {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: variables.$spacing-md;
@@ -12,7 +12,7 @@
   }
 }
 
-.actionCard {
+.quick-actions__action-card {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -30,7 +30,7 @@
   }
 }
 
-.actionIcon {
+.quick-actions__action-icon {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -45,13 +45,13 @@
     stroke: currentColor;
   }
 
-  .actionCard:hover & {
+  .quick-actions__action-card:hover & {
     background: linear-gradient(135deg, rgba(0, 152, 234, 0.25), rgba(45, 131, 236, 0.3));
     transform: scale(1.05);
   }
 }
 
-.actionLabel {
+.quick-actions__action-label {
   font-size: variables.$font-size-base;
   font-weight: variables.$font-weight-semibold;
   color: variables.$text-primary;

@@ -27,7 +27,12 @@ export const GlassContainer = ({
 
   return (
     <div
-      className={clsx(styles.container, styles[variant], styles[size], className)}
+      className={clsx(
+        styles['container'],
+        styles[`container--${variant}`],
+        styles[`container--${size}`],
+        className,
+      )}
       {...(onClick && {
         onClick: onClick as MouseEventHandler<HTMLDivElement>,
         role: 'button',

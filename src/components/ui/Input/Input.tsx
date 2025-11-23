@@ -13,21 +13,21 @@ interface InputProps extends InputHTMLAttributes<HTMLInputElement> {
 export const Input = forwardRef<HTMLInputElement, InputProps>(
   ({ label, error, success, className, ...props }, ref) => {
     return (
-      <div className={styles.wrapper}>
-        {label && <label className={styles.label}>{label}</label>}
+      <div className={styles['input']}>
+        {label && <label className={styles['input__label']}>{label}</label>}
         <input
           ref={ref}
           className={clsx(
-            styles.input,
+            styles['input__field'],
             {
-              [styles.error]: error,
-              [styles.success]: success,
+              [styles['input__field--error']]: error,
+              [styles['input__field--success']]: success,
             },
             className,
           )}
           {...props}
         />
-        {error && <span className={styles.errorText}>{error}</span>}
+        {error && <span className={styles['input__error-text']}>{error}</span>}
       </div>
     );
   },

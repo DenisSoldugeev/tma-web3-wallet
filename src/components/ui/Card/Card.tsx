@@ -28,10 +28,10 @@ export const Card = ({
   return (
     <div
       className={clsx(
-        styles.card,
+        styles['card'],
         {
-          [styles.gradient]: gradient,
-          [styles.hoverable]: hoverable,
+          [styles['card--gradient']]: gradient,
+          [styles['card--hoverable']]: hoverable,
         },
         className,
       )}

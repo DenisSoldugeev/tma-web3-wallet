@@ -23,13 +23,13 @@
   }
 }
 
-.content {
+.footer__content {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.text {
+.footer__text {
   display: flex;
   align-items: center;
   gap: variables.$spacing-sm;
@@ -39,15 +39,15 @@
   justify-content: center;
 }
 
-.label {
+.footer__label {
   white-space: nowrap;
 }
 
-.divider {
+.footer__divider {
   opacity: 0.5;
 }
 
-.link {
+.footer__link {
   display: inline-flex;
   align-items: center;
   gap: variables.$spacing-xs;
@@ -66,7 +66,7 @@
   }
 }
 
-.icon {
+.footer__icon {
   width: 14px;
   height: 14px;
   flex-shrink: 0;
@@ -78,16 +78,16 @@
     padding: variables.$spacing-md variables.$spacing-sm;
   }
 
-  .text {
+  .footer__text {
     font-size: variables.$font-size-xs;
     gap: variables.$spacing-xs;
   }
 
-  .divider {
+  .footer__divider {
     display: none;
   }
 
-  .text {
+  .footer__text {
     flex-direction: column;
     gap: variables.$spacing-xs;
   }
