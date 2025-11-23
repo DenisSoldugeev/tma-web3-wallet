@@ -9,114 +9,7 @@
   border: $border-width-thin solid rgba(255, 255, 255, $border-opacity);
 }
 
-// Dark glassmorphism - uses dark overlay (works well on light backgrounds)
-@mixin glass-dark($blur: $glass-blur, $opacity: 0.2) {
-  background: rgba(0, 0, 0, $opacity);
-  backdrop-filter: blur($blur);
-  -webkit-backdrop-filter: blur($blur);
-  border: $border-width-thin solid $glass-dark-border;
-}
 
-// Adaptive glassmorphism - automatically adapts based on Telegram theme
-// Uses light overlay for dark themes, dark overlay for light themes
-@mixin glass-adaptive($blur: $glass-blur, $opacity: 0.1, $border-opacity: 0.2) {
-  // Default: light glass for dark backgrounds
-  background: rgba(255, 255, 255, $opacity);
-  backdrop-filter: blur($blur);
-  -webkit-backdrop-filter: blur($blur);
-  border: $border-width-thin solid rgba(255, 255, 255, $border-opacity);
-
-  // Note: Telegram themes are typically dark, but this can be extended
-  // if we detect light themes in the future
-}
-
-// Gradient border effect
-@mixin gradient-border($gradient, $width: 2px, $radius: $radius-lg) {
-  position: relative;
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: $radius;
-
-  &::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: $radius;
-    padding: $width;
-    background: $gradient;
-    mask:
-      linear-gradient(#fff 0 0) content-box,
-      linear-gradient(#fff 0 0);
-    -webkit-mask-composite: xor;
-    mask-composite: exclude;
-    pointer-events: none;
-  }
-}
-
-// Animated gradient background
-@mixin animated-gradient($gradient1, $gradient2, $duration: 8s) {
-  background: $gradient1;
-  background-size: 200% 200%;
-  animation: gradient-shift $duration ease infinite;
-
-  @keyframes gradient-shift {
-    0%, 100% {
-      background: $gradient1;
-    }
-    50% {
-      background: $gradient2;
-    }
-  }
-}
-
-// Hover lift effect
-@mixin hover-lift($scale: 1.02, $shadow: $shadow-lg) {
-  transition: transform $transition-base $ease-out-expo,
-              box-shadow $transition-base $ease-out-expo;
-
-  &:hover {
-    transform: translateY(-4px) scale($scale);
-    box-shadow: $shadow;
-  }
-
-  &:active {
-    transform: translateY(-2px) scale(0.98);
-  }
-}
-
-// Glow effect on hover
-@mixin hover-glow($glow: $glow-primary) {
-  transition: box-shadow $transition-base ease;
-
-  &:hover {
-    box-shadow: $glow;
-  }
-}
-
-// Fade in animation
-@mixin fade-in($duration: 0.5s, $delay: 0s) {
-  opacity: 0;
-  animation: fadeIn $duration $ease-out-expo $delay forwards;
-
-  @keyframes fadeIn {
-    to {
-      opacity: 1;
-    }
-  }
-}
-
-// Slide up animation
-@mixin slide-up($distance: 20px, $duration: 0.5s, $delay: 0s) {
-  opacity: 0;
-  transform: translateY($distance);
-  animation: slideUp $duration $ease-out-expo $delay forwards;
-
-  @keyframes slideUp {
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-}
 
 // Responsive breakpoint mixin
 @mixin responsive($breakpoint) {
@@ -134,14 +27,12 @@
   }
 }
 
-// Flex center
 @mixin flex-center {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-// Absolute center
 @mixin absolute-center {
   position: absolute;
   top: 50%;
@@ -149,14 +40,12 @@
   transform: translate(-50%, -50%);
 }
 
-// Truncate text
 @mixin truncate {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
 
-// Multi-line truncate
 @mixin line-clamp($lines: 2) {
   display: -webkit-box;
   -webkit-line-clamp: $lines;
@@ -164,7 +53,6 @@
   overflow: hidden;
 }
 
-// Custom scrollbar
 @mixin custom-scrollbar($width: 8px, $track-bg: transparent, $thumb-bg: rgba(255, 255, 255, 0.2)) {
   &::-webkit-scrollbar {
     width: $width;
@@ -221,40 +109,24 @@
   }
 }
 
-// Floating animation
-@mixin float($distance: 10px, $duration: 3s) {
-  animation: float $duration ease-in-out infinite;
 
-  @keyframes float {
-    0%, 100% {
-      transform: translateY(0);
-    }
-    50% {
-      transform: translateY(-$distance);
-    }
-  }
-}
-
-// Gradient text
-@mixin gradient-text($gradient: $primary-gradient) {
-  background: $gradient;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-// Safe area padding (for iOS)
+// Safe area padding using Telegram-provided content inset variables
 @mixin safe-area-padding($position: bottom, $fallback: $spacing-md) {
+  $safe-top: var(--tg-content-safe-area-inset-top, env(safe-area-inset-top, 0px));
+  $safe-bottom: var(--tg-content-safe-area-inset-bottom, env(safe-area-inset-bottom, 0px));
+  $safe-left: var(--tg-content-safe-area-inset-left, env(safe-area-inset-left, 0px));
+  $safe-right: var(--tg-content-safe-area-inset-right, env(safe-area-inset-right, 0px));
+
   @if $position == top {
-    padding-top: max($fallback, env(safe-area-inset-top));
+    padding-top: max($fallback, $safe-top);
   }
   @else if $position == bottom {
-    padding-bottom: max($fallback, env(safe-area-inset-bottom));
+    padding-bottom: max($fallback, $safe-bottom);
   }
   @else if $position == left {
-    padding-left: max($fallback, env(safe-area-inset-left));
+    padding-left: max($fallback, $safe-left);
   }
   @else if $position == right {
-    padding-right: max($fallback, env(safe-area-inset-right));
+    padding-right: max($fallback, $safe-right);
   }
 }
