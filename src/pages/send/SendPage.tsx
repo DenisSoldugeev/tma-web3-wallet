@@ -143,7 +143,7 @@ export function SendPage() {
 
                 <GlassContainer variant="subtle" className={styles.card}>
                     <div className={styles.field}>
-                        <div className={styles.labelRow}>
+                        <div className={styles['label-row']}>
                             <label className={styles.label} htmlFor="amount">
                                 Amount
                             </label>
@@ -151,7 +151,7 @@ export function SendPage() {
                                 Balance: {formattedBalance} TON
                             </span>
                         </div>
-                        <div className={styles.amountInput}>
+                        <div className={styles['amount-input']}>
                             <input
                                 id="amount"
                                 type="number"

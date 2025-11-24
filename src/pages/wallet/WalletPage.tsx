@@ -84,20 +84,20 @@ export function WalletPage() {
     return (
         <div className={styles.wallet}>
             <GlassContainer variant="subtle">
-                <div className={styles.panelHeader}>
+                <div className={styles['panel-header']}>
                     <div className={styles.branding}>
-                        <div className={styles.brandIcon}>
+                        <div className={styles['brand-icon']}>
                             <Icon name='tonSymbol' size={32}/>
                         </div>
-                        <div className={styles.brandText}>
-                            <p className={styles.brandLabel}>Wallet</p>
-                            <p className={styles.brandAddress}>
+                        <div className={styles['brand-text']}>
+                            <p className={styles['brand-label']}>Wallet</p>
+                            <p className={styles['brand-address']}>
                                 {truncateAddress(wallet.address, 6, 6)}
                             </p>
                         </div>
                     </div>
                     <button
-                        className={styles.logoutButton}
+                        className={styles['logout-button']}
                         onClick={handleLogout}
                         title='Logout'
                     >
@@ -106,32 +106,32 @@ export function WalletPage() {
                 </div>
             </GlassContainer>
 
-            <GlassContainer className={styles.balanceCard} variant="subtle">
+            <GlassContainer className={styles['balance-card']} variant="subtle">
                 {isBalanceLoading ? (
-                    <div className={styles.balanceSkeleton}/>
+                    <div className={styles['balance-skeleton']}/>
                 ) : (
-                    <div className={styles.balanceContent}>
-                        <div className={styles.balanceMain}>
-                            <div className={styles.tonBalance}>
-                                <span className={styles.tonAmount}>{formattedTonAmount}</span>
-                                <span className={styles.tonSymbol}>TON</span>
+                    <div className={styles['balance-content']}>
+                        <div className={styles['balance-main']}>
+                            <div className={styles['ton-balance']}>
+                                <span className={styles['ton-amount']}>{formattedTonAmount}</span>
+                                <span className={styles['ton-symbol']}>TON</span>
                             </div>
                             {formattedUsdValue && (
-                                <p className={styles.usdValue}>≈ {formattedUsdValue}</p>
+                                <p className={styles['usd-value']}>≈ {formattedUsdValue}</p>
                             )}
                         </div>
 
-                        <div className={styles.priceDivider}/>
+                        <div className={styles['price-divider']}/>
 
-                        <div className={styles.priceInfo}>
-                            <div className={styles.priceRow}>
-                                <span className={styles.priceLabel}>TON Price</span>
-                                <span className={styles.priceValue}>{formattedTonPrice ?? '—'}</span>
+                        <div className={styles['price-info']}>
+                            <div className={styles['price-row']}>
+                                <span className={styles['price-label']}>TON Price</span>
+                                <span className={styles['price-value']}>{formattedTonPrice ?? '—'}</span>
                             </div>
                             {priceChange24h !== 0 && (
-                                <div className={styles.priceChangeRow}>
-                                    <span className={styles.priceChangeLabel}>24h Change</span>
-                                    <div className={styles.priceChange} data-trend={isPriceUp ? 'up' : 'down'}>
+                                <div className={styles['price-change-row']}>
+                                    <span className={styles['price-change-label']}>24h Change</span>
+                                    <div className={styles['price-change']} data-trend={isPriceUp ? 'up' : 'down'}>
                                         {isPriceUp ? <TrendingUp size={14}/> : <TrendingDown size={14}/>}
                                         <span>{isPriceUp ? '+' : ''}{priceChange24h.toFixed(2)}%</span>
                                     </div>

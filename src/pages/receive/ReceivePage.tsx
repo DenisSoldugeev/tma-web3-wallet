@@ -76,9 +76,9 @@ export function ReceivePage() {
             <h1 className={styles.title}>Receive TON</h1>
             <div className={styles.qr}>
                 {qrDataUrl ? (
-                    <img src={qrDataUrl} alt="QR code" className={styles.qrImage}/>
+                    <img src={qrDataUrl} alt="QR code" className={styles['qr-image']}/>
                 ) : (
-                    <div className={styles.qrSkeleton}/>
+                    <div className={styles['qr-skeleton']}/>
                 )}
             </div>
             <GlassContainer variant="subtle" className={styles.card}>
@@ -87,7 +87,7 @@ export function ReceivePage() {
                     <p className={styles.address}>{wallet.address}</p>
                 </div>
             </GlassContainer>
-            <p className={styles.qrHint}>Scan the QR or share the address to receive TON</p>
+            <p className={styles['qr-hint']}>Scan the QR or share the address to receive TON</p>
             <MainButton
                 text={copied ? 'Copied' : 'Copy address'}
                 onClick={handleCopy}
