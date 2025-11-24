@@ -11,9 +11,11 @@ A demonstration project of a TON wallet as a Telegram Mini App. Created as an ex
 - 🔐 Wallet creation with 24-word mnemonic phrase
 - 📥 Import existing wallet
 - 💎 Support for Wallet V5R1 (W5) - the latest TON standard
-- 💰 View wallet balance
+- 💰 View wallet balance and transaction history
+- 📤 Send TON with address validation
+- 📥 Receive TON with QR code generation
 - 📱 Integration with Telegram Mini Apps
-- ✨ Modern UI with smooth transitions
+- ✨ Modern UI with glass morphism design and smooth transitions
 
 ## Technologies
 
@@ -74,123 +76,66 @@ npm run lint
 
 ```
 src/
-├── components/         # UI components
-│   ├── ui/            # Base elements (Button, Card, Input)
-│   ├── wallet/        # Wallet components
-│   └── layout/        # Layout components
+├── components/ui/     # Base UI elements (Button, Card, Icon, GlassContainer)
 ├── pages/             # Application pages
 │   ├── welcome/       # Welcome page
 │   ├── create/        # Wallet creation
 │   ├── import/        # Wallet import
-│   └── wallet/        # Main wallet page
+│   ├── wallet/        # Main wallet page
+│   ├── send/          # Send TON page
+│   └── receive/       # Receive TON page with QR
 ├── services/          # Business logic
-│   ├── wallet.ts      # Wallet management
+│   ├── wallet.ts      # Wallet management (V5R1)
 │   ├── ton.ts         # Blockchain interaction
-│   └── storage.service.ts  # Data storage
-├── routes/            # File-based routing
-├── hooks/             # Custom React hooks
-├── utils/             # Utilities
-└── styles/            # Global styles
+│   └── storage.ts     # LocalStorage wrapper
+├── routes/            # File-based routing (auto-generated tree)
+├── hooks/             # Custom hooks (useBackButton, useTransitionNavigate)
+├── utils/             # Utilities (Telegram, encryption, route guards)
+└── styles/            # SCSS modules with mixins and variables
 ```
 
 ### Service Layer
 
-**WalletService** - Wallet Management
-- Generate mnemonic phrases (24 words)
-- Create WalletContractV5R1 with non-bounceable addresses
-- Import wallets from mnemonic
-- Store in localStorage
+**WalletService** - Wallet creation/import, mnemonic generation (24 words), WalletContractV5R1 initialization
 
-**TonService** - Blockchain Interaction
-- Connect to TON via TonClient
-- Fetch wallet balances
-- Transaction history
-- Send transactions (in development)
+**TonService** - Blockchain interaction via TonClient: balances, transaction history, sending transactions
 
-**StorageService** - Local Storage
-- Save wallet data to localStorage
-- Storage key: `tma_wallet`
+**StorageService** - Encrypted localStorage persistence (key: `tma_wallet`)
 
 ### Path Aliases
 
-Convenient aliases configured for imports:
-
-```
-@/             → src/
-@components/   → src/components/
-@services/     → src/services/
-@utils/        → src/utils/
-@pages/        → src/pages/
-@hooks/        → src/hooks/
-@styles/       → src/styles/
+```typescript
+import { WalletService } from '@services/wallet';
+import { GlassContainer } from '@components/ui/GlassContainer';
+// @/ @components/ @services/ @utils/ @pages/ @hooks/ @styles/
 ```
 
 ## TON Wallet V5R1
 
-The project uses the latest TON wallet standard - **Wallet V5R1 (W5)**:
+Uses the latest **Wallet V5R1 (W5)** standard with 25% lower fees, gasless transaction support, and up to 255 parallel transactions. Non-bounceable addresses with `UQ` prefix.
 
-- Reduced fees (25% lower than V4)
-- Support for gasless transactions
-- Ability to execute up to 255 transactions in parallel
-- Non-bounceable addresses (`UQ` prefix)
-
-### How Wallet Creation Works
-
-1. Generate 24-word mnemonic phrase
-2. Validate mnemonic
-3. Create keypair from mnemonic
-4. Initialize WalletContractV5R1 contract
-5. Get non-bounceable address
-6. Save to localStorage
+**Wallet Creation Flow:** Mnemonic (24 words) → Keypair → WalletContractV5R1 → Address → LocalStorage
 
 ## Telegram Integration
 
-The app works as a Telegram Mini App:
+Full Telegram Mini App integration with theme adaptation and back button handling.
 
-- Telegram environment check
-- Expand WebApp to full screen
-- Notify Telegram when app is ready
-
-### Testing in Telegram
-
-Use [ngrok](https://ngrok.com/) for local testing:
-
-```bash
-ngrok http 5173
-```
-
-Then create a bot via [@BotFather](https://t.me/BotFather) and set the ngrok URL as the Mini App address.
+**Local Testing:** Use [ngrok](https://ngrok.com/) to tunnel dev server (`ngrok http 5173`), then create bot via [@BotFather](https://t.me/BotFather) and set the ngrok URL.
 
 ## Styling
-### Telegram Themes
 
-Uses Telegram CSS variables to integrate with user's theme:
+**SCSS Modules** with glass morphism design system (`backdrop-filter: blur()`), Telegram theme variables (`var(--tg-theme-bg-color)`), and shared mixins for responsive layouts and safe areas.
 
-```
-background: var(--tg-theme-bg-color);
-color: var(--tg-theme-text-color);
-```
+**View Transitions API** for smooth page navigation with hardware acceleration.
 
 ## Deployment
 
-The project is ready for deployment on:
-- GitHub Pages
-- Vercel
-- Netlify
+Ready for GitHub Pages, Vercel, or Netlify. Build: `npm run build` → `dist/`
 
-Build command: `npm run build`
-Output directory: `dist`
+## Resources
 
-## Useful Links
+[TON Docs](https://docs.ton.org/) • [Telegram Mini Apps](https://core.telegram.org/bots/webapps) • [Wallet V5 Spec](https://github.com/ton-blockchain/wallet-contract-v5) • [Tanstack Router](https://tanstack.com/router/latest) • [Tanstack Query](https://tanstack.com/query/latest)
 
-### Documentation
-- [TON Documentation](https://docs.ton.org/)
-- [Telegram Mini Apps](https://core.telegram.org/bots/webapps)
-- [Wallet V5 Specification](https://github.com/ton-blockchain/wallet-contract-v5)
-
-### Libraries
-- [Tanstack Router](https://tanstack.com/router/latest)
-- [Tanstack Query](https://tanstack.com/query/latest)
 ## License
 
 MIT
