@@ -13,6 +13,10 @@ export function isTelegramEnvironment(): boolean {
   return !!webApp?.initData;
 }
 
+function isMobilePlatform(platform: string): boolean {
+  return ['android', 'ios'].includes(platform.toLowerCase());
+}
+
 export function initTelegramApp(): void {
   const webApp = getTelegramWebApp();
   if (!webApp) {
@@ -20,12 +24,20 @@ export function initTelegramApp(): void {
     return;
   }
 
-  webApp.requestFullscreen();
+  const isMobile = isMobilePlatform(webApp.platform);
+
+  if (isMobile) {
+    webApp.requestFullscreen();
+  } else {
+    webApp.expand();
+  }
+
   webApp.ready();
 
   console.warn('Telegram Mini App initialized', {
     version: webApp.version,
     platform: webApp.platform,
+    mode: isMobile ? 'fullscreen' : 'expanded',
   });
 }
 
