@@ -1,9 +1,8 @@
 import { ActionCard } from '@components/wallet/ActionCard';
 import { useTransitionNavigate } from '@hooks/useTransitionNavigate';
-import { WalletService } from '@services/wallet';
 import { MainButton } from '@twa-dev/sdk/react';
 import { KeyRound, Wallet } from 'lucide-react';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 import styles from './WelcomePage.module.scss';
 
@@ -12,12 +11,6 @@ type WalletAction = 'create' | 'import' | null;
 export function WelcomePage() {
     const navigate = useTransitionNavigate();
     const [selectedAction, setSelectedAction] = useState<WalletAction>('create');
-
-    useEffect(() => {
-        if (WalletService.hasWallet()) {
-            navigate({ to: '/wallet' }, 'forward');
-        }
-    }, [navigate]);
 
     return (
         <div className={styles['welcome-page']}>

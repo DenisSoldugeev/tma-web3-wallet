@@ -1,18 +1,22 @@
 import { GlassContainer } from '@components/ui/GlassContainer';
+import { useBackButton } from '@hooks/useBackButton';
 import { useTransitionNavigate } from '@hooks/useTransitionNavigate';
 import { TonService } from '@services/ton';
 import { WalletService } from '@services/wallet.ts';
 import { useQuery } from '@tanstack/react-query';
+import { useLoaderData } from '@tanstack/react-router';
 import { Address } from '@ton/ton';
 import { MainButton } from '@twa-dev/sdk/react';
 import { getTelegramWebApp, triggerHapticImpact } from '@utils/telegram';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import styles from './SendPage.module.scss';
 
+import { Route } from '@/routes/wallet/send';
+
 export function SendPage() {
     const navigate = useTransitionNavigate();
-    const [wallet] = useState(WalletService.getWallet());
+    const wallet = useLoaderData({ from: Route.id });
     const [recipientAddress, setRecipientAddress] = useState('');
     const [amount, setAmount] = useState('');
     const [comment, setComment] = useState('');
@@ -26,27 +30,12 @@ export function SendPage() {
         enabled: !!wallet,
     });
 
-    useEffect(() => {
-        if (!wallet) {
-            navigate({ to: '/' }, 'backward').then();
-            return;
-        }
+    // Handle back button
+    const handleBack = useCallback(() => {
+        navigate({ to: '/wallet' }, 'backward').then();
+    }, [navigate]);
 
-        const webApp = getTelegramWebApp();
-        if (!webApp) return;
-
-        const handleBackClick = () => {
-            navigate({ to: '/wallet' }, 'backward').then();
-        };
-
-        webApp.BackButton.show();
-        webApp.BackButton.onClick(handleBackClick);
-
-        return () => {
-            webApp.BackButton.offClick(handleBackClick);
-            webApp.BackButton.hide();
-        };
-    }, [navigate, wallet]);
+    useBackButton({ onBack: handleBack, enabled: true });
 
     useEffect(() => {
         try {
@@ -67,7 +56,7 @@ export function SendPage() {
     const canSend = isAddressValid && isAmountValid && !isSending;
 
     const handleSend = async () => {
-        if (!wallet || !canSend) return;
+        if (!canSend) return;
 
         triggerHapticImpact('medium');
         setIsSending(true);
@@ -111,8 +100,6 @@ export function SendPage() {
             setIsSending(false);
         }
     };
-
-    if (!wallet) return null;
 
     const formattedBalance = balance?.formatted || '0.0000';
 

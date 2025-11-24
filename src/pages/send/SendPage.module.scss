@@ -1,42 +1,16 @@
 @use '@/styles/variables';
-@use '@/styles/mixins';
+@use '@/styles/page-layout';
 
 .send {
-  min-height: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: variables.$spacing-md;
-  position: relative;
-  padding-top: calc(var(--tg-safe-area-inset-top) + var(--tg-content-safe-area-inset-top));
-
-  &::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(circle at 20% -10%, rgba(0, 152, 234, 0.2), transparent 45%),
-    radial-gradient(circle at 85% 0%, rgba(45, 131, 236, 0.18), transparent 40%);
-    pointer-events: none;
-    z-index: 0;
-  }
+  @include page-layout.page-container;
 }
 
 :global([data-color-scheme='dark']) .send {
-  background: linear-gradient(180deg, #0b1426 0%, #050812 80%);
-
-  &::after {
-    background: radial-gradient(circle at 25% -10%, rgba(0, 152, 234, 0.25), transparent 45%),
-    radial-gradient(circle at 80% 0%, rgba(26, 201, 255, 0.2), transparent 40%);
-  }
+  @include page-layout.page-container-dark;
 }
 
 .title {
-  text-align: center;
-  margin: 0;
-  font-size: clamp(1.6rem, 4vw, 2.1rem);
-  font-weight: variables.$font-weight-bold;
-  color: variables.$text-primary;
-  letter-spacing: 0.01em;
-  z-index: 1;
+  @include page-layout.page-title;
 }
 
 .form {
@@ -51,13 +25,11 @@
 }
 
 .card {
-  padding: variables.$spacing-lg;
+  @include page-layout.page-card;
 }
 
 .field {
-  display: flex;
-  flex-direction: column;
-  gap: variables.$spacing-xs;
+  @include page-layout.page-field;
 }
 
 .label-row {
@@ -67,11 +39,7 @@
 }
 
 .label {
-  font-size: variables.$font-size-sm;
-  color: variables.$text-secondary;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  font-weight: variables.$font-weight-medium;
+  @include page-layout.page-label;
 }
 
 .balance {
@@ -81,29 +49,7 @@
 }
 
 .input {
-  padding: variables.$spacing-md;
-  font-size: variables.$font-size-base;
-  color: variables.$text-primary;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(0, 152, 234, 0.15);
-  border-radius: variables.$radius-md;
-  outline: none;
-  transition: border-color variables.$transition-base, background variables.$transition-base;
-  font-family: variables.$font-family-mono;
-
-  &::placeholder {
-    color: variables.$text-tertiary;
-  }
-
-  &:focus {
-    border-color: rgba(0, 152, 234, 0.4);
-    background: rgba(255, 255, 255, 0.08);
-  }
-
-  &:disabled {
-    opacity: 0.5;
-    cursor: not-allowed;
-  }
+  @include page-layout.page-input;
 
   &[type='number'] {
     &::-webkit-outer-spin-button,
@@ -130,10 +76,7 @@
 }
 
 .error {
-  margin: 0;
-  font-size: variables.$font-size-xs;
-  color: #ff4757;
-  font-weight: variables.$font-weight-medium;
+  @include page-layout.page-error;
 }
 
 .hint {

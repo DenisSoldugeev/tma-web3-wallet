@@ -6,22 +6,19 @@ import { PriceService } from '@services/price';
 import { TonService } from '@services/ton.ts';
 import { WalletService } from '@services/wallet.ts';
 import { useQuery } from '@tanstack/react-query';
+import { useLoaderData } from '@tanstack/react-router';
 import { truncateAddress } from '@utils/format';
 import { triggerHapticImpact } from '@utils/telegram';
 import { LogOut, TrendingUp, TrendingDown } from 'lucide-react';
-import { useState, useEffect, useMemo } from 'react';
+import { useMemo } from 'react';
 
 import styles from './WalletPage.module.scss';
 
+import { Route } from '@/routes/wallet';
+
 export function WalletPage() {
     const navigate = useTransitionNavigate();
-    const [wallet, setWallet] = useState(WalletService.getWallet());
-
-    useEffect(() => {
-        if (!wallet) {
-            navigate({ to: '/' }, 'backward').then();
-        }
-    }, [wallet, navigate]);
+    const wallet = useLoaderData({ from: Route.id });
 
     // Fetch balance
     const { data: balance, isLoading: isBalanceLoading } = useQuery({
@@ -75,11 +72,8 @@ export function WalletPage() {
     const handleLogout = () => {
         triggerHapticImpact('soft');
         WalletService.deleteWallet();
-        setWallet(null);
         navigate({ to: '/' }, 'backward').then();
     };
-
-    if (!wallet) return null;
 
     return (
         <div className={styles.wallet}>

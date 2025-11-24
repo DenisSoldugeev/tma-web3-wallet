@@ -1,43 +1,30 @@
 import { GlassContainer } from '@components/ui/GlassContainer';
+import { useBackButton } from '@hooks/useBackButton';
 import { useTransitionNavigate } from '@hooks/useTransitionNavigate';
-import { WalletService } from '@services/wallet.ts';
+import { useLoaderData } from '@tanstack/react-router';
 import { MainButton } from '@twa-dev/sdk/react';
-import { getTelegramWebApp, triggerHapticImpact } from '@utils/telegram';
+import { triggerHapticImpact } from '@utils/telegram';
 import QRCode from 'qrcode';
-import { useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import styles from './ReceivePage.module.scss';
 
+import { Route } from '@/routes/wallet/receive';
+
 export function ReceivePage() {
     const navigate = useTransitionNavigate();
-    const [wallet] = useState(WalletService.getWallet());
+    const wallet = useLoaderData({ from: Route.id });
     const [qrDataUrl, setQrDataUrl] = useState<string>('');
     const [copied, setCopied] = useState(false);
 
-    useEffect(() => {
-        if (!wallet) {
-            navigate({ to: '/' }, 'backward').then();
-            return;
-        }
+    // Handle back button
+    const handleBack = useCallback(() => {
+        navigate({ to: '/wallet' }, 'backward').then();
+    }, [navigate]);
 
-        const webApp = getTelegramWebApp();
-        if (!webApp) return;
-
-        const handleBackClick = () => {
-            navigate({ to: '/wallet' }, 'backward').then();
-        };
-
-        webApp.BackButton.show();
-        webApp.BackButton.onClick(handleBackClick);
-
-        return () => {
-            webApp.BackButton.offClick(handleBackClick);
-            webApp.BackButton.hide();
-        };
-    }, [navigate, wallet]);
+    useBackButton({ onBack: handleBack, enabled: true });
 
     const transferLink = useMemo(() => {
-        if (!wallet) return '';
         return `ton://transfer/${wallet.address}`;
     }, [wallet]);
 
@@ -56,10 +43,7 @@ export function ReceivePage() {
             .catch((error: unknown) => console.error('Failed to generate QR code:', error));
     }, [transferLink]);
 
-    if (!wallet) return null;
-
     const handleCopy = async () => {
-        if (!wallet) return;
         triggerHapticImpact('light');
         try {
             await navigator.clipboard.writeText(wallet.address);
