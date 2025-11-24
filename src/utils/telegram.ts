@@ -28,8 +28,10 @@ export function initTelegramApp(): void {
 
   if (isMobile) {
     webApp.requestFullscreen();
+    document.body.classList.add('is-mobile');
   } else {
     webApp.expand();
+    document.body.classList.add('is-desktop');
   }
 
   webApp.ready();

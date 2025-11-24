@@ -10,6 +10,12 @@
   padding-left: variables.$spacing-md;
   padding-right: variables.$spacing-md;
 
+  .is-desktop & {
+    padding-top: calc(var(--tg-safe-area-inset-top) + var(--tg-content-safe-area-inset-top) + 20px);
+    padding-left: calc(#{variables.$spacing-md} + 20px);
+    padding-right: calc(#{variables.$spacing-md} + 20px);
+  }
+
   &::after {
     content: '';
     position: absolute;
