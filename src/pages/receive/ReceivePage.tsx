@@ -59,18 +59,23 @@ export function ReceivePage() {
     return (
         <div className={clsx('page-container', styles.receive)}>
             <h1 className={styles.title}>Receive TON</h1>
-            <div className={styles.qr}>
-                {qrDataUrl ? (
-                    <img src={qrDataUrl} alt="QR code" className={styles['qr-image']}/>
-                ) : (
-                    <div className={styles['qr-skeleton']}/>
-                )}
-            </div>
-            <GlassContainer variant="subtle" className={styles.card}>
-                <div>
-                    <p className={styles.label}>My address</p>
-                    <p className={styles.address}>{wallet.address}</p>
+
+            <GlassContainer variant='default' size="lg" className={styles.card}>
+                <div className={styles.qr}>
+                    {qrDataUrl ? (
+                        <img src={qrDataUrl} alt="QR code" className={styles['qr-image']}/>
+                    ) : (
+                        <div className={styles['qr-skeleton']}/>
+                    )}
                 </div>
+                <button className={styles.address} onClick={handleCopy}>
+                    {wallet.address}
+                </button>
+                {copied && (
+                    <GlassContainer variant="default" size="sm" className={styles.toast}>
+                        Address copied to clipboard
+                    </GlassContainer>
+                )}
             </GlassContainer>
             <p className={styles['qr-hint']}>Scan the QR or share the address to receive TON</p>
             <MainButton
