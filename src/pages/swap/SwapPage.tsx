@@ -80,7 +80,7 @@ export function SwapPage() {
 
   return (
     <div className={clsx('page-container', styles.swap)}>
-      <h1 className={styles.title}>Swap Tokens</h1>
+      <h1 className={styles.title}>Swap</h1>
 
       <div className={styles.form}>
         <GlassContainer variant="subtle" className={styles.card}>
@@ -156,7 +156,7 @@ export function SwapPage() {
       </p>
 
       <MainButton
-        text={isSwapping ? 'Swapping...' : 'Swap Tokens'}
+        text={isSwapping ? 'Swapping...' : 'Swap'}
         onClick={handleSwap}
         disabled={!canSwap}
       />
