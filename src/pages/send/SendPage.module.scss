@@ -24,55 +24,10 @@
   @include page-layout.page-card;
 }
 
-.field {
-  @include page-layout.page-field;
-}
-
-.label-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.label {
-  @include page-layout.page-label;
-}
-
-.balance {
-  font-size: variables.$font-size-sm;
-  color: variables.$text-secondary;
-  font-weight: variables.$font-weight-medium;
-}
-
-.input {
-  @include page-layout.page-input;
-
-  &[type='number'] {
-    &::-webkit-outer-spin-button,
-    &::-webkit-inner-spin-button {
-      -webkit-appearance: none;
-      margin: 0;
-    }
-  }
-}
-
-.amount-input {
-  position: relative;
-  display: flex;
-  align-items: center;
-}
-
 .currency {
-  position: absolute;
-  right: variables.$spacing-md;
   font-size: variables.$font-size-base;
   font-weight: variables.$font-weight-semibold;
   color: variables.$text-secondary;
-  pointer-events: none;
-}
-
-.error {
-  @include page-layout.page-error;
 }
 
 .hint {

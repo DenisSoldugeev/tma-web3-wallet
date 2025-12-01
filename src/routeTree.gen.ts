@@ -13,6 +13,7 @@ import { Route as ImportRouteImport } from './routes/import'
 import { Route as CreateRouteImport } from './routes/create'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as WalletIndexRouteImport } from './routes/wallet/index'
+import { Route as WalletSwapRouteImport } from './routes/wallet/swap'
 import { Route as WalletSendRouteImport } from './routes/wallet/send'
 import { Route as WalletReceiveRouteImport } from './routes/wallet/receive'
 
@@ -36,6 +37,11 @@ const WalletIndexRoute = WalletIndexRouteImport.update({
   path: '/wallet/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const WalletSwapRoute = WalletSwapRouteImport.update({
+  id: '/wallet/swap',
+  path: '/wallet/swap',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const WalletSendRoute = WalletSendRouteImport.update({
   id: '/wallet/send',
   path: '/wallet/send',
@@ -53,6 +59,7 @@ export interface FileRoutesByFullPath {
   '/import': typeof ImportRoute
   '/wallet/receive': typeof WalletReceiveRoute
   '/wallet/send': typeof WalletSendRoute
+  '/wallet/swap': typeof WalletSwapRoute
   '/wallet': typeof WalletIndexRoute
 }
 export interface FileRoutesByTo {
@@ -61,6 +68,7 @@ export interface FileRoutesByTo {
   '/import': typeof ImportRoute
   '/wallet/receive': typeof WalletReceiveRoute
   '/wallet/send': typeof WalletSendRoute
+  '/wallet/swap': typeof WalletSwapRoute
   '/wallet': typeof WalletIndexRoute
 }
 export interface FileRoutesById {
@@ -70,6 +78,7 @@ export interface FileRoutesById {
   '/import': typeof ImportRoute
   '/wallet/receive': typeof WalletReceiveRoute
   '/wallet/send': typeof WalletSendRoute
+  '/wallet/swap': typeof WalletSwapRoute
   '/wallet/': typeof WalletIndexRoute
 }
 export interface FileRouteTypes {
@@ -80,6 +89,7 @@ export interface FileRouteTypes {
     | '/import'
     | '/wallet/receive'
     | '/wallet/send'
+    | '/wallet/swap'
     | '/wallet'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -88,6 +98,7 @@ export interface FileRouteTypes {
     | '/import'
     | '/wallet/receive'
     | '/wallet/send'
+    | '/wallet/swap'
     | '/wallet'
   id:
     | '__root__'
@@ -96,6 +107,7 @@ export interface FileRouteTypes {
     | '/import'
     | '/wallet/receive'
     | '/wallet/send'
+    | '/wallet/swap'
     | '/wallet/'
   fileRoutesById: FileRoutesById
 }
@@ -105,6 +117,7 @@ export interface RootRouteChildren {
   ImportRoute: typeof ImportRoute
   WalletReceiveRoute: typeof WalletReceiveRoute
   WalletSendRoute: typeof WalletSendRoute
+  WalletSwapRoute: typeof WalletSwapRoute
   WalletIndexRoute: typeof WalletIndexRoute
 }
 
@@ -138,6 +151,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof WalletIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/wallet/swap': {
+      id: '/wallet/swap'
+      path: '/wallet/swap'
+      fullPath: '/wallet/swap'
+      preLoaderRoute: typeof WalletSwapRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/wallet/send': {
       id: '/wallet/send'
       path: '/wallet/send'
@@ -161,6 +181,7 @@ const rootRouteChildren: RootRouteChildren = {
   ImportRoute: ImportRoute,
   WalletReceiveRoute: WalletReceiveRoute,
   WalletSendRoute: WalletSendRoute,
+  WalletSwapRoute: WalletSwapRoute,
   WalletIndexRoute: WalletIndexRoute,
 }
 export const routeTree = rootRouteImport

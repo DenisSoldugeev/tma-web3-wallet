@@ -1,4 +1,5 @@
 import { GlassContainer } from '@components/ui/GlassContainer';
+import { Input } from '@components/ui/Input';
 import { useBackButton } from '@hooks/useBackButton';
 import { useTransitionNavigate } from '@hooks/useTransitionNavigate';
 import { TonService } from '@services/ton';
@@ -110,75 +111,49 @@ export function SendPage() {
 
             <div className={styles.form}>
                 <GlassContainer variant="subtle" className={styles.card}>
-                    <div className={styles.field}>
-                        <label className={styles.label} htmlFor="recipient">
-                            Recipient Address
-                        </label>
-                        <input
-                            id="recipient"
-                            type="text"
-                            className={styles.input}
-                            placeholder="UQAa..."
-                            value={recipientAddress}
-                            onChange={(e) => setRecipientAddress(e.target.value.trim())}
-                            disabled={isSending}
-                        />
-                        {recipientAddress && !isAddressValid && (
-                            <p className={styles.error}>Invalid TON address</p>
-                        )}
-                    </div>
+                    <Input
+                        label="Recipient Address"
+                        id="recipient"
+                        type="text"
+                        placeholder="UQAa..."
+                        value={recipientAddress}
+                        onChange={(e) => setRecipientAddress(e.target.value.trim())}
+                        disabled={isSending}
+                        error={recipientAddress && !isAddressValid ? 'Invalid TON address' : undefined}
+                    />
                 </GlassContainer>
 
                 <GlassContainer variant="subtle" className={styles.card}>
-                    <div className={styles.field}>
-                        <div className={styles['label-row']}>
-                            <label className={styles.label} htmlFor="amount">
-                                Amount
-                            </label>
-                            <span className={styles.balance}>
-                                Balance: {formattedBalance} TON
-                            </span>
-                        </div>
-                        <div className={styles['amount-input']}>
-                            <input
-                                id="amount"
-                                type="number"
-                                className={styles.input}
-                                placeholder="0.0"
-                                value={amount}
-                                onChange={(e) => setAmount(e.target.value)}
-                                disabled={isSending}
-                                step="0.01"
-                                min="0"
-                            />
-                            <span className={styles.currency}>TON</span>
-                        </div>
-                        {amount && !isAmountValid && (
-                            <p className={styles.error}>
-                                {amountInNano > availableBalance
-                                    ? 'Insufficient balance'
-                                    : 'Invalid amount'}
-                            </p>
-                        )}
-                    </div>
+                    <Input
+                        label="Amount"
+                        labelRight={<span>Balance: {formattedBalance} TON</span>}
+                        id="amount"
+                        type="number"
+                        placeholder="0.0"
+                        value={amount}
+                        onChange={(e) => setAmount(e.target.value)}
+                        disabled={isSending}
+                        step="0.01"
+                        min="0"
+                        suffix={<span className={styles.currency}>TON</span>}
+                        error={amount && !isAmountValid
+                            ? (amountInNano > availableBalance ? 'Insufficient balance' : 'Invalid amount')
+                            : undefined
+                        }
+                    />
                 </GlassContainer>
 
                 <GlassContainer variant="subtle" className={styles.card}>
-                    <div className={styles.field}>
-                        <label className={styles.label} htmlFor="comment">
-                            Comment (optional)
-                        </label>
-                        <input
-                            id="comment"
-                            type="text"
-                            className={styles.input}
-                            placeholder="Add a note..."
-                            value={comment}
-                            onChange={(e) => setComment(e.target.value)}
-                            disabled={isSending}
-                            maxLength={100}
-                        />
-                    </div>
+                    <Input
+                        label="Comment (optional)"
+                        id="comment"
+                        type="text"
+                        placeholder="Add a note..."
+                        value={comment}
+                        onChange={(e) => setComment(e.target.value)}
+                        disabled={isSending}
+                        maxLength={100}
+                    />
                 </GlassContainer>
             </div>
 
