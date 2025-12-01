@@ -3,11 +3,12 @@
 
 .quick-actions {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: variables.$spacing-md;
   margin-top: variables.$spacing-lg;
 
   @media (max-width: variables.$breakpoint-sm) {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: variables.$spacing-sm;
   }
 }
@@ -27,6 +28,13 @@
 
   &:active {
     transform: translateY(0);
+  }
+
+  &:nth-child(2) {
+    @media (max-width: variables.$breakpoint-sm) {
+      grid-column: 1 / -1;
+      order: 3;
+    }
   }
 }
 
