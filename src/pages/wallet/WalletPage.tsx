@@ -69,6 +69,11 @@ export function WalletPage() {
         navigate({ to: '/wallet/receive' }, 'forward').then();
     };
 
+    const handleSwap = () => {
+        triggerHapticImpact('medium');
+        navigate({ to: '/wallet/swap' }, 'forward').then();
+    };
+
     const handleLogout = () => {
         triggerHapticImpact('soft');
         WalletService.deleteWallet();
@@ -136,7 +141,7 @@ export function WalletPage() {
                 )}
             </GlassContainer>
 
-            <QuickActions onSend={handleSend} onReceive={handleReceive}/>
+            <QuickActions onSend={handleSend} onReceive={handleReceive} onSwap={handleSwap}/>
 
         </div>
     );

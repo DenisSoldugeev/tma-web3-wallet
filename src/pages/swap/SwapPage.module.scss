@@ -1,0 +1,166 @@
+@use '@/styles/variables';
+@use '@/styles/page-layout';
+
+.swap {
+  // Uses global .page-container class via clsx in component
+}
+
+.title {
+  @include page-layout.page-title;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: variables.$spacing-md;
+  max-width: 620px;
+  width: 100%;
+  margin: 0 auto;
+  position: relative;
+  z-index: 1;
+}
+
+.card {
+  @include page-layout.page-card;
+}
+
+.field {
+  @include page-layout.page-field;
+}
+
+.label-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.label {
+  @include page-layout.page-label;
+}
+
+.balance {
+  font-size: variables.$font-size-sm;
+  color: variables.$text-secondary;
+  font-weight: variables.$font-weight-medium;
+}
+
+.input {
+  @include page-layout.page-input;
+
+  &[type='number'] {
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+  }
+
+  &:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+}
+
+.token-input {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.token-selector {
+  position: absolute;
+  right: variables.$spacing-md;
+  display: flex;
+  align-items: center;
+  gap: variables.$spacing-xs;
+  padding: variables.$spacing-xs variables.$spacing-md;
+  border-radius: variables.$radius-lg;
+  background: rgba(0, 152, 234, 0.1);
+  pointer-events: none;
+}
+
+.token-symbol {
+  font-size: variables.$font-size-base;
+  font-weight: variables.$font-weight-bold;
+  color: variables.$text-accent;
+  letter-spacing: 0.05em;
+}
+
+.swap-button {
+  width: 48px;
+  height: 48px;
+  align-self: center;
+  margin: -8px 0;
+  border-radius: variables.$radius-full;
+  border: none;
+  background: linear-gradient(135deg, rgba(0, 152, 234, 0.15), rgba(45, 131, 236, 0.2));
+  color: variables.$text-accent;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all variables.$transition-base;
+  z-index: 2;
+  box-shadow: variables.$shadow-sm;
+
+  &:hover {
+    transform: scale(1.05);
+    background: linear-gradient(135deg, rgba(0, 152, 234, 0.25), rgba(45, 131, 236, 0.3));
+  }
+
+  &:active {
+    transform: scale(0.95) rotate(180deg);
+  }
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+  }
+
+  svg {
+    transition: transform variables.$transition-base;
+  }
+}
+
+.info-card {
+  padding: variables.$spacing-lg;
+  display: flex;
+  flex-direction: column;
+  gap: variables.$spacing-md;
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.info-label {
+  font-size: variables.$font-size-sm;
+  color: variables.$text-secondary;
+  font-weight: variables.$font-weight-medium;
+}
+
+.info-value {
+  font-size: variables.$font-size-sm;
+  color: variables.$text-primary;
+  font-weight: variables.$font-weight-semibold;
+  font-family: variables.$font-family-mono;
+}
+
+.error {
+  @include page-layout.page-error;
+}
+
+.hint {
+  margin: variables.$spacing-sm 0 0 0;
+  font-size: variables.$font-size-sm;
+  color: variables.$text-secondary;
+  text-align: center;
+  line-height: 1.5;
+  max-width: 620px;
+  width: 100%;
+  z-index: 1;
+  position: relative;
+}
