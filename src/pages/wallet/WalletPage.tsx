@@ -9,6 +9,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useLoaderData } from '@tanstack/react-router';
 import { truncateAddress } from '@utils/format';
 import { triggerHapticImpact } from '@utils/telegram';
+import clsx from 'clsx';
 import { LogOut, TrendingUp, TrendingDown } from 'lucide-react';
 import { useMemo } from 'react';
 
@@ -81,7 +82,7 @@ export function WalletPage() {
     };
 
     return (
-        <div className={styles.wallet}>
+        <div className={clsx('page-container', styles['wallet'])}>
             <GlassContainer variant="subtle">
                 <div className={styles['panel-header']}>
                     <div className={styles.branding}>

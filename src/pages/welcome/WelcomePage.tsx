@@ -1,6 +1,7 @@
 import { ActionCard } from '@components/wallet/ActionCard';
 import { useTransitionNavigate } from '@hooks/useTransitionNavigate';
 import { MainButton } from '@twa-dev/sdk/react';
+import clsx from 'clsx';
 import { KeyRound, Wallet } from 'lucide-react';
 import { useState } from 'react';
 
@@ -13,7 +14,7 @@ export function WelcomePage() {
     const [selectedAction, setSelectedAction] = useState<WalletAction>('create');
 
     return (
-        <div className={styles['welcome-page']}>
+        <div className={clsx('.page-container', styles['welcome-page'])}>
             <div className={styles['welcome-page__content']}>
                 <div className={styles['welcome-page__header']}>
                     <h1 className={styles['welcome-page__title']}>TMA Wallet</h1>
