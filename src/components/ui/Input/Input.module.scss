@@ -15,6 +15,19 @@
   margin-bottom: variables.$spacing-xs;
 }
 
+.input__label-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: variables.$spacing-xs;
+}
+
+.input__label-right {
+  font-size: variables.$font-size-sm;
+  color: variables.$text-secondary;
+  font-weight: variables.$font-weight-medium;
+}
+
 .input__field {
   @include mixins.glass-effect(variables.$glass-blur-subtle, 0.05, 0.2);
   width: 100%;
@@ -67,4 +80,24 @@
   font-size: variables.$font-size-sm;
   color: #ff6b6b;
   margin-top: variables.$spacing-xs;
+}
+
+.input__wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.input__field--with-suffix {
+  padding-right: 80px;
+}
+
+.input__suffix {
+  position: absolute;
+  right: variables.$spacing-md;
+  display: flex;
+  align-items: center;
+  gap: variables.$spacing-xs;
+  pointer-events: none;
 }

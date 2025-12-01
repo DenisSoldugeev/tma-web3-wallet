@@ -1,4 +1,5 @@
 import { GlassContainer } from '@components/ui/GlassContainer';
+import { Input } from '@components/ui/Input';
 import { useBackButton } from '@hooks/useBackButton';
 import { useTransitionNavigate } from '@hooks/useTransitionNavigate';
 import { TonService } from '@services/ton';
@@ -83,35 +84,27 @@ export function SwapPage() {
 
       <div className={styles.form}>
         <GlassContainer variant="subtle" className={styles.card}>
-          <div className={styles.field}>
-            <div className={styles['label-row']}>
-              <label className={styles.label} htmlFor="from-amount">
-                From
-              </label>
-              <span className={styles.balance}>Balance: {formattedBalance} {fromToken}</span>
-            </div>
-            <div className={styles['token-input']}>
-              <input
-                id="from-amount"
-                type="number"
-                className={styles.input}
-                placeholder="0.0"
-                value={fromAmount}
-                onChange={(e) => handleFromAmountChange(e.target.value)}
-                disabled={isSwapping}
-                step="0.01"
-                min="0"
-              />
+          <Input
+            label="From"
+            labelRight={<span>Balance: {formattedBalance} {fromToken}</span>}
+            id="from-amount"
+            type="number"
+            placeholder="0.0"
+            value={fromAmount}
+            onChange={(e) => handleFromAmountChange(e.target.value)}
+            disabled={isSwapping}
+            step="0.01"
+            min="0"
+            suffix={
               <div className={styles['token-selector']}>
                 <span className={styles['token-symbol']}>{fromToken}</span>
               </div>
-            </div>
-            {fromAmount && !isAmountValid && (
-              <p className={styles.error}>
-                {amountInNano > availableBalance ? 'Insufficient balance' : 'Invalid amount'}
-              </p>
-            )}
-          </div>
+            }
+            error={fromAmount && !isAmountValid
+              ? (amountInNano > availableBalance ? 'Insufficient balance' : 'Invalid amount')
+              : undefined
+            }
+          />
         </GlassContainer>
 
         <button
@@ -124,25 +117,20 @@ export function SwapPage() {
         </button>
 
         <GlassContainer variant="subtle" className={styles.card}>
-          <div className={styles.field}>
-            <label className={styles.label} htmlFor="to-amount">
-              To
-            </label>
-            <div className={styles['token-input']}>
-              <input
-                id="to-amount"
-                type="number"
-                className={styles.input}
-                placeholder="0.0"
-                value={toAmount}
-                disabled
-                readOnly
-              />
+          <Input
+            label="To"
+            id="to-amount"
+            type="number"
+            placeholder="0.0"
+            value={toAmount}
+            disabled
+            readOnly
+            suffix={
               <div className={styles['token-selector']}>
                 <span className={styles['token-symbol']}>{toToken}</span>
               </div>
-            </div>
-          </div>
+            }
+          />
         </GlassContainer>
 
         <GlassContainer variant="subtle" className={styles['info-card']}>
