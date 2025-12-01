@@ -3,11 +3,7 @@
 @use '@/styles/page-layout';
 
 .receive {
-  @include page-layout.page-container;
-}
-
-:global([data-color-scheme='dark']) .receive {
-  @include page-layout.page-container-dark;
+  // Использует глобальный класс .page-container через clsx в компоненте
 }
 
 .toolbar {

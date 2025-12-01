@@ -1,41 +1,5 @@
 @use 'variables';
 
-@mixin page-container {
-  min-height: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: variables.$spacing-md;
-  position: relative;
-  padding-top: calc(var(--tg-safe-area-inset-top) + var(--tg-content-safe-area-inset-top));
-  padding-left: variables.$spacing-md;
-  padding-right: variables.$spacing-md;
-
-  .is-desktop & {
-    padding-top: calc(var(--tg-safe-area-inset-top) + var(--tg-content-safe-area-inset-top) + 20px);
-    padding-left: calc(#{variables.$spacing-md} + 20px);
-    padding-right: calc(#{variables.$spacing-md} + 20px);
-  }
-
-  &::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: radial-gradient(circle at 20% -10%, rgba(0, 152, 234, 0.2), transparent 45%),
-    radial-gradient(circle at 85% 0%, rgba(45, 131, 236, 0.18), transparent 40%);
-    pointer-events: none;
-    z-index: 0;
-  }
-}
-
-@mixin page-container-dark {
-  background: linear-gradient(180deg, #0b1426 0%, #050812 80%);
-
-  &::after {
-    background: radial-gradient(circle at 25% -10%, rgba(0, 152, 234, 0.25), transparent 45%),
-    radial-gradient(circle at 80% 0%, rgba(26, 201, 255, 0.2), transparent 40%);
-  }
-}
-
 
 @mixin page-title {
   text-align: center;

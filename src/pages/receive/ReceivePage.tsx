@@ -4,6 +4,7 @@ import { useTransitionNavigate } from '@hooks/useTransitionNavigate';
 import { useLoaderData } from '@tanstack/react-router';
 import { MainButton } from '@twa-dev/sdk/react';
 import { triggerHapticImpact } from '@utils/telegram';
+import clsx from 'clsx';
 import QRCode from 'qrcode';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
@@ -56,7 +57,7 @@ export function ReceivePage() {
     };
 
     return (
-        <div className={styles.receive}>
+        <div className={clsx('page-container', styles.receive)}>
             <h1 className={styles.title}>Receive TON</h1>
             <div className={styles.qr}>
                 {qrDataUrl ? (

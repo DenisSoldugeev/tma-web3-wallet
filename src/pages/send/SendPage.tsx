@@ -8,6 +8,7 @@ import { useLoaderData } from '@tanstack/react-router';
 import { Address } from '@ton/ton';
 import { MainButton } from '@twa-dev/sdk/react';
 import { getTelegramWebApp, triggerHapticImpact } from '@utils/telegram';
+import clsx from 'clsx';
 import { useCallback, useEffect, useState } from 'react';
 
 import styles from './SendPage.module.scss';
@@ -104,7 +105,7 @@ export function SendPage() {
     const formattedBalance = balance?.formatted || '0.0000';
 
     return (
-        <div className={styles.send}>
+        <div className={clsx('page-container', styles.send)}>
             <h1 className={styles.title}>Send TON</h1>
 
             <div className={styles.form}>
